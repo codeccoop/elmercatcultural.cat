@@ -143,10 +143,11 @@ add_action('widgets_init', 'widgets_init');
  */
 function scripts()
 {
-    wp_enqueue_style('elmercatcultural.cat-style', get_stylesheet_uri(), array(), ELMERCATCULTURAL_VERSION);
-    wp_style_add_data('elmercatcultural.cat-style', 'rtl', 'replace');
+    wp_enqueue_style('elmercatcultural-style', get_stylesheet_uri(), array(), ELMERCATCULTURAL_VERSION);
+    wp_style_add_data('elmercatcultural-style', 'rtl', 'replace');
 
-    wp_enqueue_script('elmercatcultural.cat-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ELMERCATCULTURAL_VERSION, true);
+    wp_enqueue_script('elmercatcultural-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ELMERCATCULTURAL_VERSION, true);
+    wp_enqueue_script('elmercatcultural-viewport', get_template_directory_uri() . '/js/viewport.js', array(), ELMERCATCULTURAL_VERSION, true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');

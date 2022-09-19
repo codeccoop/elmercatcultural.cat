@@ -1,23 +1,35 @@
 .sticky {
-	display: block;
+  display: block;
 }
 
 .post,
 .page {
-	margin: 0 0 1.5em;
+  margin: 0 0 1.5em;
+  padding: 0 $size__content-padding;
+  @include columns_width(12);
 }
 
 .updated:not(.published) {
-	display: none;
+  display: none;
 }
 
 .page-content,
 .entry-content,
 .entry-summary {
-	margin: 1.5em 0 0;
+  margin: 1.5em 0 0;
 }
 
 .page-links {
-	clear: both;
-	margin: 0 0 1.5em;
+  clear: both;
+  margin: 0 0 1.5em;
+}
+
+.content__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.content__column {
+  display: flex;
+  flex-direction: column;
 }

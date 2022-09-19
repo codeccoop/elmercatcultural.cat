@@ -21,7 +21,6 @@ Underscores is distributed under the terms of the GNU GPL v2 or later.
 Normalizing styles have been helped along thanks to the fine work of
 Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 */
-
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
@@ -49,19 +48,14 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 	- Alignments
 
 --------------------------------------------------------------*/
-
 /*--------------------------------------------------------------
 # Generic
 --------------------------------------------------------------*/
-
 /* Normalize
 --------------------------------------------- */
-
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-
 /* Document
 	 ========================================================================== */
-
 /**
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -73,7 +67,6 @@ html {
 
 /* Sections
 	 ========================================================================== */
-
 /**
  * Remove the margin in all browsers.
  */
@@ -99,7 +92,6 @@ h1 {
 
 /* Grouping content
 	 ========================================================================== */
-
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
@@ -121,7 +113,6 @@ pre {
 
 /* Text-level semantics
 	 ========================================================================== */
-
 /**
  * Remove the gray background on active links in IE 10.
  */
@@ -187,7 +178,6 @@ sup {
 
 /* Embedded content
 	 ========================================================================== */
-
 /**
  * Remove the border on images inside links in IE 10.
  */
@@ -197,7 +187,6 @@ img {
 
 /* Forms
 	 ========================================================================== */
-
 /**
  * 1. Change the font styles in all browsers.
  * 2. Remove the margin in Firefox and Safari.
@@ -343,7 +332,6 @@ textarea {
 
 /* Interactive
 	 ========================================================================== */
-
 /*
  * Add the correct display in Edge, IE 10+, and Firefox.
  */
@@ -360,7 +348,6 @@ summary {
 
 /* Misc
 	 ========================================================================== */
-
 /**
  * Add the correct display in IE 10+.
  */
@@ -377,7 +364,6 @@ template {
 
 /* Box sizing
 --------------------------------------------- */
-
 /* Inherit box-sizing to more easily change it's value on a component level.
 @link http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 *,
@@ -393,7 +379,6 @@ html {
 /*--------------------------------------------------------------
 # Base
 --------------------------------------------------------------*/
-
 /* Typography
 --------------------------------------------- */
 body,
@@ -402,10 +387,10 @@ input,
 select,
 optgroup,
 textarea {
-	color: #404040;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-	font-size: 1rem;
-	line-height: 1.5;
+	color: #000000;
+	font-family: Montserrat, "Helvetica Neue", sans-serif;
+	font-size: 16px;
+	line-height: 1.4;
 }
 
 h1,
@@ -415,6 +400,28 @@ h4,
 h5,
 h6 {
 	clear: both;
+	font-family: "Krona One", sans-serif;
+	font-size: 96px;
+	line-height: 1.15;
+}
+
+h1 .subtitle,
+h2 .subtitle,
+h3 .subtitle,
+h4 .subtitle,
+h5 .subtitle,
+h6 .subtitle {
+	font-size: 36px;
+	line-height: 1;
+}
+
+h1 .highlight,
+h2 .highlight,
+h3 .highlight,
+h4 .highlight,
+h5 .highlight,
+h6 .highlight {
+	color: #d63d1c;
 }
 
 p {
@@ -437,9 +444,9 @@ address {
 }
 
 pre {
-	background: #eee;
-	font-family: "Courier 10 Pitch", courier, monospace;
-	line-height: 1.6;
+	background: #000000;
+	font-family: Montserrat, "Helvetica Neue", sans-serif;
+	line-height: 1;
 	margin-bottom: 1.6em;
 	max-width: 100%;
 	overflow: auto;
@@ -450,18 +457,18 @@ code,
 kbd,
 tt,
 var {
-	font-family: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+	font-family: monospace;
 }
 
 abbr,
 acronym {
-	border-bottom: 1px dotted #666;
+	border-bottom: 1px dotted #000000;
 	cursor: help;
 }
 
 mark,
 ins {
-	background: #fff9c0;
+	background: #000000;
 	text-decoration: none;
 }
 
@@ -469,14 +476,27 @@ big {
 	font-size: 125%;
 }
 
+p .highlight,
+abbr .highlight,
+cite .highlight,
+dfn .highlight,
+em .highlight,
+i .highlight,
+blockquote .highlight,
+address .highlight,
+pre .highlight {
+	color: #d63d1c;
+}
+
 /* Elements
 --------------------------------------------- */
 body {
-	background: #fff;
+	background: #ffffff;
+	padding: 0 4.4vw;
 }
 
 hr {
-	background-color: #ccc;
+	background-color: #ffffff;
 	border: 0;
 	height: 1px;
 	margin-bottom: 1.5em;
@@ -533,25 +553,22 @@ table {
 /* Links
 --------------------------------------------- */
 a {
-	color: #4169e1;
+	color: #8dc8a8;
 }
 
 a:visited {
-	color: #800080;
+	color: #8dc8a8;
 }
 
-a:hover,
-a:focus,
-a:active {
-	color: #191970;
+a:hover, a:focus, a:active {
+	color: #8dc8a8;
 }
 
 a:focus {
 	outline: thin dotted;
 }
 
-a:hover,
-a:active {
+a:hover, a:active {
 	outline: 0;
 }
 
@@ -562,30 +579,10 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
 	border: 1px solid;
-	border-color: #ccc #ccc #bbb;
 	border-radius: 3px;
-	background: #e6e6e6;
 	color: rgba(0, 0, 0, 0.8);
 	line-height: 1;
 	padding: 0.6em 1em 0.4em;
-}
-
-button:hover,
-input[type="button"]:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover {
-	border-color: #ccc #bbb #aaa;
-}
-
-button:active,
-button:focus,
-input[type="button"]:active,
-input[type="button"]:focus,
-input[type="reset"]:active,
-input[type="reset"]:focus,
-input[type="submit"]:active,
-input[type="submit"]:focus {
-	border-color: #aaa #bbb #bbb;
 }
 
 input[type="text"],
@@ -604,33 +601,14 @@ input[type="datetime"],
 input[type="datetime-local"],
 input[type="color"],
 textarea {
-	color: #666;
-	border: 1px solid #ccc;
+	color: #000000;
+	border: 1px solid #6f6f6f;
 	border-radius: 3px;
 	padding: 3px;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="password"]:focus,
-input[type="search"]:focus,
-input[type="number"]:focus,
-input[type="tel"]:focus,
-input[type="range"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="week"]:focus,
-input[type="time"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="color"]:focus,
-textarea:focus {
-	color: #111;
-}
-
 select {
-	border: 1px solid #ccc;
+	border: 1px solid #6f6f6f;
 }
 
 textarea {
@@ -640,16 +618,15 @@ textarea {
 /*--------------------------------------------------------------
 # Layouts
 --------------------------------------------------------------*/
-
 /*--------------------------------------------------------------
 # Components
 --------------------------------------------------------------*/
-
 /* Navigation
 --------------------------------------------- */
 .main-navigation {
 	display: block;
-	width: 100%;
+	height: 50px;
+	width: 91.2vw;
 }
 
 .main-navigation ul {
@@ -704,20 +681,16 @@ textarea {
 }
 
 @media screen and (min-width: 37.5em) {
-
 	.menu-toggle {
 		display: none;
 	}
-
 	.main-navigation ul {
 		display: flex;
 	}
 }
 
-.site-main .comment-navigation,
-.site-main
-.posts-navigation,
-.site-main
+.site-main .comment-navigation, .site-main
+.posts-navigation, .site-main
 .post-navigation {
 	margin: 0 0 1.5em;
 }
@@ -750,6 +723,8 @@ textarea {
 .post,
 .page {
 	margin: 0 0 1.5em;
+	padding: 0 column_width();
+	width: 91.2vw;
 }
 
 .updated:not(.published) {
@@ -765,6 +740,16 @@ textarea {
 .page-links {
 	clear: both;
 	margin: 0 0 1.5em;
+}
+
+.content__row {
+	display: flex;
+	flex-direction: row;
+}
+
+.content__column {
+	display: flex;
+	flex-direction: column;
 }
 
 /* Comments
@@ -877,10 +862,8 @@ textarea {
 /*--------------------------------------------------------------
 # Plugins
 --------------------------------------------------------------*/
-
 /* Jetpack infinite scroll
 --------------------------------------------- */
-
 /* Hide the Posts Navigation and the Footer when Infinite Scroll is in use. */
 .infinite-scroll .posts-navigation,
 .infinite-scroll.neverending .site-footer {
@@ -895,10 +878,8 @@ textarea {
 /*--------------------------------------------------------------
 # Utilities
 --------------------------------------------------------------*/
-
 /* Accessibility
 --------------------------------------------- */
-
 /* Text meant only for screen readers. */
 .screen-reader-text {
 	border: 0;
@@ -914,12 +895,11 @@ textarea {
 }
 
 .screen-reader-text:focus {
-	background-color: #f1f1f1;
 	border-radius: 3px;
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
 	clip: auto !important;
 	clip-path: none;
-	color: #21759b;
+	color: Montserrat, "Helvetica Neue", sans-serif;
 	display: block;
 	font-size: 0.875rem;
 	font-weight: 700;
@@ -941,20 +921,16 @@ textarea {
 /* Alignments
 --------------------------------------------- */
 .alignleft {
-
 	/*rtl:ignore*/
 	float: left;
-
 	/*rtl:ignore*/
 	margin-right: 1.5em;
 	margin-bottom: 1.5em;
 }
 
 .alignright {
-
 	/*rtl:ignore*/
 	float: right;
-
 	/*rtl:ignore*/
 	margin-left: 1.5em;
 	margin-bottom: 1.5em;
@@ -967,3 +943,5 @@ textarea {
 	margin-right: auto;
 	margin-bottom: 1.5em;
 }
+
+/*# sourceMappingURL=style.css.map */

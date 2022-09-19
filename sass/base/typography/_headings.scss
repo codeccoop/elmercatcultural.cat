@@ -4,5 +4,17 @@ h3,
 h4,
 h5,
 h6 {
-	clear: both;
+  clear: both;
+  font-family: $font__secondary;
+  font-size: $font__size-title;
+  line-height: $font__line-height-title;
+
+  & .subtitle {
+    font-size: $font__size-subtitle;
+    line-height: $font__line-height-subtitle;
+  }
+
+  & .highlight {
+    color: $color__font-highlight;
+  }
 }
