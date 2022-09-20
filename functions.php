@@ -192,7 +192,7 @@ if (class_exists('WooCommerce')) {
 function wip_redirection()
 {
     if (!is_user_logged_in()) {
-        wp_redirect('/index.html');
+        wp_redirect('/wip.html');
     }
 }
 add_action('template_redirect', 'wip_redirection');
