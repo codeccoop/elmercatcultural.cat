@@ -2,6 +2,7 @@
   display: block;
   height: $size__site-header;
   @include columns-width(12);
+  background-color: white;
 
   ul {
     display: none;
@@ -16,6 +17,7 @@
       top: 100%;
       left: -999em;
       z-index: 99999;
+      padding: 0.65rem 1.5rem 0.85rem;
 
       ul {
         left: -999em;
@@ -23,6 +25,7 @@
       }
 
       li {
+        padding: 5rem 5rem;
         &:hover > ul,
         &.focus > ul {
           display: block;
@@ -31,7 +34,7 @@
       }
 
       a {
-        width: 200px;
+        width: 500px;
       }
 
       :hover > a,
@@ -51,6 +54,11 @@
 
   li {
     position: relative;
+    height: $size__site-header;
+    padding: 0 10px;
+    border-right: 1px solid $color__theme-primary;
+    &:hover{
+    }
 
     &:hover > a,
     &.focus > a {
@@ -58,8 +66,12 @@
   }
 
   a {
+    color: black;
     display: block;
     text-decoration: none;
+    &:hover{
+      color: $color__theme-primary;
+    }
   }
 
   .current_page_item > a,

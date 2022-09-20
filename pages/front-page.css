@@ -1,0 +1,11 @@
+#cover .front-page__section {
+	padding: 0 var(--size__site-padding);
+	width: var(--size__site-main);
+	background-color: red;
+}
+
+#cover .front-page__section h1 {
+	color: red;
+}
+
+/*# sourceMappingURL=front-page.css.map */

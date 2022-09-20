@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "front-page.css",
+	"sources": [
+		"../sass/pages/front-page.scss"
+	],
+	"names": [],
+	"mappings": "AAAA,AACI,MADE,CACF,oBAAoB,CAAA;CAChB,OAAO,EAAE,CAAC,CAAC,yBAAyB;CACpC,KAAK,EAAE,sBAAsB;CAC7B,gBAAgB,EAAE,GAAG;CAKxB;;AATL,AAKQ,MALF,CACF,oBAAoB,CAIhB,EAAE,CAAA;CACE,KAAK,EAAC,GAAG;CACZ"
+}
