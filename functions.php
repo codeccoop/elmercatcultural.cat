@@ -196,3 +196,5 @@ function wip_redirection()
     }
 }
 add_action('template_redirect', 'wip_redirection');
+
+require get_template_directory() . '/post_types/destacat.php';
