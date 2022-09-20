@@ -1,14 +1,26 @@
 .main-navigation {
-  display: block;
+  display: flex;
   height: $size__site-header;
   @include columns-width(12);
   background-color: white;
+  justify-content: flex-end;
 
   ul {
-    display: none;
+    align-items: center;
+    display: flex;
     list-style: none;
     margin: 0;
     padding-left: 0;
+    height: $size__site-header;
+    .sub-menu{
+      //width: 300px;
+      height: auto;
+      flex-direction: column;
+      li{
+        padding: 1rem 1rem;
+        border-right: none;
+      }
+    }
 
     ul {
       box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
@@ -34,7 +46,7 @@
       }
 
       a {
-        width: 500px;
+        width: 200px;
       }
 
       :hover > a,
@@ -54,9 +66,8 @@
 
   li {
     position: relative;
-    height: $size__site-header;
-    padding: 0 10px;
-    border-right: 1px solid $color__theme-primary;
+    padding: 0 1rem;
+    border-right: 2px solid $color__theme-primary;
     &:hover{
     }
 
@@ -66,6 +77,7 @@
   }
 
   a {
+    font-weight: 600;
     color: black;
     display: block;
     text-decoration: none;
@@ -80,6 +92,8 @@
   .current-menu-ancestor > a {
   }
 }
+/*Submenú*/
+
 
 /* Small menu. */
 .menu-toggle,

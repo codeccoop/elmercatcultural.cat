@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*!
 Theme Name: elmercatcultural.cat
 Theme URI: https://underscores.me/
@@ -624,17 +625,30 @@ textarea {
 /* Navigation
 --------------------------------------------- */
 .main-navigation {
-	display: block;
+	display: flex;
 	height: 50px;
 	width: 91.2vw;
 	background-color: white;
+	justify-content: flex-end;
 }
 
 .main-navigation ul {
-	display: none;
+	align-items: center;
+	display: flex;
 	list-style: none;
 	margin: 0;
 	padding-left: 0;
+	height: 50px;
+}
+
+.main-navigation ul .sub-menu {
+	height: auto;
+	flex-direction: column;
+}
+
+.main-navigation ul .sub-menu li {
+	padding: 1rem 1rem;
+	border-right: none;
 }
 
 .main-navigation ul ul {
@@ -663,7 +677,7 @@ textarea {
 }
 
 .main-navigation ul ul a {
-	width: 500px;
+	width: 200px;
 }
 
 .main-navigation ul li:hover > ul,
@@ -673,12 +687,12 @@ textarea {
 
 .main-navigation li {
 	position: relative;
-	height: 50px;
-	padding: 0 10px;
-	border-right: 1px solid #fcefd0;
+	padding: 0 1rem;
+	border-right: 2px solid #fcefd0;
 }
 
 .main-navigation a {
+	font-weight: 600;
 	color: black;
 	display: block;
 	text-decoration: none;
@@ -688,6 +702,7 @@ textarea {
 	color: #fcefd0;
 }
 
+/*Submenú*/
 /* Small menu. */
 .menu-toggle,
 .main-navigation.toggled ul {
