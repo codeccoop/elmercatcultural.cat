@@ -46,5 +46,8 @@
                     )
                 );
                 ?>
+                <button id="menu-close">x</button>
             </nav><!-- #site-navigation -->
         </header><!-- #masthead -->
+        <div class="veil">
+        </div>
