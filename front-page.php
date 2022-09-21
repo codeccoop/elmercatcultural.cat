@@ -9,10 +9,11 @@
  *
  * @package elmercatcultural.cat
  */
+// wp_enqueue_script('front-page');
 get_header();
 ?>
 <main class="front-page">
-    <section id="cover" class="front-page__section">
+    <section id="highlights" class="front-page__section">
         <?php
         $args = array(
             'post_type' => 'destacat',
@@ -23,20 +24,51 @@ get_header();
         );
         $loop = new WP_Query($args);
         ?>
-        <div class="front-page__jumbotron">
-            <h1>El Mercat</h1> 
+        <div class="front-page__jumbotron <?= $loop->post_count == 0 ? 'static' : 'slider'; ?>">
             <?php if ($loop->post_count == 0) : ?>
-                <img class="front-page__jumbotron-static" src="<?= get_template_directory_uri() . '/assets/images/jumbotron--default.png'; ?>" />
-        <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
-            <img class="front-page__jumbotron-slider" src="<?= get_the_post_thumbnail_url(get_the_ID()); ?>" />
-            <?php endwhile; endif; ?>
+                <figure class="front-page__jumbotron-item">
+                    <img src="<?= get_template_directory_uri() . '/assets/images/jumbotron--default.png'; ?>" />
+                    <figcaption class="title">El Mercat Cultural</figcaption>
+                </figure>
+                <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
+                    <figure class="front-page__jumbotron-item">
+                        <img src="<?= get_the_post_thumbnail_url(get_the_ID()); ?>" />
+                        <figcaption class="title"><?= get_the_excerpt(get_the_ID()) ?></figcaption>
+                    </figure>
+            <?php endwhile;
+            endif; ?>
         </div>
     </section>
-    <section id=" destacats" class="front-page__section">
-                <h1>DESTACATS</h1>
+    <section id="highlight-links" class="front-page__section">
+        <div class="front-page__highlight-links">
+            <?php
+            $programacio = get_page_by_title('programacio');
+            $tallers = get_page_by_title('tallers');
+            $programacio_url = get_page_link($programacio);
+            $tallers_url = get_page_link($tallers);;
+            ?><div class="front-page__highlight-link">
+                <a href="<?= $programacio_url; ?>">
+                    Programació Cultural
+                </a>
+            </div>
+            <div class="front-page__highlight-link">
+                <a href="<?= $tallers_url; ?>">
+                    Tallers i cursos
+                </a>
+            </div>
+        </div>
+    </section>
+    <section id="barris" class="front-page__section">
+        <div class="front-page__section-content">
+            <h2>Barris de Muntanya</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
+        </div>
     </section>
     <section id="participa" class="front-page__section">
-        <h1>PARTICIPA</h1>
+        <div class="front-page__section-content">
+            <h2>Participa</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
+        </div>
     </section>
 </main>
 <?php

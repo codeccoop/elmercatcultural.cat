@@ -4,7 +4,7 @@ h3,
 h4,
 h5,
 h6,
-p.title {
+.title {
   clear: both;
   font-family: $font__secondary;
   font-size: $font__size-title;
@@ -21,7 +21,7 @@ h3 + .subtitle,
 h4 + .subtitle,
 h5 + .subtitle,
 h6 + .subtitle,
-p.title + .subtitle {
+.title + .subtitle {
   font-size: $font__size-subtitle;
   line-height: $font__line-height-subtitle;
   margin-top: -1em;

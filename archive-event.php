@@ -5,7 +5,6 @@
  *
  * @package elmercatcultural.cat
  */
-wp_enqueue_script('async-grid');
 get_header();
 ?>
 <main id="event-archive" class="site-main archive">
