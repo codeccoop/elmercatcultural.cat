@@ -43,6 +43,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 	- Galleries
 # plugins
 	- Jetpack infinite scroll
+  - Async Grids
 # Utilities
 	- Accessibility
 	- Alignments
@@ -398,21 +399,12 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p.title {
 	clear: both;
 	font-family: "Krona One", sans-serif;
 	font-size: 96px;
 	line-height: 1.15;
-}
-
-h1 .subtitle,
-h2 .subtitle,
-h3 .subtitle,
-h4 .subtitle,
-h5 .subtitle,
-h6 .subtitle {
-	font-size: 36px;
-	line-height: 1;
 }
 
 h1 .highlight,
@@ -420,8 +412,21 @@ h2 .highlight,
 h3 .highlight,
 h4 .highlight,
 h5 .highlight,
-h6 .highlight {
+h6 .highlight,
+p.title .highlight {
 	color: #d63d1c;
+}
+
+h1 + .subtitle,
+h2 + .subtitle,
+h3 + .subtitle,
+h4 + .subtitle,
+h5 + .subtitle,
+h6 + .subtitle,
+p.title + .subtitle {
+	font-size: 36px;
+	line-height: 1;
+	margin-top: -1em;
 }
 
 p {
@@ -675,7 +680,7 @@ textarea {
 	position: relative;
 	height: 50px;
 	padding: 0 10px;
-	border-right: 1px solid #fcefd0;
+	border-right: 1px solid #e3d0b9;
 }
 
 .main-navigation a {
@@ -685,7 +690,7 @@ textarea {
 }
 
 .main-navigation a:hover {
-	color: #fcefd0;
+	color: #e3d0b9;
 }
 
 /* Small menu. */
@@ -889,6 +894,60 @@ textarea {
 	display: block;
 }
 
+/* Async grids
+--------------------------------------------- */
+.async-grid {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.grid-item {
+	flex: 0 0 33.33%;
+	padding-top: calc(30% - 55px);
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	border-right: 1px solid white;
+}
+
+.grid-item:nth-child(3n), .grid-item:last-child {
+	border-right: none;
+}
+
+[data-rows="2"] .grid-item:nth-child(-n + 3) figcaption {
+	border-bottom: 1px solid white;
+}
+
+[data-rows="3"] .grid-item:nth-child(-n + 6) figcaption {
+	border-bottom: 1px solid white;
+}
+
+.grid-item img {
+	position: absolute;
+	left: 7.5%;
+	top: 0px;
+	height: 75%;
+	width: 85%;
+	object-fit: cover;
+}
+
+.grid-item figcaption {
+	z-index: 10;
+	width: 85%;
+	height: 55px;
+	margin-left: 7.5%;
+	margin-bottom: 1rem;
+	text-shadow: 1px 1px 3px #0002;
+	font-size: 0.8rem;
+}
+
+.grid-item figcaption label {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
 /*--------------------------------------------------------------
 # Utilities
 --------------------------------------------------------------*/
@@ -963,6 +1022,49 @@ textarea {
 .front-page__section {
 	padding: 0 4.4vw;
 	height: 100vh;
+}
+
+.page-template-archive-event {
+	background-color: #9fc69f;
+}
+
+.page-template-archive-workshop {
+	background-color: #b5d6db;
+}
+
+.site-main.archive {
+	width: 75.66667vw;
+	margin-left: 5.76667vw;
+}
+
+.archive__filters {
+	display: flex;
+	align-items: center;
+	padding: 0 0 2rem;
+	border-bottom: 1px solid #ffffff;
+	margin-bottom: 1rem;
+}
+
+.archive__filter {
+	color: #ffffff;
+	text-transform: uppercase;
+	cursor: pointer;
+	padding: 0 0.3rem;
+	margin: 0 0.2rem;
+	border-bottom: 1px solid transparent;
+}
+
+.archive__filter:first-child {
+	margin-left: 0.5rem;
+}
+
+.archive__filter:last-child {
+	padding-right: 0;
+}
+
+.archive__filter:hover, .archive__filter.active {
+	color: #000000;
+	border-bottom: 1px solid;
 }
 
 /*# sourceMappingURL=style.css.map */

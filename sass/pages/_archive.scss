@@ -1,0 +1,43 @@
+.page-template-archive-event {
+  background-color: $color__theme-tertiary;
+}
+
+.page-template-archive-workshop {
+  background-color: $color__theme-secondary;
+}
+
+.site-main.archive {
+  @include columns_width(10);
+  margin-left: column_width();
+}
+
+.archive__filters {
+  display: flex;
+  align-items: center;
+  padding: 0 0 2rem;
+  border-bottom: 1px solid $white;
+  margin-bottom: 1rem;
+}
+
+.archive__filter {
+  color: $white;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  margin: 0 0.2rem;
+  border-bottom: 1px solid transparent;
+
+  &:first-child {
+    margin-left: 0.5rem;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  &:hover,
+  &.active {
+    color: $color__font-primary;
+    border-bottom: 1px solid;
+  }
+}

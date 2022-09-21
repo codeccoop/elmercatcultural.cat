@@ -3,18 +3,26 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p.title {
   clear: both;
   font-family: $font__secondary;
   font-size: $font__size-title;
   line-height: $font__line-height-title;
 
-  & .subtitle {
-    font-size: $font__size-subtitle;
-    line-height: $font__line-height-subtitle;
-  }
-
   & .highlight {
     color: $color__font-highlight;
   }
+}
+
+h1 + .subtitle,
+h2 + .subtitle,
+h3 + .subtitle,
+h4 + .subtitle,
+h5 + .subtitle,
+h6 + .subtitle,
+p.title + .subtitle {
+  font-size: $font__size-subtitle;
+  line-height: $font__line-height-subtitle;
+  margin-top: -1em;
 }

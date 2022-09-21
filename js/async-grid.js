@@ -1,7 +1,7 @@
 document.addEventListener( 'DOMContentLoaded', function() {
 	const siteMain = document.getElementsByClassName( 'site-main' )[ 0 ];
-	const content = siteMain.getElementsByClassName( 'events-grid' )[ 0 ];
-	const eventType = siteMain.id === 'event-archive' ? 'event' : 'workshop';
+	const content = siteMain.getElementsByClassName( 'async-grid' )[ 0 ];
+	const postType = siteMain.id === 'event-archive' ? 'event' : 'workshop';
 
 	const term = new State( 'all', onFilter );
 	const page = new State( 1, onFilter );
@@ -43,9 +43,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		ajax.send(
 			encodePayload( {
 				_ajax_nonce: ajax_data.nonce,
-				action: 'get_grid_events',
+				action: 'get_grid_items',
 				term: term.value,
 				page: page.value,
+				type: postType,
 			} )
 		);
 	}
@@ -63,6 +64,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				for ( let i = 0, len = posts.length; i < len; i++ ) {
 					content.appendChild( renderEvent( posts[ i ] ) );
 				}
+				content.setAttribute( 'data-rows', Math.ceil( posts.length / 3 ) );
 				renderPages( pages );
 				res( data );
 			} catch ( err ) {
@@ -73,12 +75,18 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 	function renderEvent( datum ) {
 		const el = document.createElement( 'figure' );
-		el.classList.add( 'grid-event' );
+		el.classList.add( 'grid-item' );
 		const img = document.createElement( 'img' );
 		img.src = datum.thumbnail;
 		el.appendChild( img );
 		const caption = document.createElement( 'figcaption' );
-		caption.innerText = datum.title;
+		caption.innerHTML =
+      '<label>' +
+      datum.title +
+      '</label><br/>' +
+      'Inici: ' +
+      ( datum.date || '12-07-2022' );
+		// caption.innerText = datum.title;
 		el.appendChild( caption );
 		return el;
 	}

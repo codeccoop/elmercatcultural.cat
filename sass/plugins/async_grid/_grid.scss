@@ -1,0 +1,56 @@
+.async-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  flex: 0 0 33.33%;
+  padding-top: calc(30% - 55px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-right: 1px solid white;
+
+  &:nth-child(3n),
+  &:last-child {
+    border-right: none;
+  }
+
+  [data-rows="2"] & {
+    &:nth-child(-n + 3) figcaption {
+      border-bottom: 1px solid white;
+    }
+  }
+
+  [data-rows="3"] & {
+    &:nth-child(-n + 6) figcaption {
+      border-bottom: 1px solid white;
+    }
+  }
+
+  img {
+    position: absolute;
+    left: 7.5%;
+    top: 0px;
+    height: 75%;
+    width: 85%;
+    object-fit: cover;
+  }
+
+  figcaption {
+    z-index: 10;
+    width: 85%;
+    height: 55px;
+    margin-left: 7.5%;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 3px #0002;
+    font-size: 0.8rem;
+
+    label {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+}

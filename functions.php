@@ -210,6 +210,7 @@ add_action('template_redirect', 'wip_redirection');
 /* Custom Post Types */
 require get_template_directory() . '/post_types/destacat.php';
 require get_template_directory() . '/post_types/event.php';
+require get_template_directory() . '/post_types/workshop.php';
 
 /* AJAX actions */
 require get_template_directory() . '/ajax/async-grid.php';

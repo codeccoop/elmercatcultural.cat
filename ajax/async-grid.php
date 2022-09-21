@@ -1,14 +1,16 @@
 <?php
-add_action('wp_ajax_get_grid_events', 'emc_get_grid_events');
+add_action('wp_ajax_get_grid_items', 'emc_get_grid_items');
 
-if (!function_exists('emc_get_grid_events')) {
-    function emc_get_grid_events()
+if (!function_exists('emc_get_grid_items')) {
+    function emc_get_grid_items()
     {
         check_ajax_referer('async_grid');
         $term = $_POST['term'];
         $page = $_POST['page'];
+        $type = $_POST['type'];
+
         $args = array(
-            'post_type' => 'event',
+            'post_type' => $type,
             'post_status' => 'publish',
             'posts_per_page' => 9,
             'offset' => ($page - 1) * 9
@@ -26,12 +28,16 @@ if (!function_exists('emc_get_grid_events')) {
         while ($query->have_posts()) {
             $query->the_post();
             $ID = get_the_ID();
+            $thumbnail = get_the_post_thumbnail_url($ID);
+            if (!$thumbnail) {
+                $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
+            }
             array_push($data['posts'], array(
                 'id' => $ID,
                 'title' => get_the_title($ID),
                 'category' => get_the_category($ID),
                 'excerpt' => get_the_excerpt($ID),
-                'thumbnail' => get_the_post_thumbnail_url($ID)
+                'thumbnail' => $thumbnail
             ));
         }
 
@@ -40,7 +46,7 @@ if (!function_exists('emc_get_grid_events')) {
             // $cat = get_category($catID);
             $count = $cat->count;
         } else {
-            $count = wp_count_posts('event');
+            $count = wp_count_posts($type);
             if ($count) {
                 $count = $count->publish;
             } else {
