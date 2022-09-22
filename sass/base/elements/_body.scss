@@ -1,4 +1,5 @@
 body {
   background: $color__theme-base; // Fallback for when there is no custom background color defined.
   padding: 0 $size__site-padding;
+  overflow-x: hidden;
 }
