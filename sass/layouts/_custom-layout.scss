@@ -1,21 +1,22 @@
 .site {
-    position: relative;
-
+  position: relative;
 }
 
 .site-header {
-	position: relative;
-    height: $size__site-header;
-    
+  position: relative;
+  height: $size__site-header;
+  background-color: $white;
+  margin-left: calc(#{$size__site-padding} * -1);
+  width: vw(100);
 }
 
 // .site-navigation {
 //     position: absolute;
 // }
-    
 
 .widget-area {
 }
 
 .site-footer {
 }
+

@@ -1,13 +1,18 @@
 .main-navigation {
-  margin-left: -4.4vw;
-  padding: 0 4.4vw;
+  top: 0;
+  // left: -4.4vw;
+  right: 0;
   position: fixed;
+  padding: 0 4.4vw;
   z-index: 300;
   display: flex;
   height: $size__site-header;
-  width: 100vw;
   background-color: white;
   justify-content: flex-end;
+
+  .admin-bar & {
+    top: var(--wp-admin--admin-bar--height);
+  }
 
   ul {
     align-items: center;
@@ -17,68 +22,60 @@
     padding-left: 0;
     height: $size__site-header;
 
-    
     li {
       position: relative;
       padding: 0 1rem;
       border-right: 2px solid $color__theme-primary;
-        ul.sub-menu{
+      ul.sub-menu {
+        @include columns-width(4);
+        position: fixed;
+        z-index: 300;
+        top: 0;
+        right: -50%;
+        height: 100vh;
+        flex-direction: column;
+        padding: 0;
+        margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
+        background-color: white;
+        transition: right 500ms ease-in-out;
+        li {
           @include columns-width(4);
-          position: fixed;
-          z-index: 300;
-          top:0;
-          right: -50%;
-          height: 100vh;
-          flex-direction: column;
-          padding: 0;
-          margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
-          background-color: white;
-          transition: right  500ms ease-in-out;
-          li {
-            @include columns-width(4);
-            border-bottom: 2px solid $color__theme-primary;
-            border-right: none;
-            padding:1rem 0;
-            &:hover {
-              background-color: black;
-              a{
-                color: white;
-              }
-              }
-              a{
-                color: black;
-                padding: 1rem 3rem;
-                &:hover{
-                  color: white;
-                }
-              } 
-               
-            
+          border-bottom: 2px solid $color__theme-primary;
+          border-right: none;
+          padding: 1rem 0;
+          &:hover {
+            background-color: black;
+            a {
+              color: white;
+            }
           }
-  
-        
+          a {
+            color: black;
+            padding: 1rem 3rem;
+            &:hover {
+              color: white;
+            }
+          }
         }
-      &.focus 
-        .sub-menu{
+      }
+      &.focus .sub-menu {
         right: 0;
         //afegir propietats opacitat body
-        }
+      }
     }
-    
 
-  
     &:hover > a,
     &.focus > a {
     }
-    a{
-    font-weight: 600;
-    color: black;
-    display: block;
-    text-decoration: none;
-    &:hover{
-      color: $color__theme-primary;
-    }
-      
+
+    a {
+      font-weight: 600;
+      color: black;
+      display: block;
+      text-decoration: none;
+      &:hover {
+        color: $color__theme-primary;
+      }
     }
   }
 
@@ -86,8 +83,9 @@
   .current-menu-item > a,
   .current_page_ancestor > a,
   .current-menu-ancestor > a {
+    /* */
   }
-  #menu-close{
+  #menu-close {
     cursor: pointer;
     position: fixed;
     z-index: 300;
@@ -97,30 +95,34 @@
     border: none;
     color: black;
     font-size: 32px;
-    transition: right  500ms ease-in-out;
-    &.focus{
+    transition: right 500ms ease-in-out;
+    &.focus {
       right: 2%;
     }
   }
-  
 }
-div.veil{
+
+div.veil {
   width: 100%;
   height: 100%;
   background: rgb(0, 0, 0);
   opacity: 0;
   position: fixed;
-  top: 0;
+  top: $size__site-header;
   left: 0;
   z-index: 100;
   display: block;
   transition: opacity 500ms ease-in;
-  
-  &.show{
-    opacity: 0.4; 
-    pointer-events: none; 
+  pointer-events: none;
+
+  .admin-bar & {
+    top: calc(#{$size__site-header} + var(--wp-admin--admin-bar--height));
   }
 
+  &.show {
+    opacity: 0.4;
+    pointer-events: all;
+  }
 }
 /* Small menu. */
 .menu-toggle,
