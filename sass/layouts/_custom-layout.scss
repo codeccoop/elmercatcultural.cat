@@ -3,7 +3,11 @@
 }
 
 .site-header {
+  display: flex;
+  flex: 2;
+  align-items: center;
   position: relative;
+  padding: 0 4.4vw;
   height: $size__site-header;
   background-color: $white;
   margin-left: calc(#{$size__site-padding} * -1);
