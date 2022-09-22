@@ -1,9 +1,7 @@
 .main-navigation {
-  top: 0;
+  flex:2;
   // left: -4.4vw;
-  right: 0;
-  position: fixed;
-  padding: 0 4.4vw;
+  // padding: 0 4.4vw;
   z-index: 300;
   display: flex;
   height: $size__site-header;
