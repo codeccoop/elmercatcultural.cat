@@ -4,4 +4,6 @@ package-lock.json
 composer.lock
 style.css.map
 style.css
+woocommerce.css
+woocommerce.css.map
 .DS_Store

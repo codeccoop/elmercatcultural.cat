@@ -1,21 +1,29 @@
+a.button,
 button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-  border: 1px solid;
-  // border-color: $color__border-button;
-  border-radius: 3px;
-  // background: $color__background-button;
-  color: rgba(0, 0, 0, 0.8);
-  line-height: 1;
-  padding: 0.6em 1em 0.4em;
+  color: $color__font-primary;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-family: "Krona One", sans-serif;
+  cursor: pointer;
+  padding: 0.2em;
+  border-bottom: 0.2em solid transparent;
+  transition: border-bottom 150ms ease;
+  text-transform: uppercase;
 
-  // &:hover {
-  // 	border-color: $color__border-button-hover;
-  // }
+  &:hover {
+    border-bottom: 0.2em solid;
+  }
 
-  // &:active,
-  // &:focus {
-  // 	border-color: $color__border-button-focus;
-  // }
+  &:active,
+  &:focus,
+  &.active,
+  &.focus {
+    color: $white;
+  }
 }

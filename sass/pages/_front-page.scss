@@ -3,7 +3,7 @@ body.home {
 }
 
 .front-page {
-  @include columns_width(12);
+  @include columns_width(14);
 }
 
 .front-page__section {
@@ -21,17 +21,22 @@ body.home {
 
   &#barris {
     background-color: $white;
+    padding-left: column_outer_width(1);
   }
 }
 
 .front-page__section-content {
   text-align: center;
-  @include columns_width(10);
-  margin-left: column_width();
-  padding: 2rem 0;
+  @include columns_width(12);
+  margin-left: column_outer_width(1);
+  padding: column_outer_width(1) column_outer_width(2);
 
   h2 {
     font-size: 3rem;
+  }
+
+  p:last-of-type {
+    margin-bottom: 3rem;
   }
 }
 
@@ -63,6 +68,40 @@ body.home {
       z-index: 20;
       font-size: 3rem;
       background-color: white;
+    }
+  }
+
+  .slick-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      margin-right: 0.5rem;
+
+      &:last-child {
+        right-right: 0;
+      }
+
+      &.slick-active button {
+        cursor: default;
+        background-color: $white;
+      }
+
+      > button {
+        cursor: pointer;
+        border-radius: 50%;
+        border: 2px solid $white;
+        background-color: transparent;
+        width: 16px;
+        height: 16px;
+        font-size: 0px;
+      }
     }
   }
 }

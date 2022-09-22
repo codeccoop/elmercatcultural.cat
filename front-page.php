@@ -44,15 +44,14 @@ get_header();
             <?php
             $programacio = get_page_by_title('programacio');
             $tallers = get_page_by_title('tallers');
-            $programacio_url = get_page_link($programacio);
-            $tallers_url = get_page_link($tallers);;
-            ?><div class="front-page__highlight-link">
-                <a href="<?= $programacio_url; ?>">
+            ?>
+            <div class="front-page__highlight-link">
+                <a href="<?= get_page_link($programacio); ?>">
                     Programació Cultural
                 </a>
             </div>
             <div class="front-page__highlight-link">
-                <a href="<?= $tallers_url; ?>">
+                <a href="<?= get_page_link($tallers); ?>">
                     Tallers i cursos
                 </a>
             </div>
@@ -62,12 +61,16 @@ get_header();
         <div class="front-page__section-content">
             <h2>Barris de Muntanya</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
+            <?php $elmercat = get_page_by_title('pagina-exemple'); ?>
+            <a href="/pagina-exemple/" class="button">Coneix-ne més</a>
         </div>
     </section>
     <section id="participa" class="front-page__section">
         <div class="front-page__section-content">
             <h2>Participa</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
+            <?php $participa = get_page_by_title('Pàgina d’exemple'); ?>
+            <a href="/pagina-exemple/" class="button">Participa</a>
         </div>
     </section>
 </main>
