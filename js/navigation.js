@@ -59,14 +59,38 @@
 	const linksWithChildren = menu.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
 
 	// Toggle focus each time a menu link is focused or blurred.
-	for ( const link of links ) {
-		link.addEventListener( 'focus', toggleFocus, true );
-		link.addEventListener( 'blur', toggleFocus, true );
-	}
+	// for ( const link of links ) {
+	// 	link.addEventListener( 'focus', toggleFocus, true );
+	// 	link.addEventListener( 'blur', toggleFocus, true );
+	// }
 
-	// Toggle focus each time a menu link with children receive a touch event.
+	//select close button
+	const closeButton = document.getElementById('menu-close');
+	// add event listener to each time a menu link with children receive a click.
 	for ( const link of linksWithChildren ) {
-		link.addEventListener( 'touchstart', toggleFocus, false );
+		link.addEventListener( 'click', openSidebar);
+	}
+	/**Sets or removes class focus */
+	function openSidebar (ev){
+		ev.preventDefault();//to prevent navigation when you click an a element with children
+		for ( const link of linksWithChildren ) {
+			link.parentNode.classList.remove( 'focus'); //select parentNode of the a element, in this case a li element
+		}
+		ev.target.parentNode.classList.add('focus');
+		closeButton.classList.add('focus');
+		document.getElementsByClassName('veil')[0].classList.add('show');
+		document.addEventListener('click', onClickOut);
+	};
+	/**removes class focus when clicking outside menu */
+	function onClickOut (ev){
+		if(!menu.contains(ev.target)){//if we do not click on the menu, then remove classes
+			for ( const link of linksWithChildren ) {
+				link.parentNode.classList.remove( 'focus');
+				closeButton.classList.remove('focus');
+				document.getElementsByClassName('veil')[0].classList.remove('show');
+			}
+			document.removeEventListener('click', onClickOut);
+		}
 	}
 
 	/**

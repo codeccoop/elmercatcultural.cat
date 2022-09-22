@@ -1,76 +1,84 @@
 .main-navigation {
-  display: block;
+  margin-left: -4.4vw;
+  padding: 0 4.4vw;
+  position: fixed;
+  z-index: 300;
+  display: flex;
   height: $size__site-header;
-  @include columns-width(12);
+  width: 100vw;
   background-color: white;
+  justify-content: flex-end;
 
   ul {
-    display: none;
+    align-items: center;
+    display: flex;
     list-style: none;
     margin: 0;
     padding-left: 0;
-
-    ul {
-      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-      float: left;
-      position: absolute;
-      top: 100%;
-      left: -999em;
-      z-index: 99999;
-      padding: 0.65rem 1.5rem 0.85rem;
-
-      ul {
-        left: -999em;
-        top: 0;
-      }
-
-      li {
-        padding: 5rem 5rem;
-        &:hover > ul,
-        &.focus > ul {
-          display: block;
-          left: auto;
-        }
-      }
-
-      a {
-        width: 500px;
-      }
-
-      :hover > a,
-      .focus > a {
-      }
-
-      a:hover,
-      a.focus {
-      }
-    }
-
-    li:hover > ul,
-    li.focus > ul {
-      left: auto;
-    }
-  }
-
-  li {
-    position: relative;
     height: $size__site-header;
-    padding: 0 10px;
-    border-right: 1px solid $color__theme-primary;
-    &:hover{
-    }
 
+    
+    li {
+      position: relative;
+      padding: 0 1rem;
+      border-right: 2px solid $color__theme-primary;
+        ul.sub-menu{
+          @include columns-width(4);
+          position: fixed;
+          z-index: 300;
+          top:0;
+          right: -50%;
+          height: 100vh;
+          flex-direction: column;
+          padding: 0;
+          margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
+          background-color: white;
+          transition: right  500ms ease-in-out;
+          li {
+            @include columns-width(4);
+            border-bottom: 2px solid $color__theme-primary;
+            border-right: none;
+            padding:1rem 0;
+            &:hover {
+              background-color: black;
+              a{
+                color: white;
+              }
+              }
+              a{
+                color: black;
+                padding: 1rem 3rem;
+                &:hover{
+                  color: white;
+                }
+              } 
+               
+            
+          }
+  
+        
+        }
+      &.focus 
+        .sub-menu{
+        right: 0;
+        //afegir propietats opacitat body
+        }
+    }
+    
+
+  
     &:hover > a,
     &.focus > a {
     }
-  }
-
-  a {
+    a{
+    font-weight: 600;
     color: black;
     display: block;
     text-decoration: none;
     &:hover{
       color: $color__theme-primary;
+    }
+      
     }
   }
 
@@ -79,8 +87,41 @@
   .current_page_ancestor > a,
   .current-menu-ancestor > a {
   }
+  #menu-close{
+    cursor: pointer;
+    position: fixed;
+    z-index: 300;
+    top: 85%;
+    right: -50%;
+    background-color: white;
+    border: none;
+    color: black;
+    font-size: 32px;
+    transition: right  500ms ease-in-out;
+    &.focus{
+      right: 2%;
+    }
+  }
+  
 }
+div.veil{
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0);
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: block;
+  transition: opacity 500ms ease-in;
+  
+  &.show{
+    opacity: 0.4; 
+    pointer-events: none; 
+  }
 
+}
 /* Small menu. */
 .menu-toggle,
 .main-navigation.toggled ul {
