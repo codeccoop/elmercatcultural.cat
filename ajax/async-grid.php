@@ -37,6 +37,7 @@ if (!function_exists('emc_get_grid_items')) {
                 'title' => get_the_title($ID),
                 'category' => get_the_category($ID),
                 'excerpt' => get_the_excerpt($ID),
+                'url' => get_post_permalink($ID),
                 'thumbnail' => $thumbnail
             ));
         }

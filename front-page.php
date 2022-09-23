@@ -33,12 +33,13 @@ get_header();
                 <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
                     <figure class="front-page__jumbotron-item">
                         <img src="<?= get_the_post_thumbnail_url(get_the_ID()); ?>" />
-                        <figcaption class="title"><?= get_the_excerpt(get_the_ID()) ?></figcaption>
+                        <figcaption class="title is-3"><?= get_the_excerpt(get_the_ID()) ?></figcaption>
                     </figure>
             <?php endwhile;
             endif; ?>
         </div>
     </section>
+    <?php /*
     <section id="highlight-links" class="front-page__section">
         <div class="front-page__highlight-links">
             <?php
@@ -56,8 +57,29 @@ get_header();
                 </a>
             </div>
         </div>
-    </section>
+        </section> */ ?>
     <section id="barris" class="front-page__section">
+        <div class="front-page__highlight-links">
+            <?php
+            $programacio = get_page_by_title('programacio');
+            $tallers = get_page_by_title('tallers');
+            ?>
+            <div class="front-page__highlight-link">
+                <a href="#">
+                    Entitats del Mercat
+                </a>
+            </div>
+            <div class="front-page__highlight-link">
+                <a href="<?= get_page_link($programacio); ?>">
+                    Programació Cultural
+                </a>
+            </div>
+            <div class="front-page__highlight-link">
+                <a href="<?= get_page_link($tallers); ?>">
+                    Tallers i cursos
+                </a>
+            </div>
+        </div>
         <div class="front-page__section-content">
             <h2>Barris de Muntanya</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>

@@ -4,9 +4,7 @@
 
 .post,
 .page {
-  margin: 0 0 1.5em;
-  padding: 0 $size__content-padding;
-  @include columns_width(12);
+  // margin: 0 0 1.5em;
 }
 
 .updated:not(.published) {

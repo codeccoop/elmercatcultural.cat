@@ -3,4 +3,8 @@
 @import "variables/media";
 @import "variables/structure";
 @import "variables/columns";
-@import "mixins/mixins";
+@import "functions/viewport";
+@import "functions/columns";
+@import "mixins/media";
+@import "mixins/columns";
+@import "mixins/alignment";

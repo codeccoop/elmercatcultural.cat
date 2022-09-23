@@ -12,7 +12,7 @@
 
     .form-row-first,
     .form-row-last {
-      @include columns_width(2);
+      @include m-columns_width(2);
     }
   }
 }

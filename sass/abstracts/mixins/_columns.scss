@@ -1,0 +1,3 @@
+@mixin m-columns_width($i: 14, $gutter: false) {
+  width: columns_width($i, $gutter);
+}

@@ -1,5 +1,5 @@
 .main-navigation {
-  flex:2;
+  flex: 2;
   // left: -4.4vw;
   // padding: 0 4.4vw;
   z-index: 300;
@@ -24,8 +24,13 @@
       position: relative;
       padding: 0 1rem;
       border-right: 2px solid $color__theme-primary;
+
+      &:last-child {
+        border-right: none;
+      }
+
       ul.sub-menu {
-        @include columns-width(4);
+        @include m-columns-width(4);
         position: fixed;
         z-index: 300;
         top: 0;
@@ -36,8 +41,9 @@
         margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
         background-color: white;
         transition: right 500ms ease-in-out;
+
         li {
-          @include columns-width(4);
+          @include m-columns-width(4);
           border-bottom: 2px solid $color__theme-primary;
           border-right: none;
           padding: 1rem 0;

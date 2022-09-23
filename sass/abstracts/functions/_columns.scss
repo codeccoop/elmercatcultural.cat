@@ -1,0 +1,29 @@
+@function column_width() {
+  @return (100vw - $size__site-padding * 2 - $gutter_width * ($columns - 1)) / $columns;
+}
+
+@function columns_width($i: 14, $gutter: false) {
+  @if ($gutter == "all") {
+    @return column_width() * $i + $gutter_width * ($i + 1);
+  } @else if ($gutter == "side") {
+    @return column_width() * $i + $gutter_width * $i;
+  } @else {
+    @return column_width() * $i + $gutter_width * ($i - 1);
+  }
+}
+
+// @function column_width() {
+//   @return calc(
+//     (#{vw(100)} - #{$size__site-padding * 2 - $gutter_width * ($columns - 1)}) / #{$columns * 1vw}
+//   );
+// }
+
+// @function columns_width($i: 14, $gutter: false) {
+//   @if ($gutter == "all") {
+//     @return calc(#{column_width()} * #{$i + $gutter_width * ($i + 1) / 1vw});
+//   } @else if ($gutter == "side") {
+//     @return calc(#{column_width()} * #{($i + $gutter_width * $i) / 1vw});
+//   } @else {
+//     @return calc(#{column_width()} * #{$i + $gutter_width * ($i - 1) / 1vw});
+//   }
+// }

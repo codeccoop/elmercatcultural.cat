@@ -1,10 +1,2 @@
 $columns: 14;
-$gutter_width: 1vw;
-
-@function column_width() {
-  @return (100vw - $size__site-padding * 2 - $gutter_width * ($columns - 1)) / $columns;
-}
-
-@function column_outer_width($i) {
-  @return column_width() * $i + $gutter_width * $i;
-}
+$gutter_width: 1.111vw;

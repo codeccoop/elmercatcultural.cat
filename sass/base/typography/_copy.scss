@@ -20,7 +20,7 @@ address {
 pre {
   background: $color__font-primary;
   font-family: $font__primary;
-  line-height: $font__line-height-pre;
+  line-height: $font__line-height-small;
   margin-bottom: 1.6em;
   max-width: 100%;
   overflow: auto;
@@ -58,8 +58,14 @@ em,
 i,
 blockquote,
 address,
-pre {
+pre,
+figcaption {
   & .highlight {
     color: $color__font-highlight;
+  }
+
+  & .small {
+    font-size: $font__size-small;
+    line-height: $font__line-height-small;
   }
 }

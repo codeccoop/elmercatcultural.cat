@@ -1,5 +1,6 @@
 .site {
   position: relative;
+  display: block;
 }
 
 .site-header {
@@ -7,19 +8,33 @@
   flex: 2;
   align-items: center;
   position: relative;
-  padding: 0 $size__site-padding;
+  padding: 0 $size__site-padding / 2;
   height: $size__site-header;
   background-color: $white;
-  margin-left: calc(#{$size__site-padding} * -1);
   width: vw(100);
 }
 
-// .site-navigation {
-//     position: absolute;
-// }
+.site-main {
+  padding: 0 $size__site-padding 5rem;
 
-.widget-area {
+  .page-header {
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+  }
+
+  .page-breadcrumb {
+    margin: 0px;
+    line-height: 1;
+    margin-bottom: -0.5em;
+  }
+
+  .page-title {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 }
 
 .site-footer {
+  height: $size__site-footer;
+  background-color: $white;
 }

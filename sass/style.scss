@@ -106,7 +106,8 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------- */
 @import "utilities/alignments";
 
-/* Pages
+/* Templates
 --------------------------------------------- */
-@import "pages/front-page";
-@import "pages/archive";
+@import "templates/front-page";
+@import "templates/archive";
+@import "templates/page";

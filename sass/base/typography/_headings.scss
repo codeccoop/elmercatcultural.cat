@@ -5,14 +5,37 @@ h4,
 h5,
 h6,
 .title {
-  clear: both;
   font-family: $font__secondary;
-  font-size: $font__size-title;
-  line-height: $font__line-height-title;
+  font-weight: bold;
+  text-transform: uppercase;
 
   & .highlight {
     color: $color__font-highlight;
   }
+}
+
+h1,
+.title {
+  clear: both;
+  font-size: $font__size-title;
+  line-height: $font__line-height-title;
+}
+
+h2,
+.title.is-2 {
+  clear: both;
+  font-size: $font__size-title-2;
+  line-height: $font__line-height-title-2;
+}
+
+h3,
+h4,
+h5,
+h6,
+.title.is-3 {
+  font-size: $font__size-heading;
+  line-height: $font__line-height-heading;
+  text-transform: none;
 }
 
 h1 + .subtitle,

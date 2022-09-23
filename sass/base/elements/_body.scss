@@ -1,5 +1,5 @@
 body {
-  background: $color__theme-base; // Fallback for when there is no custom background color defined.
-  padding: 0 $size__site-padding;
+  background: $white; // Fallback for when there is no custom background color defined.
   overflow-x: hidden;
+  width: vw(100);
 }

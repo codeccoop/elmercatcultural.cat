@@ -104,6 +104,18 @@ function setup()
 }
 add_action('after_setup_theme', 'setup');
 
+function emc_initialize_theme()
+{
+    register_taxonomy_for_object_type('post_tag', 'page');
+}
+add_action('init', 'emc_initialize_theme');
+
+function emc_tags_support_query($wp_query)
+{
+    if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
+}
+add_action('pre_get_posts', 'emc_tags_support_query');
+
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *

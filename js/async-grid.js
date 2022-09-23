@@ -76,18 +76,22 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	function renderEvent( datum ) {
 		const el = document.createElement( 'figure' );
 		el.classList.add( 'grid-item' );
+		const anchor = document.createElement( 'a' );
+		anchor.href = datum.url;
 		const img = document.createElement( 'img' );
 		img.src = datum.thumbnail;
-		el.appendChild( img );
+		anchor.appendChild( img );
 		const caption = document.createElement( 'figcaption' );
+		caption.classList.add( 'small' );
 		caption.innerHTML =
-      '<label>' +
+      '<label class="title is.3">' +
       datum.title +
       '</label><br/>' +
       'Inici: ' +
       ( datum.date || '12-07-2022' );
 		// caption.innerText = datum.title;
-		el.appendChild( caption );
+		anchor.appendChild( caption );
+		el.appendChild( anchor );
 		return el;
 	}
 

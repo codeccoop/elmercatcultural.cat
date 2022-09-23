@@ -1,33 +1,36 @@
-body.home {
-  background-color: $color__theme-primary;
-}
-
-.front-page {
-  @include columns_width(14);
-}
-
 .front-page__section {
   display: block;
+  padding: 5rem columns_width(2, "side") + $size__site-padding 5rem;
+  width: vw(100);
 
-  &#highlights,
-  &#barris {
-    margin-left: ($size__site-padding * -1);
-    width: vw(100);
+  &#highlights {
+    padding: 0px;
+    height: vh(100) - $size__site-header;
+
+    .admin-bar & {
+      height: calc(
+        calc(#{vh(100)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+      );
+    }
   }
 
-  &#highlight-links {
-    padding-bottom: 2rem;
-  }
+  // &#highlight-links {
+  //   padding: 5rem $size__site-padding 5rem;
+  // }
 
   &#barris {
-    background-color: $white;
-    padding-left: column_outer_width(1);
+    background-color: $color__theme-tertiary;
+    // padding-left: $size__site-padding;
+  }
+
+  &#participa {
+    background-color: $color__theme-secondary;
   }
 }
 
 .front-page__section-content {
   text-align: center;
-  @include columns_width(12);
+  @include m-columns_width(10);
   margin-left: column_outer_width(1);
   padding: column_outer_width(1) column_outer_width(2);
 
@@ -43,11 +46,18 @@ body.home {
 .front-page__jumbotron {
   position: relative;
   overflow: hidden;
+  height: 100%;
 
   .front-page__jumbotron-item {
     margin: 0;
     position: relative;
     padding-top: calc(#{vh(100)} - #{$size__site-header});
+
+    .admin-bar & {
+      padding-top: calc(
+        calc(#{vh(100)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+      );
+    }
 
     img {
       position: absolute;
@@ -74,7 +84,7 @@ body.home {
   .slick-dots {
     position: absolute;
     left: 50%;
-    bottom: 16px;
+    bottom: 20px;
     transform: translateX(-50%);
     display: flex;
     list-style: none;
@@ -85,7 +95,7 @@ body.home {
       margin-right: 0.5rem;
 
       &:last-child {
-        right-right: 0;
+        margin-right: 0;
       }
 
       &.slick-active button {
@@ -110,22 +120,35 @@ body.home {
   display: flex;
   border-top: 1px solid;
   border-bottom: 1px solid;
+  border-color: $white;
+  margin: 4rem columns_width(2, "side") * -1 8rem;
+  @include m-columns_width();
 
   .front-page__highlight-link {
     flex: 1;
-    margin: 1rem 0;
+    display: flex;
+    margin: 3.5rem 0;
     text-align: center;
+    align-items: center;
     border-right: 1px solid;
-    padding: 2rem 0;
-    font-size: 1.5rem;
+    border-color: $white;
+    padding: 2rem 3rem;
     font-weight: bold;
+    font-family: $font__secondary;
+    text-transform: uppercase;
 
     &:last-child {
       border-right: none;
     }
 
     a {
+      width: 100%;
       color: $color__font-primary;
+      text-decoration: none;
+
+      &:hover {
+        color: $white;
+      }
     }
   }
 }

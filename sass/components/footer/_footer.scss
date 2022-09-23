@@ -1,0 +1,23 @@
+.site-footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__content {
+  flex: 1;
+  display: flex;
+  padding: $size__site-padding / 2;
+}
+
+.footer__column {
+  flex: 1;
+}
+
+.footer__logo {
+  @include m-center-block;
+}
+
+.site-info {
+  text-align: center;
+  padding-bottom: 1rem;
+}
