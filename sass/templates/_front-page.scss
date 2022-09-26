@@ -132,19 +132,21 @@
     align-items: center;
     border-right: 1px solid;
     border-color: $white;
-    padding: 2rem 3rem;
     font-weight: bold;
     font-family: $font__secondary;
-    text-transform: uppercase;
 
     &:last-child {
       border-right: none;
     }
 
     a {
+      display: block;
       width: 100%;
+      padding: 2rem 3rem;
       color: $color__font-primary;
       text-decoration: none;
+      text-transform: uppercase;
+      text-align: center;
 
       &:hover {
         color: $white;

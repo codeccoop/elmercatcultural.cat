@@ -3,4 +3,11 @@ body {
   // overflow-x: hidden;
   // width: vw(100);
   display: block;
+
+  &.page,
+  &.post,
+  &.home {
+    width: vw(100);
+    overflow-x: hidden;
+  }
 }
