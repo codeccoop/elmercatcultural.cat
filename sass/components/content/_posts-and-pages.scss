@@ -2,8 +2,11 @@
   display: block;
 }
 
+.home,
 .post,
 .page {
+  width: vw(100);
+  overflow-x: hidden;
   // margin: 0 0 1.5em;
 }
 
