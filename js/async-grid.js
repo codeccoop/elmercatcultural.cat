@@ -3,8 +3,11 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	const content = siteMain.getElementsByClassName( 'async-grid' )[ 0 ];
 	const postType = siteMain.id === 'event-archive' ? 'event' : 'workshop';
 
-	const term = new State( 'all', onFilter );
-	const page = new State( 1, onFilter );
+	const term = new State( 'all', () => {
+		page.reset();
+		onFilter( 'term' );
+	} );
+	const page = new State( 1, () => onFilter( 'page' ) );
 
 	const filters = Array.apply( null, siteMain.getElementsByClassName( 'async-filter' ) );
 	filters.forEach( function( btn ) {
@@ -19,15 +22,23 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	function onClickPage( ev ) {
-		page.value = ev.target.dataset.page;
+		page.value = ev.currentTarget.dataset.page;
+		// window.scrollTo( 0, 0 );
 	}
 
-	function onFilter() {
+	function onFilter( src ) {
 		const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
 			if ( this.readyState === 4 ) {
 				if ( this.status === 200 ) {
-					renderEvents( this.responseText ).then( onFilterSuccess ).catch( onFilterFails );
+					renderEvents( this.responseText )
+						.then( ( data ) => {
+							if ( src === 'page' && data.posts.length <= 6 ) {
+								window.scrollTo( 0, 0 );
+							}
+						} )
+						.then( onFilterSuccess )
+						.catch( onFilterFails );
 				} else {
 					onFilterFails();
 				}
@@ -84,12 +95,12 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		const caption = document.createElement( 'figcaption' );
 		caption.classList.add( 'small' );
 		caption.innerHTML =
-      '<label class="title is.3">' +
+      '<b class="title is.3">' +
       datum.title +
-      '</label><br/>' +
+      '</b><br/>' +
       'Inici: ' +
       ( datum.date || '12-07-2022' );
-		// caption.innerText = datum.title;
+
 		anchor.appendChild( caption );
 		el.appendChild( anchor );
 		return el;
@@ -99,23 +110,51 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		pager.innerHTML = '';
 		if ( pages <= 1 ) {
 			return;
+		} else if ( pages > 3 ) {
+			renderNavButtons( pages );
 		}
-		for ( let i = 0; i < pages; i++ ) {
-			pager.appendChild( renderPage( i ) );
+
+		let visible;
+		if ( page.value <= 2 ) {
+			visible = [ 1, 2, 3 ];
+		} else if ( page.value === pages ) {
+			visible = Array.apply( null, Array( 3 ) ).map( ( _, i ) => pages - ( 2 - i ) );
+		} else {
+			visible = Array.apply( null, Array( 3 ) ).map( ( _, i ) => page.value - 1 + i );
 		}
+
+		visible
+			.filter( ( v ) => v <= pages )
+			.map( renderPage )
+			.map( ( c ) => pager.appendChild( c ) );
 	}
 
 	function renderPage( i ) {
 		const li = document.createElement( 'li' );
 		li.classList.add( 'async-page' );
-		if ( page.value === i ) {
-			li.classList.add( 'active' );
-		}
 
-		li.innerText = i + 1;
-		li.setAttribute( 'data-page', i + 1 );
+		li.innerText = i;
+		li.setAttribute( 'data-page', i );
 		li.addEventListener( 'click', onClickPage );
 		return li;
+	}
+
+	function renderNavButtons( pages ) {
+		let html = '';
+		if ( page.value > 2 ) {
+			html += `<li class="async-nav-btn first" data-page="1"><i></i></li>
+        <li class="async-nav-btn previous" data-page="${ page.value - 1 }"><i></i></li>`;
+		}
+
+		if ( page.value <= pages - 2 ) {
+			html += `<li class="async-nav-btn next" data-page="${ page.value + 1 }"><i></i></li>
+        <li class="async-nav-btn last" data-page="${ pages }"><i></i></li>`;
+		}
+
+		pager.innerHTML = html;
+		for ( const btn of pager.getElementsByClassName( 'async-nav-btn' ) ) {
+			btn.addEventListener( 'click', onClickPage );
+		}
 	}
 
 	function onFilterSuccess() {
@@ -125,11 +164,19 @@ document.addEventListener( 'DOMContentLoaded', function() {
 				el.classList.add( 'active' );
 			}
 		} );
+
+		for ( const p of pager.getElementsByClassName( 'async-page' ) ) {
+			p.classList.remove( 'active' );
+			if ( parseInt( p.dataset.page ) === page.value ) {
+				p.classList.add( 'active' );
+			}
+		}
 	}
 
 	function onFilterFails( err ) {
-		console.log( err );
+		// console.log( err );
 		content.innerHTML = "<h1>No s'han trobat esdeveniments</h1>";
+		onFilterSuccess();
 	}
 
 	function encodePayload( data ) {
@@ -144,13 +191,20 @@ document.addEventListener( 'DOMContentLoaded', function() {
 function State( defaultValue, changeCallback ) {
 	let _currentValue = defaultValue;
 	const _changeCallback = changeCallback;
-	const history = [];
+
+	const type = defaultValue.__proto__.constructor;
+
+	Object.defineProperty( this, 'default', {
+		value: defaultValue,
+		writable: false,
+		configurable: false,
+	} );
 	Object.defineProperty( this, 'value', {
 		set( val ) {
 			if ( _currentValue !== val ) {
 				const from = _currentValue;
-				const to = val;
-				_currentValue = val;
+				const to = type( val );
+				_currentValue = to;
 				if ( _changeCallback ) {
 					_changeCallback( to, from );
 				}
@@ -160,4 +214,8 @@ function State( defaultValue, changeCallback ) {
 			return _currentValue !== undefined ? _currentValue : defaultValue;
 		},
 	} );
+
+	this.reset = function() {
+		_currentValue = defaultValue;
+	};
 }
