@@ -60,11 +60,11 @@ blockquote,
 address,
 pre,
 figcaption {
-  & .highlight {
+  &.highlight {
     color: $color__font-highlight;
   }
 
-  & .small {
+  &.small {
     font-size: $font__size-small;
     line-height: $font__line-height-small;
   }
