@@ -10,6 +10,7 @@
 
 ?>
 
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="post-header">
         <?php $tags = wp_get_post_tags(get_the_ID());
@@ -37,8 +38,45 @@
 
         </div>
         <div class="post-content__description">
+            <?php
+            $carroussel_event = get_field('carroussel_event', $post_id);
+            $image_carroussel_1 = $carroussel_event['image_carroussel_1'];
+            $image_carroussel_2 = $carroussel_event['image_carroussel_2'];
+            $image_carroussel_3 = $carroussel_event['image_carroussel_3'];
+            ?>
             <p><?php echo get_the_excerpt($post_id); ?></p>
-            <?php the_post_thumbnail(); ?>
+            <?php
+            if ($image_carroussel_1 || $image_carroussel_1 && $image_carroussel_2 || $image_carroussel_1 && $image_carroussel_3 || $image_carroussel_1 && $image_carroussel_2 && $image_carroussel_3) {?>
+                <div class="carroussel-container">
+                    <div class="carroussel-content">
+                    <?php 
+                        if ($image_carroussel_1){
+                            $carroussel_data_1 = wp_get_attachment_image_src($image_carroussel_1, 'full', false);
+                            }
+                        if ($carroussel_data_1){ ?>
+                            <div><img class="carroussel-image" src="<?php echo $carroussel_data_1[0]; ?>" alt="Imatge del carroussel"></div>
+                        <?php }
+                        if ($image_carroussel_2){
+                        $carroussel_data_2 = wp_get_attachment_image_src($image_carroussel_2, 'full', false);
+                        }
+                        if ($carroussel_data_2){ ?>
+                            <div><img class="carroussel-image" src="<?php echo $carroussel_data_2[0]; ?>" alt="Imatge del carroussel"></div>
+                        <?php }
+                        if($image_carroussel_3){
+                            $carroussel_data_3 = wp_get_attachment_image_src($image_carroussel_3, 'full', false);
+                        }
+                        if($carroussel_data_3){ ?>
+                            <div><img class="carroussel-image" src="<?php echo $carroussel_data_3[0]; ?>" alt="Imatge del carroussel"></div>
+                        <?php }
+                    ?>
+                    </div>
+                    <div class="slides-numbers">
+                        <span class="active">01</span> / <span class="total"></span>
+                    </div> 
+                </div>
+            <?php }
+            else {} 
+            ?>
         </div>
 
        
