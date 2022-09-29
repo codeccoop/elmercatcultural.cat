@@ -1,6 +1,11 @@
 a {
   color: $color__font-primary;
   text-decoration: underline;
+  &.small-title{
+    font-family: $font__secondary;
+    font-weight: bold;
+    font-size: $font__size-small;
+    }
 
   // &:visited {
   //   color: $color__link;

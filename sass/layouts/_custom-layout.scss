@@ -17,7 +17,8 @@
 .site-main {
   padding: 0 $size__site-padding 5rem;
 
-  .page-header {
+  .page-header,
+  .post-header {
     padding-top: 8rem;
     padding-bottom: 3rem;
     margin-bottom: 3em;

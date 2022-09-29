@@ -1,0 +1,21 @@
+.site-main.post {
+    .post-header {
+      border-bottom: 3px solid $color__theme-secondary;
+    }
+    .post-content{
+        display: flex;
+        justify-content: center;
+        p.event-bold{
+            font-weight: bold;
+          }
+        .post-content__inscription{
+            flex:1;
+        }
+        .post-content__description{
+            flex:3;
+            border-left: 3px solid $color__theme-secondary;
+            padding-left: $size__site-padding;
+            align-items: flex-start;
+        }
+    }
+}
