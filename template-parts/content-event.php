@@ -70,9 +70,9 @@
                         <?php }
                     ?>
                     </div>
-                    <div class="slides-numbers">
-                        <span class="active">01</span> / <span class="total"></span>
-                    </div> 
+                    <!-- <div class="slides-numbers">
+                        <span class="active">1</span> / <span class="total"></span>
+                    </div>  -->
                 </div>
             <?php }
             else {} 

@@ -158,6 +158,10 @@ add_action('widgets_init', 'widgets_init');
  */
 function scripts()
 {
+    wp_register_style('mapbox-gl-css', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css', false);
+    // wp_enqueue_style('mapbox-gl-css');
+    wp_register_script('mapbox-gl-js', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js', false);
+    // wp_enqueue_script('mapbox-gl-js');
     wp_enqueue_style('montserrat_font', 'https://fonts.googleapis.com/css2?family=family=Montserrat:ital,wght@0,400;0,700;0,800;1,400', array(), ELMERCATCULTURAL_VERSION, null, 'all');
     wp_enqueue_style('krona_font', 'https://fonts.googleapis.com/css2?family=Krona+One', array(), ELMERCATCULTURAL_VERSION, null, 'all');
 
@@ -237,6 +241,10 @@ function wip_redirection()
     }
 }
 add_action('template_redirect', 'wip_redirection');
+/**
+ * Load shortcodes
+ */
+require get_template_directory() . '/shortcodes/embedded-map.php';
 
 /* Custom Post Types */
 require get_template_directory() . '/post_types/destacat.php';

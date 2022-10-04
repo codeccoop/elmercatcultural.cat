@@ -11,6 +11,15 @@
 
 .footer__column {
   flex: 1;
+  p.footer__title{
+    font-family: $font__secondary;
+    font-weight: 400;
+    line-height: $font__line-height-small;
+  }
+  p.footer__text{
+    font-family: $font__primary;
+    line-height: $font__line-height-small;
+  }
 }
 
 .footer__logo {
