@@ -6,7 +6,9 @@ body {
 
   &.page,
   &.post,
-  &.home {
+  &.home,
+  &.single-event,
+  &.single-workshop {
     width: vw(100);
     overflow-x: hidden;
   }

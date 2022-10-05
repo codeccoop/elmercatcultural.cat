@@ -1,5 +1,5 @@
 <?php
-function bl_sc_embedded_map($atts = [], $content = null, $tag = '')
+function emc_sc_embedded_map($atts = [], $content = null, $tag = '')
 {
     $atts = array_change_key_case((array) $atts, CASE_LOWER);
 
@@ -27,7 +27,7 @@ function bl_sc_embedded_map($atts = [], $content = null, $tag = '')
         $style .= 'width: ' . $width . ';';
     }
 
-    $classes = 'bl_embedded_map';
+    $classes = 'emc_embedded_map';
     if ($class) {
         $classes .= ' ' . $class;
     }
@@ -59,4 +59,4 @@ function bl_sc_embedded_map($atts = [], $content = null, $tag = '')
     return $content . $script;
 }
 
-add_shortcode('embedded_map', 'bl_sc_embedded_map');
+add_shortcode('embedded_map', 'emc_sc_embedded_map');

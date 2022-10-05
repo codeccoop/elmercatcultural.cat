@@ -1,6 +1,6 @@
 .front-page__section {
   display: block;
-  padding: 5rem columns_width(2, "side") + $size__site-padding 5rem;
+  padding: 5rem columns_width(2, 'side') + $size__site-padding 5rem;
   width: vw(100);
 
   &#highlights {
@@ -14,13 +14,8 @@
     }
   }
 
-  // &#highlight-links {
-  //   padding: 5rem $size__site-padding 5rem;
-  // }
-
   &#barris {
     background-color: $color__theme-tertiary;
-    // padding-left: $size__site-padding;
   }
 
   &#participa {
@@ -77,7 +72,10 @@
       object-fit: cover;
       z-index: 20;
       font-size: 3rem;
-      background-color: white;
+
+      > span {
+        background-color: white;
+      }
     }
   }
 
@@ -121,7 +119,7 @@
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: $white;
-  margin: 4rem columns_width(2, "side") * -1 8rem;
+  margin: 4rem columns_width(2, 'side') * -1 8rem;
   @include m-columns_width();
 
   .front-page__highlight-link {
