@@ -11,6 +11,18 @@
 
 .footer__column {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.footer__row {
+  flex: 1;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 
   p.footer__title {
     font-family: $font__secondary;
@@ -30,6 +42,28 @@
 
 .footer__logo {
   @include m-center-block;
+}
+
+.footer__social {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between;
+
+  li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background-color: #888;
+    }
+  }
 }
 
 .site-info {
