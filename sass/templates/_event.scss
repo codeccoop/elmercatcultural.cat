@@ -10,26 +10,44 @@
           }
         .post-content__inscription{
             flex:1;
+            .small-title{
+              display: flex;
+              justify-content: center;
+              margin-bottom: 3rem;
+            }
         }
         .post-content__description{
             flex:3;
             border-left: 3px solid $color__theme-secondary;
             padding-left: $size__site-padding;
             align-items: flex-start;
+            .description-text {
+              @include m-columns-width(9, all);
+              margin-left: auto;
+              p {
+                margin-top: 0;
+              }
+            }
         }
     }
+    .thumbnail-container img{
+      margin: 0 0.5rem;
+      object-fit: cover;
+      height: 50vh;
+    }
     .carroussel-container {
+        position: relative;
         //height: 100%;
         max-width: 100vw;
         //max-height: calc(100vh - var(--header-height));
-        width: vw(50);
-        margin: 0 calc(var(--content-padding) * -1);
+        //width: vw(55);
+        @include m-columns-width(9, all);
+        margin-left: auto;
       }
       .carroussel-content {
         button {
           display: none;
           visibility: none;
-          //position: relative;
           width: 0px;
           height: 0px;
           font-size: 0px;
@@ -37,19 +55,21 @@
         .slick-prev:before {
             content: "<";
             position: absolute;
-            bottom: -5%;
+            bottom: 0;
             left: 30%;
             color: black;
             font-size: 12px;
+            transform: translateY(100%);
           }
           
         .slick-next:before {
             content: ">";
             position: absolute;
-            bottom: -5%;
+            bottom: 0;
             left: 70%;
             color: black;
             font-size: 12px;
+            transform: translateY(100%);
           }
         .carroussel-image {
             margin: 0 0.5rem;
@@ -58,14 +78,15 @@
         }  
       }
     .slides-numbers {
-        width: vw(3);
+        width: fit-content;
         visibility: hidden;
-        position: relative;
-        left: 48%;
+        position: absolute;
+        left: 50%;
         bottom: 0;
         color: black;
         font-size: 12px;
         font-family: $font__secondary;
+        transform: translate(-50%, 100%);
         &.show {
           visibility: visible;
 

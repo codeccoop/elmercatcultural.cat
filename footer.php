@@ -43,11 +43,11 @@
         <div class="footer__column"></div>
             <div class="footer__column_map">
                 <?php
-                $coordinates = array_map('trim', explode(' ', get_theme_mod('map_coordinates')));
-                $lat = $coordinates[0];
-                $lng = $coordinates[1];
-                echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
-                ?>
+                // $coordinates = array_map('trim', explode(' ', get_theme_mod('map_coordinates')));
+                // $lat = $coordinates[0];
+                // $lng = $coordinates[1];
+                // echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
+                // ?>
             </div>
         <div class="footer__column"></div>
         <div class="footer__column"></div>
