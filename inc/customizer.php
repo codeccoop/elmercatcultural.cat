@@ -33,6 +33,51 @@ function customize_register($wp_customize)
             )
         );
     }
+
+    /* Footer Customizer */
+    $wp_customize->add_section('footer', array(
+        'title' => 'Peu de pàgina',
+        # 'description' => 'Informació de contacte i altres',
+        'priority' => 60
+    ));
+
+    $wp_customize->add_setting('contact', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => 'Carrer d\'Elisa Moragues i Badia, 3\n08017 Barcelona'
+    ));
+    $wp_customize->add_setting('open_hours', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => 'De 10 a 14h i de 17 a 21h'
+    ));
+    $wp_customize->add_setting('coordinates', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_text_field',
+        'default' => '41.399647 2.149845'
+    ));
+
+    $wp_customize->add_control('contact', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Contacte',
+        'description' => 'Adreça, correu electrònic i telèfon',
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('open_hours', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Horari',
+        'description' => 'Hores d\'obertura i tancament',
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('coordinates', array(
+        'type' => 'text',
+        'priority' => 5,
+        'label' => 'Coordenades de l\'edifici',
+        'description' => 'Hores d\'obertura i tancament',
+        'section' => 'footer'
+    ));
 }
 add_action('customize_register', 'customize_register');
 

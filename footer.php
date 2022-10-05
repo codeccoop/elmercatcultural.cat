@@ -23,10 +23,7 @@
                     Contacte
                 </p>
                 <p class="footer__text small">
-                    Carrer de x, 30 </br>
-                    08018 Barcelona </br>
-                    elmercat@elmercatcultural.cat </br>
-                    93 200 24 34
+                    <?= preg_replace('/\n/', '<br>', get_theme_mod('contact')) ?>
                 </p>
             </div>
             <div class="footer__column__timetable">
@@ -34,21 +31,21 @@
                     Horari
                 </p>
                 <p class="footer__text small">
-                    de 10 a 14h </br>
-                    i de 17 a 21h </br>
+                    <?= preg_replace('/\n/', '<br>', get_theme_mod('open_hours')); ?>
                 </p>
             </div>
-            
+
         </div>
         <div class="footer__column"></div>
-            <div class="footer__column_map">
-                <?php
-                $coordinates = array_map('trim', explode(' ', get_theme_mod('map_coordinates')));
-                $lat = $coordinates[0];
-                $lng = $coordinates[1];
-                echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
-                ?>
-            </div>
+        <div class="footer__column">
+            <?php
+            $coordinates = array_map('trim', explode(' ', get_theme_mod('coordinates')));
+            # $coordinates = [41.5028, 1.81346];
+            $lat = $coordinates[0];
+            $lng = $coordinates[1];
+            echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
+            ?>
+        </div>
         <div class="footer__column"></div>
         <div class="footer__column"></div>
         <div class="footer__column"></div>
