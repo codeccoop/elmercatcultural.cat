@@ -28,12 +28,17 @@
                 margin-top: 0;
               }
             }
+            .video-container{
+              @include m-columns-width(9, all);
+              margin-left: auto;
+              margin-top: 3rem;
+            }
+            .thumbnail-container img{
+              margin: 0 0.5rem;
+              object-fit: cover;
+              height: 50vh;
+            }
         }
-    }
-    .thumbnail-container img{
-      margin: 0 0.5rem;
-      object-fit: cover;
-      height: 50vh;
     }
     .carroussel-container {
         position: relative;

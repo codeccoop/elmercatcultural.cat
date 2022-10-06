@@ -42,11 +42,13 @@
             <?php the_field('description_event', $post_id);?>
             </div>
             <?php
-            $carroussel_event = get_field('carroussel_event', $post_id);
             $has_images=false;
-            foreach ($carroussel_event as $item => $val){
-                if($val!=null){
-                    $has_images=true;
+            if(get_field('carroussel_event', $post_id)){
+                $carroussel_event = get_field('carroussel_event', $post_id);
+                foreach ($carroussel_event as $item => $val){
+                    if($val!=null){
+                        $has_images=true;
+                    }
                 }
             }
             if($has_images){?>
@@ -75,11 +77,20 @@
                     </div>
                 
                 <?php }
-            else {?>
-                <div class="thumbnail-container">
-                    <?php the_post_thumbnail(); ?>
+            else {
+                if(has_post_thumbnail()){?>
+                    <div class="thumbnail-container">
+                        <?php the_post_thumbnail(); ?>
+                    </div>
+
+                <?php } 
+                } ?>
+            <?php if(get_field('video', $post_id)){?>
+                <div class="video-container">
+                    <?php the_field('video', $post_id); ?>
                 </div>
             <?php } ?>
+            
         </div>
 
        
