@@ -51,8 +51,11 @@ function emc_sc_embedded_map($atts = [], $content = null, $tag = '')
          center: [' . $lng . ', ' . $lat . '], // starting position [lng, lat]
          zoom: ' . $zoom . ', // starting zoom
         });
-        map.addControl(new mapboxgl.NavigationControl());
-        new mapboxgl.Marker().setLngLat([' . $lng . ', ' . $lat . ']).addTo(map);
+        // map.addControl(new mapboxgl.NavigationControl());
+        new mapboxgl.Marker({
+            color: \'#e74c3c\',
+            scale: 0.5
+        }).setLngLat([' . $lng . ', ' . $lat . ']).addTo(map);
     });
     </script>';
 

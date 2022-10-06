@@ -1,11 +1,18 @@
 a {
+  cursor: pointer;
   color: $color__font-primary;
-  text-decoration: underline;
-  &.small-title{
+  text-decoration: none;
+
+  .mobile & {
+    text-decoration: underline;
+  }
+  // text-decoration: underline;
+
+  &.small-title {
     font-family: $font__secondary;
     font-weight: bold;
     font-size: $font__size-small;
-    }
+  }
 
   // &:visited {
   //   color: $color__link;
@@ -14,7 +21,8 @@ a {
   &:hover,
   &:focus,
   &:active {
-    color: $color__link;
+    text-decoration: underline;
+    // color: $color__link;
   }
 
   // &:focus {

@@ -56,6 +56,12 @@ function customize_register($wp_customize)
         'sanitize_callback' => 'sanitize_text_field',
         'default' => '41.399647 2.149845'
     ));
+    $wp_customize->add_setting('howtoarrive', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => 'FGC: S1 i S2 Peu del Funicular – Funicular fins a Vallvidrera Superior
+Autobusos: 111, 118 i 12'
+    ));
 
     $wp_customize->add_control('contact', array(
         'type' => 'textarea',
@@ -76,6 +82,13 @@ function customize_register($wp_customize)
         'priority' => 5,
         'label' => 'Coordenades de l\'edifici',
         'description' => 'Hores d\'obertura i tancament',
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('howtoarrive', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Com arribar',
+        'description' => 'Descripció de les opcions de transport públic',
         'section' => 'footer'
     ));
 }
