@@ -19,6 +19,8 @@ h1,
   clear: both;
   font-size: $font__size-title;
   line-height: $font__line-height-title;
+  font-weight: 400;
+  letter-spacing: 0.035em;
 }
 
 h2,
@@ -26,6 +28,8 @@ h2,
   clear: both;
   font-size: $font__size-title-2;
   line-height: $font__line-height-title-2;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 h3,

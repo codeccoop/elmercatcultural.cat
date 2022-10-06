@@ -1,21 +1,25 @@
 .site-main.page {
   .page-header {
-    border-bottom: 3px solid $color__theme-secondary;
+    border-bottom: 2px solid $color__theme-secondary;
   }
+
   /*Custom classes*/
-  .em-separador-pagina{
+  .em-separador-pagina {
     border-top: none;
     border-bottom: none;
     background-color: $color__theme-secondary;
     height: 3px;
   }
-  .em-columnes-linia{
+
+  .em-columnes-linia {
     padding-top: 1em;
-    &:first-child{
+
+    &:first-child {
       padding-right: 4em;
       border-right: 3px solid $color__theme-secondary;
     }
-    &:last-child{
+
+    &:last-child {
       padding-left: 4em;
     }
   }

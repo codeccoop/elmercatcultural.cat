@@ -66,14 +66,16 @@
 
     figcaption {
       position: absolute;
-      top: 1em;
-      left: 1em;
+      top: calc(#{$size__site-padding} / 2);
+      left: $size__site-padding;
       max-width: calc(50% - 1em);
       object-fit: cover;
       z-index: 20;
       font-size: 3rem;
+      line-height: 1.2;
 
       > span {
+        padding-left: 0.2em;
         background-color: white;
       }
     }
