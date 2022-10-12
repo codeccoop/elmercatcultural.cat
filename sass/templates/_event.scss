@@ -7,13 +7,16 @@
         justify-content: center;
         p.event-bold{
             font-weight: bold;
+            margin-bottom: 0;
           }
         .post-content__inscription{
             flex:1;
-            .small-title{
-              display: flex;
-              justify-content: center;
-              margin-bottom: 3rem;
+            p {
+              margin-top:0;
+            }
+            .artistic-description p{
+              font-size: $font__size-small;
+              line-height: $font__line-height-small;
             }
         }
         .post-content__description{

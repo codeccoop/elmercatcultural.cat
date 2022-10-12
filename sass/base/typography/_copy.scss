@@ -68,4 +68,8 @@ figcaption {
     font-size: $font__size-small;
     line-height: $font__line-height-small;
   }
+  &.event-title{
+    font-size: $font__size-event;
+    line-height: $font__line-height-small;
+  }
 }

@@ -23,19 +23,28 @@
     <div class="post-content">
         <?php $post_id = get_the_ID(); ?>
         <div class="post-content__inscription">
-            <a class="small-title">INSCRIU-TE</a>
-            <p class="event-bold small">DATES</p>
-            <?php if (get_field('date', $post_id)) : ?>
+            <p class="event-bold event-title">INSCRIPCIÓ</p>
+            <p class="small"> Presencial </p>
+            <p class="event-bold event-title">DATA</p>
+            <?php if (get_field('date', $post_id)){?>
                 <p class="small"><?php the_field('date', $post_id); ?></p>
-            <?php else : ?>
+            <?php } ?>
                 
-            <?php endif ?>
-            <p class="event-bold small">SESSIONS</p>
-            <p class="event-bold small">HORA</p>
-            <p class="event-bold small">PREU</p>
-            <p class="event-bold small">CATEGORIA</p>
-            <p class="event-bold small">FITXA TÈCNICA</p>
-
+            <p class="event-bold event-title">HORA</p>
+            <?php if (get_field('hour', $post_id)){?>
+                <p class="small"><?php the_field('hour', $post_id); ?></p>
+            <?php } ?>
+            <p class="event-bold event-title">PREU</p>
+            <?php if (get_field('price', $post_id)){?>
+                <p class="small"><?php the_field('price', $post_id); ?></p>
+            <?php } ?>
+            <p class="event-bold event-title">CATEGORIA</p>
+                <?php $categories=get_the_category($post_id);
+                foreach ($categories as $category) {?>
+                    <p class="small"><?php echo $category->name; ?></p>
+                    <?php } ?>
+            <p class="event-bold event-title">FITXA ARTÍSTICA</p>
+            <span class="artistic-description"><?php the_field('artists', $post_id); ?></p>
         </div>
         <div class="post-content__description">
             <div class="description-text">
