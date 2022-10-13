@@ -11,6 +11,19 @@
   .admin-bar & {
     top: var(--wp-admin--admin-bar--height);
   }
+  &.toggled{
+    ul {
+      position: initial;
+      display: block;
+      height: 100vh;
+      width: 100%;
+    }
+    li {
+      font-size: $font__size-small;
+      height: 7rem;
+      border-right: none;
+    }
+  }
 
   ul {
     align-items: center;
@@ -19,11 +32,22 @@
     margin: 0;
     padding-left: 0;
     height: $size__site-header;
+    display: none;
+    @include m-media(sm){
+      display: flex;
+    }
 
     li {
       position: relative;
       padding: 0 1rem;
       border-right: 2px solid $color__theme-primary;
+      display: flex;
+      height: 1.5rem;
+      align-items: center;
+      a {
+        font-size: $font__size-small;
+        font-weight: 600;
+      }
 
       &:last-child {
         border-right: none;
@@ -47,6 +71,7 @@
           border-bottom: 2px solid $color__theme-primary;
           border-right: none;
           padding: 1rem 0;
+          height: 7rem;
           &:hover {
             background-color: black;
             a {
@@ -54,10 +79,14 @@
             }
           }
           a {
+            font-size: $font__size-nav-submenu;
+            font-family: $font__secondary;
+            font-weight: 400;
             color: black;
             padding: 1rem 3rem;
             &:hover {
               color: white;
+              
             }
           }
         }
@@ -88,21 +117,52 @@
   .current-menu-ancestor > a {
     /* */
   }
+  // #menu-close {
+  //   cursor: pointer;
+  //   position: fixed;
+  //   z-index: 300;
+  //   top: 85%;
+  //   right: -50%;
+  //   background-color: white;
+  //   border: none;
+  //   color: $color__theme-primary;
+  //   // font-size: 2.5rem;
+  //   // font-weight: 100;
+  //   height: 30px;
+  //   width: 30px;
+  //   transition: right 500ms ease-in-out;
+  //   &.focus {
+  //     right: 2%;
+  //   }
+  // }
   #menu-close {
-    cursor: pointer;
     position: fixed;
+    cursor: pointer;
     z-index: 300;
     top: 85%;
     right: -50%;
-    background-color: white;
-    border: none;
-    color: black;
-    font-size: 32px;
+    width: 32px;
+    height: 32px;
     transition: right 500ms ease-in-out;
     &.focus {
-      right: 2%;
+    right: 2%;
     }
   }
+  #menu-close:before, #menu-close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: $color__theme-primary;;
+  }
+  #menu-close:before {
+    transform: rotate(45deg);
+  }
+  #menu-close:after {
+    transform: rotate(-45deg);
+  }
+  
 }
 
 div.veil {
@@ -129,37 +189,79 @@ div.veil {
 }
 /* Small menu. */
 .menu-toggle,
-.main-navigation.toggled ul {
-  display: block;
+.main-navigation.toggled {
+  ul {
+    display: block;
+    background-color: white;
+    position: initial;
+  }
+}
+.menu-toggle {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+  cursor: pointer;
+  position: absolute;
+  right: var(--content-padding);
+  top: 50%;
+  transform: translate(0, -50%);
+
+  @include m-media(sm) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .toggled & {
+    .burger::after {
+      transform: translate(0, -5.6px) rotate(45deg);
+
+      @include m-media(sm) {
+        transform: translate(0, -7.5px) rotate(45deg);
+      }
+    }
+
+    .burger::before {
+      transform: translate(0, 5.6px) rotate(-45deg);
+
+      @include m-media(sm) {
+        transform: translate(0, 7.5px) rotate(-45deg);
+      }
+    }
+  }
+  .burger {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .burger::after,
+  .burger::before {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 10%;
+    background-color: $color__font-primary;
+    border-radius: 5%;
+    transition: transform 300ms ease-out;
+  }
+
+  .burger::before {
+    content: ' ';
+    top: 25%;
+  }
+
+  .burger::after {
+    content: ' ';
+    bottom: 25%;
+  }
 }
 
-@media screen and (min-width: 37.5em) {
+@include m-media(sm) {
   .menu-toggle {
     display: none;
   }
-
-  .main-navigation ul {
-    display: flex;
-  }
 }
 
-.comment-navigation,
-.posts-navigation,
-.post-navigation {
-  .site-main & {
-    margin: 0 0 1.5em;
-  }
-
-  .nav-links {
-    display: flex;
-  }
-
-  .nav-previous {
-    flex: 1 0 50%;
-  }
-
-  .nav-next {
-    text-align: end;
-    flex: 1 0 50%;
-  }
-}

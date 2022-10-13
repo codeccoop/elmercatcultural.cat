@@ -12,8 +12,8 @@
 
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-    <header class="post-header">      
-        <p class="page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
+    <header class="post-header">
+        <p class="page-breadcrumb small">TALLERS I BOCINS</p>
         <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
     </header><!-- .entry-header -->
 
@@ -22,12 +22,12 @@
         <div class="post-content__inscription">
             <p class="event-bold event-title">INSCRIPCIÓ</p>
             <p class="small"> Presencial </p>
-            <p class="event-bold event-title">DATA</p>
+            <p class="event-bold event-title">DATES</p>
             <?php if (get_field('date', $post_id)){?>
                 <p class="small"><?php the_field('date', $post_id); ?></p>
             <?php } ?>
                 
-            <p class="event-bold event-title">HORA</p>
+            <p class="event-bold event-title">HORARI</p>
             <?php if (get_field('hour', $post_id)){?>
                 <p class="small"><?php the_field('hour', $post_id); ?></p>
             <?php } ?>
@@ -40,7 +40,7 @@
                 foreach ($categories as $category) {?>
                     <p class="small"><?php echo $category->name; ?></p>
                     <?php } ?>
-            <p class="event-bold event-title">FITXA ARTÍSTICA</p>
+            <p class="event-bold event-title">FITXA TÈCNICA</p>
             <span class="artistic-description"><?php the_field('artists', $post_id); ?></p>
         </div>
         <div class="post-content__description">

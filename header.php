@@ -35,7 +35,6 @@
             </div><!-- .site-branding -->
 
             <nav id="site-navigation" class="main-navigation">
-                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e('Primary Menu', 'elmercatcultural.cat'); ?></button>
                 <?php
                 wp_nav_menu(
                     array(
@@ -44,7 +43,10 @@
                     )
                 );
                 ?>
-                <button id="menu-close">x</button>
+                <a id="menu-close"></a>
+                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                    <span class="burger"></span>
+                </button>
             </nav><!-- #site-navigation -->
         </header><!-- #masthead -->
         <div class="veil">
