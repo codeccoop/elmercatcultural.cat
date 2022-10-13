@@ -12,7 +12,7 @@ function emc_post_type_event()
         'description'   => 'Aquest post serveix per crear les entrades de la secció serveis',
         'public'        => true,
         'menu_position' => 4,
-        'supports'      => array('title', 'thumbnail', 'excerpt', 'page-attributes'),
+        'supports'      => array('title', 'thumbnail', 'page-attributes'),
         'show_in_rest'  => true,
         'has_archive'   => false,
         'taxonomies' => array('category'),
