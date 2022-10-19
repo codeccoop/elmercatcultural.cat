@@ -11,6 +11,7 @@
  */
 // wp_enqueue_script('front-page');
 get_header();
+$page_ID = get_option('page_on_front');
 ?>
 <main class="front-page">
     <section id="highlights" class="front-page__section">
@@ -63,36 +64,37 @@ get_header();
             <?php
             $programacio = get_page_by_title('programacio');
             $tallers = get_page_by_title('tallers');
+            $links = get_field('links', $page_ID);
             ?>
             <div class="front-page__highlight-link">
-                <a href="#">
-                    Entitats del Mercat
+                <a href="<?= $links['link-1']['url']; ?>">
+                    <?= $links['link-1']['text']; ?>
                 </a>
             </div>
             <div class="front-page__highlight-link">
-                <a href="<?= get_page_link($programacio); ?>">
-                    Programació Cultural
+                <a href="<?= $links['link-2']['url']; ?>">
+                    <?= $links['link-2']['text']; ?>
                 </a>
             </div>
             <div class="front-page__highlight-link">
-                <a href="<?= get_page_link($tallers); ?>">
-                    Tallers i cursos
+                <a href="<?= $links['link-3']['url']; ?>">
+                    <?= $links['link-3']['text']; ?>
                 </a>
             </div>
         </div>
         <div class="front-page__section-content">
-            <h2>Barris de Muntanya</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
-            <?php $els_barris = get_page_by_title('barris-de-muntanya'); ?>
-            <a href="<?= get_page_link($els_barris); ?>" class="button">Coneix-ne més</a>
+            <?php $section = get_field('section-1', $page_ID); ?>
+            <h2><?= $section['title']; ?></h2>
+            <p><?= $section['text']; ?></p>
+            <a href="<?= $section['link']['url']; ?>" class="button"><?= $section['link']['text'] ?></a>
         </div>
     </section>
     <section id="participa" class="front-page__section">
         <div class="front-page__section-content">
-            <h2>Participa</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu fringilla metus. Phasellus in egestas eros, in efficitur ligula. Proin neque dolor, scelerisque ac mi vel, malesuada varius metus. Pellentesque lobortis maximus orci, at hendrerit tortor finibus non. Vivamus ac nulla vestibulum nisi auctor posuere a sit amet lectus. Nulla posuere nunc quam, et scelerisque nibh lobortis vel.</p>
-            <?php $participa = get_page_by_title('participa'); ?>
-            <a href="<?= get_page_link($participa) ?>" class="button">Participa</a>
+            <?php $section = get_field('section-2', $page_ID); ?>
+            <h2><?= $section['title']; ?></h2>
+            <p><?= $section['text']; ?></p>
+            <a href="<?= $section['link']['url']; ?>" class="button"><?= $section['link']['text'] ?></a>
         </div>
     </section>
 </main>
