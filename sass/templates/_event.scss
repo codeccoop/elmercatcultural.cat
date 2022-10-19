@@ -1,12 +1,12 @@
 .site-main.post {
     .post-header {
-      border-bottom: 3px solid $color__theme-secondary;
+      border-bottom: 2px solid $color__theme-secondary;
     }
     .post-content{
         display: flex;
         justify-content: center;
         p.event-bold{
-            font-weight: bold;
+            font-weight: 400;
             margin-bottom: 0;
           }
         .post-content__inscription{
@@ -22,20 +22,24 @@
         }
         .post-content__description{
             flex:3;
-            border-left: 3px solid $color__theme-secondary;
+            border-left: 2px solid $color__theme-secondary;
             padding-left: $size__site-padding;
             align-items: flex-start;
             .description-text {
               @include m-columns-width(9, all);
               margin-left: auto;
+              margin-bottom: 7rem;
               p {
-                margin-top: 0;
+                margin: 0;
               }
             }
             .video-container{
               @include m-columns-width(9, all);
               margin-left: auto;
-              margin-top: 3rem;
+              margin-top: 8rem;
+              iframe {
+                width: 100%;
+              }
             }
             .thumbnail-container img{
               margin: 0 0.5rem;
@@ -65,7 +69,7 @@
             content: "<";
             position: absolute;
             bottom: 0;
-            left: 30%;
+            left: 23%;
             color: black;
             font-size: 12px;
             transform: translateY(100%);
@@ -75,7 +79,7 @@
             content: ">";
             position: absolute;
             bottom: 0;
-            left: 70%;
+            left: 76%;
             color: black;
             font-size: 12px;
             transform: translateY(100%);

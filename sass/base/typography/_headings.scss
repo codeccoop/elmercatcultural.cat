@@ -34,7 +34,7 @@ h2,
   font-size: $font__size-title-2;
   line-height: $font__line-height-title-2;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 
   .is-mobile & {
     font-size: $font__size-title-2-mobile;
@@ -74,4 +74,5 @@ h6 + .subtitle,
   font-size: $font__size-subtitle;
   line-height: $font__line-height-subtitle;
   margin-top: -1em;
+  letter-spacing: 0;
 }
