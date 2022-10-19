@@ -1,3 +1,4 @@
+
 .site-main.post {
     .post-header {
       border-bottom: 2px solid $color__theme-secondary;
@@ -12,8 +13,12 @@
         .post-content__inscription{
             flex:1;
             padding-right: 1.5rem;
+            margin-top: 1rem;
             p {
               margin-top:0;
+              &.small{
+                margin-bottom: 1.5rem;
+              }
             }
             .artistic-description p{
               font-size: $font__size-small;
@@ -25,8 +30,9 @@
             border-left: 2px solid $color__theme-secondary;
             padding-left: $size__site-padding;
             align-items: flex-start;
+            padding-top: 1rem;
             .description-text {
-              @include m-columns-width(9, all);
+              @include m-columns-width(8.5, all);
               margin-left: auto;
               margin-bottom: 7rem;
               p {
@@ -34,7 +40,7 @@
               }
             }
             .video-container{
-              @include m-columns-width(9, all);
+              @include m-columns-width(8.5, all);
               margin-left: auto;
               margin-top: 8rem;
               iframe {
@@ -54,7 +60,7 @@
         max-width: 100vw;
         //max-height: calc(100vh - var(--header-height));
         //width: vw(55);
-        @include m-columns-width(9, all);
+        @include m-columns-width(8.5, all);
         margin-left: auto;
       }
       .carroussel-content {
@@ -69,7 +75,7 @@
             content: "<";
             position: absolute;
             bottom: 0;
-            left: 23%;
+            left: 22%;
             color: black;
             font-size: 12px;
             transform: translateY(100%);
@@ -79,7 +85,7 @@
             content: ">";
             position: absolute;
             bottom: 0;
-            left: 76%;
+            left: 77%;
             color: black;
             font-size: 12px;
             transform: translateY(100%);
