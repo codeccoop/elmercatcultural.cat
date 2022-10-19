@@ -1,12 +1,30 @@
-a {
+a,
+.link {
+  display: inline;
   cursor: pointer;
   color: $color__font-primary;
   text-decoration: none;
 
+  &.small {
+    font-size: $font__size-small;
+    line-height: $font__line-height-small;
+  }
+
+  &.underline,
+  > .underline {
+    text-decoration: none;
+    padding: 0 0.1em;
+    padding-bottom: 0;
+    border-bottom: 0.15em solid transparent;
+    transition: border-bottom 100ms ease, color 100ms ease;
+    text-decoration: none;
+  }
+
   .mobile & {
     text-decoration: underline;
+    text-decoration-thickness: 0.15em;
+    border-bottom: none;
   }
-  // text-decoration: underline;
 
   &.small-title {
     font-family: $font__secondary;
@@ -14,20 +32,20 @@ a {
     font-size: $font__size-small;
   }
 
-  // &:visited {
-  //   color: $color__link;
-  // }
+  &:visited {
+  }
 
   &:hover,
   &:focus,
   &:active {
-    text-decoration: underline;
-    // color: $color__link;
+    &.underline,
+    > .underline {
+      border-bottom-color: revert;
+    }
   }
 
-  // &:focus {
-  //   outline: thin dotted;
-  // }
+  &:focus {
+  }
 
   &:hover,
   &:active {

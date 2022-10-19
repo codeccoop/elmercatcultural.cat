@@ -8,7 +8,12 @@ textarea {
   font-family: $font__primary;
   font-size: $font__size;
   line-height: $font__line-height;
+
+  &.small {
+    font-size: $font__size-small;
+    line-height: $font__line-height-small;
+  }
 }
 
-@import "headings";
-@import "copy";
+@import 'headings';
+@import 'copy';

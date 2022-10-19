@@ -40,25 +40,6 @@ $page_ID = get_option('page_on_front');
             endif; ?>
         </div>
     </section>
-    <?php /*
-    <section id="highlight-links" class="front-page__section">
-        <div class="front-page__highlight-links">
-            <?php
-            $programacio = get_page_by_title('programacio');
-            $tallers = get_page_by_title('tallers');
-            ?>
-            <div class="front-page__highlight-link">
-                <a href="<?= get_page_link($programacio); ?>">
-                    Programació Cultural
-                </a>
-            </div>
-            <div class="front-page__highlight-link">
-                <a href="<?= get_page_link($tallers); ?>">
-                    Tallers i cursos
-                </a>
-            </div>
-        </div>
-        </section> */ ?>
     <section id="barris" class="front-page__section">
         <div class="front-page__highlight-links">
             <?php
@@ -68,17 +49,17 @@ $page_ID = get_option('page_on_front');
             ?>
             <div class="front-page__highlight-link">
                 <a href="<?= $links['link-1']['url']; ?>">
-                    <?= $links['link-1']['text']; ?>
+                    <span class="underline"><?= $links['link-1']['text']; ?></span>
                 </a>
             </div>
             <div class="front-page__highlight-link">
                 <a href="<?= $links['link-2']['url']; ?>">
-                    <?= $links['link-2']['text']; ?>
+                    <span class="underline"><?= $links['link-2']['text']; ?></span>
                 </a>
             </div>
             <div class="front-page__highlight-link">
                 <a href="<?= $links['link-3']['url']; ?>">
-                    <?= $links['link-3']['text']; ?>
+                    <span class="underline"><?= $links['link-3']['text']; ?></span>
                 </a>
             </div>
         </div>
@@ -86,7 +67,7 @@ $page_ID = get_option('page_on_front');
             <?php $section = get_field('section-1', $page_ID); ?>
             <h2><?= $section['title']; ?></h2>
             <p><?= $section['text']; ?></p>
-            <a href="<?= $section['link']['url']; ?>" class="button"><?= $section['link']['text'] ?></a>
+            <a href="<?= $section['link']['url']; ?>" class="underline small"><?= $section['link']['text'] ?></a>
         </div>
     </section>
     <section id="participa" class="front-page__section">
@@ -94,7 +75,7 @@ $page_ID = get_option('page_on_front');
             <?php $section = get_field('section-2', $page_ID); ?>
             <h2><?= $section['title']; ?></h2>
             <p><?= $section['text']; ?></p>
-            <a href="<?= $section['link']['url']; ?>" class="button"><?= $section['link']['text'] ?></a>
+            <a href="<?= $section['link']['url']; ?>" class="underline small"><?= $section['link']['text'] ?></a>
         </div>
     </section>
 </main>
