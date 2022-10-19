@@ -1,23 +1,25 @@
 a.button,
 button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
   color: $color__font-primary;
   text-decoration: none;
   border: none;
   outline: none;
   background-color: transparent;
-  font-weight: bold;
-  font-family: "Krona One", sans-serif;
+  font-family: 'Krona One', sans-serif;
   cursor: pointer;
-  padding: 0.2em;
-  border-bottom: 0.2em solid transparent;
-  transition: border-bottom 150ms ease;
+  padding: 0.1em;
+  padding-bottom: 0.05em;
+  border-bottom: 0.15em solid transparent;
+  transition: border-bottom 100ms ease, color 100ms ease;
   text-transform: uppercase;
 
-  &:hover {
-    border-bottom: 0.2em solid;
+  &:hover,
+  &:focus,
+  &:active {
+    border-bottom-color: revert;
   }
 
   &:active,

@@ -1,6 +1,6 @@
 .front-page__section {
   display: block;
-  padding: 5rem columns_width(2, 'side') + $size__site-padding 5rem;
+  padding: 6.25rem columns_width(2, 'side') + $size__site-padding 6.25rem;
   width: vw(100);
 
   &#highlights {
@@ -31,6 +31,24 @@
 
   p:last-of-type {
     margin-bottom: 3rem;
+  }
+
+  a {
+    position: relative;
+    text-transform: uppercase;
+    font-family: $font__secondary;
+
+    &:after {
+      position: absolute;
+      content: '>';
+      right: 0px;
+      top: 50%;
+      transform: translate(calc(100% + 0.35em), -50%);
+    }
+
+    &:hover {
+      color: $white;
+    }
   }
 }
 
@@ -88,7 +106,7 @@
     padding: 0;
 
     > li {
-      margin-right: 0.5rem;
+      margin-right: 0.65rem;
 
       &:last-child {
         margin-right: 0;
@@ -102,10 +120,10 @@
       > button {
         cursor: pointer;
         border-radius: 50%;
-        border: 2px solid $white;
+        border: 1.5px solid $white;
         background-color: transparent;
-        width: 16px;
-        height: 16px;
+        width: 13px;
+        height: 13px;
         font-size: 0px;
       }
     }
@@ -115,8 +133,8 @@
 .front-page__highlight-links {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
   border-color: $white;
 
   @include m-media(md) {
@@ -131,15 +149,14 @@
     margin: 0.5rem 0;
     text-align: center;
     align-items: center;
-    border-bottom: 1px solid;
+    border-bottom: 2px solid;
     border-color: $white;
-    font-weight: bold;
     font-family: $font__secondary;
 
     @include m-media(md) {
       margin: 3.5rem 0;
       border-bottom: none;
-      border-right: 1px solid;
+      border-right: 2px solid $white;
     }
 
     &:last-child {
@@ -152,9 +169,8 @@
       width: 100%;
       padding: 2rem 3rem;
       color: $color__font-primary;
-      text-decoration: none;
+      line-height: 1.8;
       text-transform: uppercase;
-      text-align: center;
 
       &:hover {
         color: $white;
