@@ -21,6 +21,11 @@ h1,
   line-height: $font__line-height-title;
   font-weight: 400;
   letter-spacing: 0.035em;
+
+  .is-mobile & {
+    font-size: $font__size-title-mobile;
+    // line-height: $font__line-height-title-mobile;
+  }
 }
 
 h2,
@@ -30,6 +35,18 @@ h2,
   line-height: $font__line-height-title-2;
   font-weight: 400;
   letter-spacing: 0.02em;
+
+  .is-mobile & {
+    font-size: $font__size-title-2-mobile;
+    // line-height: $font__line-height-title-2-mobile;
+  }
+}
+
+.is-mobile {
+  h2,
+  .title.is-2 {
+    font-size: $font__size-title-2-mobile;
+  }
 }
 
 h3,
@@ -40,6 +57,11 @@ h6,
   font-size: $font__size-heading;
   line-height: $font__line-height-heading;
   text-transform: none;
+
+  .is-mobile & {
+    font-size: $font__size-heading-mobile;
+    // line-height: $font__line-height-heading-mobile;
+  }
 }
 
 h1 + .subtitle,

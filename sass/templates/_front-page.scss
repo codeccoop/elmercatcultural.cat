@@ -29,10 +29,6 @@
   margin-left: column_outer_width(1);
   padding: column_outer_width(1) column_outer_width(2);
 
-  h2 {
-    font-size: 3rem;
-  }
-
   p:last-of-type {
     margin-bottom: 3rem;
   }
@@ -118,24 +114,36 @@
 
 .front-page__highlight-links {
   display: flex;
+  flex-direction: column;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: $white;
-  margin: 1rem columns_width(2, 'side') * -1 8rem;
-  @include m-columns_width();
+
+  @include m-media(md) {
+    flex-direction: row;
+    margin: 1rem columns_width(2, 'side') * -1 8rem;
+    @include m-columns_width();
+  }
 
   .front-page__highlight-link {
     flex: 1;
     display: flex;
-    margin: 3.5rem 0;
+    margin: 0.5rem 0;
     text-align: center;
     align-items: center;
-    border-right: 1px solid;
+    border-bottom: 1px solid;
     border-color: $white;
     font-weight: bold;
     font-family: $font__secondary;
 
+    @include m-media(md) {
+      margin: 3.5rem 0;
+      border-bottom: none;
+      border-right: 1px solid;
+    }
+
     &:last-child {
+      border-bottom: none;
       border-right: none;
     }
 

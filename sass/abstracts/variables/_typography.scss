@@ -1,6 +1,6 @@
 // stylelint-disable value-keyword-case
-$font__primary: Montserrat, "Helvetica Neue", sans-serif;
-$font__secondary: "Krona One", sans-serif;
+$font__primary: Montserrat, 'Helvetica Neue', sans-serif;
+$font__secondary: 'Krona One', sans-serif;
 $font__pre: monospace;
 // stylelint-enable value-keyword-case
 $font__size: 16px;
@@ -18,3 +18,11 @@ $font__line-height-title-2: 1.2;
 $font__line-height-heading: 1.4;
 $font__line-height-subtitle: 1;
 $font__line-height-small: 1.25;
+
+$font__size-title-mobile: $font__size * 2.5;
+$font__size-title-2-mobile: $font__size * 2;
+$font__size-heading-mobile: $font__size * 1;
+
+$font__line-height-title-mobile: 1.2;
+$font__line-height-title-2-mobile: 1.2;
+$font__line-height-heading-mobile: 1.4;
