@@ -12,14 +12,14 @@ input[type='submit'] {
   cursor: pointer;
   padding: 0.1em;
   padding-bottom: 0.05em;
-  border-bottom: 0.15em solid transparent;
-  transition: border-bottom 100ms ease, color 100ms ease;
+  // border-bottom: 0.15em solid transparent;
+  // transition: border-bottom 100ms ease, color 100ms ease;
   text-transform: uppercase;
 
   &:hover,
   &:focus,
   &:active {
-    border-bottom-color: revert;
+    border-bottom: 0.15em solid;
   }
 
   &:active,

@@ -124,8 +124,8 @@
     </div>
     <div class="site-info">
         <p class="small">
-            Web creada i dissenyada per <a href="https://www.codeccoop.org" target="_blank">Còdec</a>
-            (programació) i <a>Maria Coll</a> (diseny)
+            Web creada i dissenyada per <a class="underline" href="https://www.codeccoop.org" target="_blank">Còdec</a>
+            (programació) i <a class="underline" href="http://mariacollsague.com/projects/" target="_blank">Maria Coll</a> (diseny)
         </p>
     </div>
 </footer>

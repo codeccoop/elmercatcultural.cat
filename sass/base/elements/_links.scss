@@ -15,8 +15,9 @@ a,
     text-decoration: none;
     padding: 0 0.1em;
     padding-bottom: 0;
-    border-bottom: 0.15em solid transparent;
-    transition: border-bottom 100ms ease, color 100ms ease;
+    // border-bottom: 0.15em solid;
+    // border-bottom-color: transparent;
+    transition: border-bottom-color 100ms ease, color 100ms ease;
     text-decoration: none;
   }
 
@@ -40,7 +41,7 @@ a,
   &:active {
     &.underline,
     > .underline {
-      border-bottom-color: revert;
+      border-bottom: 0.15em solid;
     }
   }
 
