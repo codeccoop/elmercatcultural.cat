@@ -23,7 +23,7 @@ a,
 
   .mobile & {
     text-decoration: underline;
-    text-decoration-thickness: 0.15em;
+    text-decoration-thickness: 0.1em;
     border-bottom: none;
   }
 
@@ -38,10 +38,11 @@ a,
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &.active {
     &.underline,
     > .underline {
-      border-bottom: 0.15em solid;
+      border-bottom: 0.1em solid;
     }
   }
 
