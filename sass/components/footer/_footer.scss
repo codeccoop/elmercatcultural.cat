@@ -12,6 +12,14 @@
   max-width: 600px;
   width: 100%;
 
+  .page-template-default:not(.home) & {
+    border-top: 1px solid;
+
+    @include m-media(md) {
+      border-top: none;
+    }
+  }
+
   @include m-media(md) {
     max-width: unset;
     flex-direction: row;

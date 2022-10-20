@@ -50,6 +50,11 @@
             <div class="description-text">
                 <?php the_field('description_event', $post_id); ?>
             </div>
+            <?php if (get_field('video', $post_id)) { ?>
+                <div class="video-container">
+                    <?php the_field('video', $post_id); ?>
+                </div>
+            <?php } ?>
             <?php
             $has_images = false;
             if (get_field('carroussel_event', $post_id)) {
@@ -93,12 +98,6 @@
 
             <?php }
             } ?>
-            <?php if (get_field('video', $post_id)) { ?>
-                <div class="video-container">
-                    <?php the_field('video', $post_id); ?>
-                </div>
-            <?php } ?>
-
         </div>
 
 
