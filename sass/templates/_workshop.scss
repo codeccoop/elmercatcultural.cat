@@ -1,12 +1,20 @@
 .site-main.post {
-    .type-workshop {
-      .post-header {
-        border-bottom: 2px solid $color__theme-tertiary;
-      }
-      .post-content{
-        .post-content__description{
-          border-left: 2px solid $color__theme-tertiary;
+  .type-workshop {
+    .post-header {
+      border-bottom: 3px solid $color__theme-secondary;
+    }
+
+    .post-content {
+      .post-content__description {
+        @include m-media(zr, md) {
+          border-top: 3px solid $color__theme-secondary;
+        }
+
+        @include m-media(md) {
+          border-left: 3px solid $color__theme-secondary;
         }
       }
-    }    
+    }
+  }
 }
+

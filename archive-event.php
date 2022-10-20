@@ -11,7 +11,7 @@ get_header();
     <header class="page-header">
         <h2 class="page-title"><?= get_the_title() ?></h2>
         <p class="page-description">
-            <?= get_the_excerpt() ?>
+            <?= get_the_content() ?>
         </p>
     </header><!-- .page-header -->
     <div class="page-content">

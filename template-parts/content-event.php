@@ -15,7 +15,7 @@
     <header class="post-header">
         <?php $parent_page = get_page(22); ?>
         <a href="<?= get_page_link($parent_page); ?>">
-            <p class="page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
+            <p class="underline page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
         </a>
         <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
     </header><!-- .entry-header -->
