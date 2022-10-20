@@ -14,7 +14,9 @@
     <header class="page-header">
         <?php $tags = wp_get_post_tags(get_the_ID());
         if (sizeof($tags) > 0) : ?>
-            <p class="page-breadcrumb small"><?= $tags[0]->name; ?></p>
+            <a href="/">
+                <p class="underline page-breadcrumb small"><?= $tags[0]->name; ?></p>
+            </a>
         <?php endif; ?>
         <?php the_title('<h2 class="page-title">', '</h2>'); ?>
     </header><!-- .entry-header -->

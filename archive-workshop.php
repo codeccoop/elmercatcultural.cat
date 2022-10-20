@@ -15,11 +15,11 @@ get_header();
         </p>
     </header><!-- .page-header -->
     <nav class="workshop-archive__filters archive__filters">
-        Filtra per categoria d'espectacle:
-        <a data-term="all" class="workshop-archive__filter archive__filter async-filter">Tots</a>
-        <a data-term="comunitari" class="workshop-archive__filter archive__filter async-filter">Comunitari</a>
-        <a data-term="cultura" class="workshop-archive__filter archive__filter async-filter">Cultura</a>
-        <a data-term="ecosocial" class="workshop-archive__filter archive__filter async-filter">Ecosocial</a>
+        <span>Filtra per categoria d'espectacle:</span>
+        <a data-term="all" class="small underline workshop-archive__filter archive__filter async-filter">Tots</a>
+        <a data-term="comunitari" class="small underline workshop-archive__filter archive__filter async-filter">Comunitari</a>
+        <a data-term="cultura" class="small underline workshop-archive__filter archive__filter async-filter">Cultura</a>
+        <a data-term="ecosocial" class="small underline workshop-archive__filter archive__filter async-filter">Ecosocial</a>
     </nav>
     <div class="workshop-archive__grid async-grid">
     </div>

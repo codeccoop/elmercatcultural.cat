@@ -136,6 +136,7 @@
   border-top: 2px solid;
   border-bottom: 2px solid;
   border-color: $white;
+  margin: 1rem 0 8rem;
 
   @include m-media(md) {
     flex-direction: row;
@@ -167,10 +168,14 @@
     a {
       display: block;
       width: 100%;
-      padding: 2rem 3rem;
+      padding: 2rem 0;
       color: $color__font-primary;
       line-height: 1.8;
       text-transform: uppercase;
+
+      @include m-media(md) {
+        padding: 2rem 3rem;
+      }
 
       &:hover {
         color: $white;
