@@ -11,19 +11,6 @@
   .admin-bar & {
     top: var(--wp-admin--admin-bar--height);
   }
-  &.toggled{
-    ul {
-      position: initial;
-      display: block;
-      height: 100vh;
-      width: 100%;
-    }
-    li {
-      font-size: $font__size-small;
-      height: 7rem;
-      border-right: none;
-    }
-  }
 
   ul {
     align-items: center;
@@ -42,7 +29,6 @@
       padding: 0 1rem;
       border-right: 2px solid $color__theme-primary;
       display: flex;
-      height: 1.5rem;
       align-items: center;
       a {
         font-size: $font__size-small;
@@ -53,47 +39,49 @@
         border-right: none;
       }
 
-      ul.sub-menu {
-        @include m-columns-width(4);
-        position: fixed;
-        z-index: 300;
-        top: 0;
-        right: -50%;
-        height: 100vh;
-        flex-direction: column;
-        padding: 0;
-        margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
-        background-color: white;
-        transition: right 500ms ease-in-out;
-
-        li {
+      @include m-media(md){
+        ul.sub-menu {
           @include m-columns-width(4);
-          border-bottom: 2px solid $color__theme-primary;
-          border-right: none;
-          padding: 1rem 0;
-          height: 7rem;
-          &:hover {
-            background-color: black;
-            a {
-              color: white;
-            }
-          }
-          a {
-            font-size: $font__size-nav-submenu;
-            font-family: $font__secondary;
-            font-weight: 400;
-            color: black;
-            padding: 1rem 3rem;
+          position: fixed;
+          z-index: 300;
+          top: 0;
+          right: -50%;
+          height: 100vh;
+          flex-direction: column;
+          padding: 0;
+          margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
+          background-color: white;
+          transition: right 500ms ease-in-out;
+  
+          li {
+            @include m-columns-width(4);
+            border-bottom: 2px solid $color__theme-primary;
+            border-right: none;
+            padding: 1rem 0;
+            height: 7rem;
             &:hover {
-              color: white;
-              
+              background-color: black;
+              a {
+                color: white;
+              }
+            }
+            a {
+              font-size: $font__size-nav-submenu;
+              font-family: $font__secondary;
+              font-weight: 400;
+              color: black;
+              padding: 1rem 3rem;
+              &:hover {
+                color: white;
+                
+              }
             }
           }
         }
-      }
-      &.focus .sub-menu {
-        right: 0;
-        //afegir propietats opacitat body
+        &.focus .sub-menu {
+          right: 0;
+          //afegir propietats opacitat body
+        }
       }
     }
 
@@ -110,91 +98,91 @@
       }
     }
   }
-
-  .current_page_item > a,
-  .current-menu-item > a,
-  .current_page_ancestor > a,
-  .current-menu-ancestor > a {
-    /* */
-  }
-  // #menu-close {
-  //   cursor: pointer;
-  //   position: fixed;
-  //   z-index: 300;
-  //   top: 85%;
-  //   right: -50%;
-  //   background-color: white;
-  //   border: none;
-  //   color: $color__theme-primary;
-  //   // font-size: 2.5rem;
-  //   // font-weight: 100;
-  //   height: 30px;
-  //   width: 30px;
-  //   transition: right 500ms ease-in-out;
-  //   &.focus {
-  //     right: 2%;
-  //   }
-  // }
-  #menu-close {
-    position: fixed;
-    cursor: pointer;
-    z-index: 300;
-    top: 85%;
-    right: -50%;
-    width: 32px;
-    height: 32px;
-    transition: right 500ms ease-in-out;
-    &.focus {
-    right: 2%;
+  @include m-media(md){
+    #menu-close {
+      position: fixed;
+      cursor: pointer;
+      z-index: 300;
+      top: 85%;
+      right: -50%;
+      width: 32px;
+      height: 32px;
+      transition: right 500ms ease-in-out;
+      &.focus {
+      right: 2%;
+      }
+    }
+    #menu-close:before, #menu-close:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: $color__theme-primary;;
+    }
+    #menu-close:before {
+      transform: rotate(45deg);
+    }
+    #menu-close:after {
+      transform: rotate(-45deg);
     }
   }
-  #menu-close:before, #menu-close:after {
-    position: absolute;
-    left: 15px;
-    content: ' ';
-    height: 33px;
-    width: 2px;
-    background-color: $color__theme-primary;;
-  }
-  #menu-close:before {
-    transform: rotate(45deg);
-  }
-  #menu-close:after {
-    transform: rotate(-45deg);
-  }
+}
+@include m-media(md){
+  div.veil {
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    opacity: 0;
+    position: fixed;
+    top: $size__site-header;
+    left: 0;
+    z-index: 100;
+    display: block;
+    transition: opacity 500ms ease-in;
+    pointer-events: none;
   
+    .admin-bar & {
+      top: calc(#{$size__site-header} + var(--wp-admin--admin-bar--height));
+    }
+  
+    &.show {
+      opacity: 0.4;
+      pointer-events: all;
+    }
+  } 
 }
-
-div.veil {
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0);
-  opacity: 0;
-  position: fixed;
-  top: $size__site-header;
-  left: 0;
-  z-index: 100;
-  display: block;
-  transition: opacity 500ms ease-in;
-  pointer-events: none;
-
-  .admin-bar & {
-    top: calc(#{$size__site-header} + var(--wp-admin--admin-bar--height));
-  }
-
-  &.show {
-    opacity: 0.4;
-    pointer-events: all;
-  }
-}
-/* Small menu. */
-.menu-toggle,
+  /* Small menu. */
 .main-navigation.toggled {
-  ul {
+  .main-navigation-container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    left: 0px;
+    top: $size__site-header;
+  }
+  #primary-menu {
     display: block;
     background-color: white;
-    position: initial;
+    width: 100vw;
+    height: 100vh;
+    margin-top: $size__site-header;
+    li{
+      display: block;
+      border: none;
+      ul.sub-menu{
+        display: none;
+        li{
+          border: none;
+        }
+      }
+      &.focus .sub-menu {
+        display: block;
+      }
+    }
   }
+
 }
 .menu-toggle {
   background-color: transparent;
@@ -264,4 +252,3 @@ div.veil {
     display: none;
   }
 }
-

@@ -70,8 +70,11 @@
 	for ( const link of linksWithChildren ) {
 		link.addEventListener( 'click', openSidebar);
 	}
-	/**Sets or removes class focus and displays veiled div and hiddens overflow to block scrolling*/
-	function openSidebar (ev){
+	/**
+	 *Sets or removes class focus and displays veiled div and hiddens overflow to block scrolling
+	 * @param  ev
+	 */
+	function openSidebar (ev) {
 		ev.preventDefault();//to prevent navigation when you click an a element with children
 		for ( const link of linksWithChildren ) {
 			link.parentNode.classList.remove( 'focus'); //select parentNode of the a element, in this case a li element
@@ -79,17 +82,20 @@
 		ev.target.parentNode.classList.add('focus');
 		closeButton.classList.add('focus');
 		document.getElementsByClassName('veil')[0].classList.add('show');
-		document.body.style.overflow="hidden";
+		document.body.style.overflow='hidden';
 		document.addEventListener('click', onClickOut);
 	};
-	/**removes class focus when clicking outside menu, hiddens div and allows scrolling*/
-	function onClickOut (ev){
-		if(!menu.contains(ev.target)){//if we do not click on the menu, then remove classes
+	/**
+	 *removes class focus when clicking outside menu, hiddens div and allows scrolling
+	 * @param  ev
+	 */
+	function onClickOut( ev) {
+		if (! menu.contains(ev.target)) {//if we do not click on the menu, then remove classes
 			for ( const link of linksWithChildren ) {
 				link.parentNode.classList.remove( 'focus');
 				closeButton.classList.remove('focus');
-				document.getElementsByClassName('veil')[0].classList.remove('show');
-				document.body.style.overflow="scroll";
+				document.getElementsByClassName( 'veil')[0].classList.remove('show');
+				document.body.style.overflow = 'scroll';
 			}
 			document.removeEventListener('click', onClickOut);
 		}
