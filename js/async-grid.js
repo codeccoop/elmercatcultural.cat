@@ -97,9 +97,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		caption.innerHTML =
       '<b class="title is.3">' +
       datum.title +
-      '</b><br/>' +
-      'Inici: ' +
-      ( datum.date || '12-07-2022' );
+      '</b>' +
+      ( datum.date ? '<br/>Data: ' + datum.date : '' ) +
+      ( datum.hour ? '<br/>Horari: ' + datum.hour : '' );
 
 		anchor.appendChild( caption );
 		el.appendChild( anchor );

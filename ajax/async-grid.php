@@ -15,6 +15,8 @@ if (!function_exists('emc_get_grid_items')) {
             'posts_per_page' => 9,
             'offset' => ($page - 1) * 9
         );
+
+        echo print_r($args);
         if ($term != 'all') {
             $args['category_name'] = $term;
         }
@@ -29,16 +31,22 @@ if (!function_exists('emc_get_grid_items')) {
             $query->the_post();
             $ID = get_the_ID();
             $thumbnail = get_the_post_thumbnail_url($ID);
+            $date = get_field('date', $ID);
+            $hour = get_field('hour', $ID);
+
             if (!$thumbnail) {
                 $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
             }
+
             array_push($data['posts'], array(
                 'id' => $ID,
                 'title' => get_the_title($ID),
                 'category' => get_the_category($ID),
                 'excerpt' => get_the_excerpt($ID),
                 'url' => get_post_permalink($ID),
-                'thumbnail' => $thumbnail
+                'thumbnail' => $thumbnail,
+                'date' => $date,
+                'hour' => $hour
             ));
         }
 

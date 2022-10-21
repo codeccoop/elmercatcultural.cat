@@ -242,7 +242,7 @@ function wip_redirection()
         wp_redirect('/wip.html');
     }
 }
-add_action('template_redirect', 'wip_redirection');
+// add_action('template_redirect', 'wip_redirection');
 /**
  * Load shortcodes
  */

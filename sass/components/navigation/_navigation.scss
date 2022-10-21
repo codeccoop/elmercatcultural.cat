@@ -1,16 +1,10 @@
 .main-navigation {
-  flex: 2;
-  // left: -4.4vw;
-  // padding: 0 4.4vw;
-  z-index: 300;
+  flex: 1;
   display: flex;
   height: $size__site-header;
   background-color: white;
   justify-content: flex-end;
-
-  .admin-bar & {
-    top: var(--wp-admin--admin-bar--height);
-  }
+  position: relative;
 
   ul {
     align-items: center;
@@ -20,7 +14,8 @@
     padding-left: 0;
     height: $size__site-header;
     display: none;
-    @include m-media(sm){
+
+    @include m-media(md) {
       display: flex;
     }
 
@@ -30,6 +25,7 @@
       border-right: 2px solid $color__theme-primary;
       display: flex;
       align-items: center;
+
       a {
         font-size: $font__size-small;
         font-weight: 600;
@@ -39,22 +35,27 @@
         border-right: none;
       }
 
-      @include m-media(md){
+      @include m-media(md) {
         ul.sub-menu {
           @include m-columns-width(4);
+          min-width: 350px;
           position: fixed;
           z-index: 300;
-          top: 0;
+          top: $size__site-header;
           right: -50%;
-          height: 100vh;
+          height: calc(100vh - #{$size__site-header});
           flex-direction: column;
           padding: 0;
-          margin: 82px 0; //!!!aquest margin hauria de calcular-se millor
           background-color: white;
           transition: right 500ms ease-in-out;
-  
+
+          .admin-bar & {
+            top: calc(#{$size__site-header} + var(--wp-admin--admin-bar--height));
+          }
+
           li {
             @include m-columns-width(4);
+            min-width: 350px;
             border-bottom: 2px solid $color__theme-primary;
             border-right: none;
             padding: 1rem 0;
@@ -73,7 +74,6 @@
               padding: 1rem 3rem;
               &:hover {
                 color: white;
-                
               }
             }
           }
@@ -98,7 +98,7 @@
       }
     }
   }
-  @include m-media(md){
+  @include m-media(md) {
     #menu-close {
       position: fixed;
       cursor: pointer;
@@ -109,16 +109,17 @@
       height: 32px;
       transition: right 500ms ease-in-out;
       &.focus {
-      right: 2%;
+        right: 2%;
       }
     }
-    #menu-close:before, #menu-close:after {
+    #menu-close:before,
+    #menu-close:after {
       position: absolute;
       left: 15px;
       content: ' ';
       height: 33px;
       width: 2px;
-      background-color: $color__theme-primary;;
+      background-color: $color__theme-primary;
     }
     #menu-close:before {
       transform: rotate(45deg);
@@ -128,7 +129,7 @@
     }
   }
 }
-@include m-media(md){
+@include m-media(md) {
   div.veil {
     width: 100%;
     height: 100%;
@@ -137,24 +138,24 @@
     position: fixed;
     top: $size__site-header;
     left: 0;
-    z-index: 100;
+    z-index: 99;
     display: block;
     transition: opacity 500ms ease-in;
     pointer-events: none;
-  
+
     .admin-bar & {
       top: calc(#{$size__site-header} + var(--wp-admin--admin-bar--height));
     }
-  
+
     &.show {
       opacity: 0.4;
       pointer-events: all;
     }
-  } 
+  }
 }
-  /* Small menu. */
+/* Small menu. */
 .main-navigation.toggled {
-  .main-navigation-container{
+  .main-navigation-container {
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -168,12 +169,12 @@
     width: 100vw;
     height: 100vh;
     margin-top: $size__site-header;
-    li{
+    li {
       display: block;
       border: none;
-      ul.sub-menu{
+      ul.sub-menu {
         display: none;
-        li{
+        li {
           border: none;
         }
       }
@@ -182,7 +183,6 @@
       }
     }
   }
-
 }
 .menu-toggle {
   background-color: transparent;
@@ -197,7 +197,7 @@
   top: 50%;
   transform: translate(0, -50%);
 
-  @include m-media(sm) {
+  @include m-media(md) {
     width: 40px;
     height: 40px;
   }
@@ -206,7 +206,7 @@
     .burger::after {
       transform: translate(0, -5.6px) rotate(45deg);
 
-      @include m-media(sm) {
+      @include m-media(md) {
         transform: translate(0, -7.5px) rotate(45deg);
       }
     }
@@ -214,7 +214,7 @@
     .burger::before {
       transform: translate(0, 5.6px) rotate(-45deg);
 
-      @include m-media(sm) {
+      @include m-media(md) {
         transform: translate(0, 7.5px) rotate(-45deg);
       }
     }
@@ -247,7 +247,7 @@
   }
 }
 
-@include m-media(sm) {
+@include m-media(md) {
   .menu-toggle {
     display: none;
   }
