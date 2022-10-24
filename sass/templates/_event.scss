@@ -1,6 +1,7 @@
 .site-main.post {
+  margin-bottom: 6.5rem;
   .post-header {
-    border-bottom: 3px solid $color__theme-tertiary;
+    border-bottom: 2px solid $color__theme-tertiary;
 
     .page-breadcrumb {
       width: fit-content;
@@ -24,6 +25,7 @@
     .post-content__inscription {
       flex: 1;
       padding-right: 1.5rem;
+      margin-top: 1.1rem;
 
       p {
         margin-top: 0;
@@ -41,12 +43,13 @@
 
       @include m-media(zr, md) {
         padding-top: 3rem;
-        border-top: 3px solid $color__theme-tertiary;
+        border-top: 2px solid $color__theme-tertiary;
       }
 
       @include m-media(md) {
+        padding-top: 1.1rem;
         padding-left: $size__site-padding;
-        border-left: 3px solid $color__theme-tertiary;
+        border-left: 2px solid $color__theme-tertiary;
       }
 
       .description-text {
@@ -65,6 +68,9 @@
       .video-container {
         width: 100%;
         margin-top: 3rem;
+        @include m-media(md) {
+          margin-top: 8rem;
+        }
 
         iframe {
           width: 100%;
@@ -74,6 +80,7 @@
             @include m-columns-width(9, all);
             margin-left: auto;
             height: 40vh;
+            
           }
 
           @include m-media(lg) {
@@ -105,6 +112,8 @@
     @include m-media(md) {
       @include m-columns-width(9, all);
       margin-left: auto;
+      margin-top: 8rem;
+      margin-bottom: 1.5rem;
     }
   }
   .carroussel-content {
@@ -120,7 +129,7 @@
       content: '<';
       position: absolute;
       bottom: 0;
-      left: 30%;
+      left: 23%;
       color: black;
       font-size: 12px;
       transform: translateY(100%);
@@ -130,7 +139,7 @@
       content: '>';
       position: absolute;
       bottom: 0;
-      left: 70%;
+      left: 76%;
       color: black;
       font-size: 12px;
       transform: translateY(100%);
