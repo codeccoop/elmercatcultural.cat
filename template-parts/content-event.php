@@ -14,9 +14,13 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="post-header">
         <?php $parent_page = get_page(22); ?>
-        <a href="<?= get_page_link($parent_page); ?>">
+        <div class="post-header__buttons">
             <p class="underline page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
-        </a>
+            <a href="<?= get_page_link($parent_page); ?>">
+            <p class="small"> < &nbsp&nbspTORNAR </p>
+            </a>
+        </div>
+        
         <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
     </header><!-- .entry-header -->
 
@@ -50,11 +54,6 @@
             <div class="description-text">
                 <?php the_field('description_event', $post_id); ?>
             </div>
-            <?php if (get_field('video', $post_id)) { ?>
-                <div class="video-container">
-                    <?php the_field('video', $post_id); ?>
-                </div>
-            <?php } ?>
             <?php
             $has_images = false;
             if (get_field('carroussel_event', $post_id)) {
@@ -98,6 +97,11 @@
 
             <?php }
             } ?>
+            <?php if (get_field('video', $post_id)) { ?>
+                <div class="video-container">
+                    <?php the_field('video', $post_id); ?>
+                </div>
+            <?php } ?>
         </div>
 
 

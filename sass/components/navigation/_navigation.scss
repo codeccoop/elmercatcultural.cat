@@ -29,6 +29,7 @@
       a {
         font-size: $font__size-small;
         font-weight: 600;
+        line-height: 1.75;
       }
 
       &:last-child {
@@ -103,13 +104,13 @@
       position: fixed;
       cursor: pointer;
       z-index: 300;
-      top: 85%;
       right: -50%;
       width: 32px;
       height: 32px;
       transition: right 500ms ease-in-out;
       &.focus {
         right: 2%;
+        bottom: 4%;
       }
     }
     #menu-close:before,
@@ -172,14 +173,23 @@
     li {
       display: block;
       border: none;
+     
+      a{
+        padding: 1rem;
+      }
       ul.sub-menu {
         display: none;
         li {
-          border: none;
+          border-bottom: 1px solid $color__theme-primary;
+          &:hover{
+            background-color: black;
+            color: white;
+          }
         }
       }
       &.focus .sub-menu {
         display: block;
+        height: auto;
       }
     }
   }

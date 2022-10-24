@@ -18,8 +18,8 @@ get_header();
         <nav class="event-archive__filters archive__filters">
             <span>Filtra per categoria d'espectacle:</span>
             <a data-term="all" class="small underline event-archive__filter archive__filter async-filter">Tots</a>
-            <a data-term="espectacles-i-concerts" class="small underline event-archive__filter archive__filter async-filter">Espectacles i concerts</a>
-            <a data-term="xerrades-cineforums" class="small underline event-archive__filter archive__filter async-filter">Xerrades - Cinefòrums</a>
+            <a data-term="espectacles-i-concerts" class="small underline event-archive__filter archive__filter async-filter">Espectacles i <br> concerts</a>
+            <a data-term="xerrades-cineforums" class="small underline event-archive__filter archive__filter async-filter">Xerrades i <br> Cinefòrums</a>
             <a data-term="cicles" class="small underline event-archive__filter archive__filter async-filter">Cícles</a>
         </nav>
         <div class="event-archive__grid archive__grid async-grid">

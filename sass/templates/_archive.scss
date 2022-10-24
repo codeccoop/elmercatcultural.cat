@@ -1,9 +1,9 @@
 #workshop-archive {
-  background-color: $color__theme-secondary;
+  background-color: $color__theme-tertiary;
 }
 
 #event-archive {
-  background-color: $color__theme-tertiary;
+  background-color: $color__theme-secondary;
 }
 
 .site-main {
@@ -12,6 +12,7 @@
   .page-header {
     padding-top: 8rem;
     padding-bottom: 3rem;
+    @include m-columns-width(10, all);
   }
 
   .page-title {
@@ -33,6 +34,7 @@
   > a {
     display: block;
     width: fit-content;
+    text-align: center;
 
     @include m-media(md) {
       display: inline;
@@ -59,7 +61,6 @@
 }
 
 .archive__filter {
-  color: $white;
   text-transform: uppercase;
   cursor: pointer;
   padding: 0 0.3rem;
@@ -75,6 +76,6 @@
 
   &:hover,
   &.active {
-    color: $color__font-primary;
+    color: $white;
   }
 }
