@@ -162,8 +162,13 @@ function scripts()
     // wp_enqueue_style('mapbox-gl-css');
     wp_register_script('mapbox-gl-js', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js', false);
     // wp_enqueue_script('mapbox-gl-js');
-    wp_enqueue_style('montserrat_font', 'https://fonts.googleapis.com/css2?family=family=Montserrat:ital,wght@0,400;0,700;0,800;1,400', array(), ELMERCATCULTURAL_VERSION, null, 'all');
-    wp_enqueue_style('krona_font', 'https://fonts.googleapis.com/css2?family=Krona+One', array(), ELMERCATCULTURAL_VERSION, null, 'all');
+    // wp_enqueue_style('montserrat_font',
+    # '<link rel="preconnect" href="https://fonts.googleapis.com">
+    # <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    # <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">';
+    // wp_enqueue_style('
+    // wp_enqueue_style('montserrat_font', 'https://fonts.googleapis.com/css2?family=family=Montserrat:ital,wght@0,400;0,700;0,800;1,400&display=swap', array(), ELMERCATCULTURAL_VERSION, null, 'all');
+    // wp_enqueue_style('krona_font', 'https://fonts.googleapis.com/css2?family=Krona+One&display=swap', array(), ELMERCATCULTURAL_VERSION, null, 'all');
 
     if (is_admin()) return;
 
@@ -242,7 +247,7 @@ function wip_redirection()
         wp_redirect('/wip.html');
     }
 }
-// add_action('template_redirect', 'wip_redirection');
+add_action('template_redirect', 'wip_redirection');
 /**
  * Load shortcodes
  */
