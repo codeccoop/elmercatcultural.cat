@@ -16,7 +16,6 @@ if (!function_exists('emc_get_grid_items')) {
             'offset' => ($page - 1) * 9
         );
 
-        echo print_r($args);
         if ($term != 'all') {
             $args['category_name'] = $term;
         }
