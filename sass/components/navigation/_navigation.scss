@@ -162,7 +162,6 @@
     overflow: hidden;
     position: fixed;
     left: 0px;
-    top: $size__site-header;
   }
   #primary-menu {
     display: block;
@@ -170,6 +169,9 @@
     width: 100vw;
     height: 100vh;
     margin-top: $size__site-header;
+    padding-top: 50%;
+    padding-left: 20%;
+    padding-right: 18%;
     li {
       display: block;
       border: none;
