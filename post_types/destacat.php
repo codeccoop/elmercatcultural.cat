@@ -12,7 +12,7 @@ function emc_post_type_destacat()
         'description'   => 'Aquest post es mostrarà al slider de la portada',
         'public'        => true,
         'menu_position' => 3,
-        'supports'      => array('title', 'thumbnail', 'excerpt'),
+        'supports'      => array('title', 'thumbnail'),
         'show_in_rest'  => true,
         'has_archive'   => false,
         # 'taxonomies' => array('category', 'post_tag'),

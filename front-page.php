@@ -32,9 +32,22 @@ $page_ID = get_option('page_on_front');
                     <figcaption class="title">El Mercat Cultural</figcaption>
                 </figure>
                 <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
+                    <?php
+                    $ID = get_the_ID();
+                    $imageURL = get_the_post_thumbnail_url(get_the_ID());
+                    $text = get_field('text', $ID);
+                    $URL = get_field('url', $ID);
+                    ?>
                     <figure class="front-page__jumbotron-item">
-                        <img src="<?= get_the_post_thumbnail_url(get_the_ID()); ?>" />
-                        <figcaption class="title is-3"><?= get_the_excerpt(get_the_ID()) ?></figcaption>
+                        <? if ($URL) : ?>
+                        <a href="<?= $URL; ?>">
+                            <img src="<?= $imageURL; ?>" />
+                            <figcaption class="title is-3"><?= $text; ?></figcaption>
+                        </a>
+                        <? else: ?>
+                        <img src="<?= $imageURL; ?>" /></a>
+                        <figcaption class="title is-3"><?= $text; ?></figcaption>
+                        <? endif; ?>
                     </figure>
             <?php endwhile;
             endif; ?>
