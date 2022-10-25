@@ -1,5 +1,6 @@
 <?php
 add_action('wp_ajax_get_grid_items', 'emc_get_grid_items');
+add_action('wp_ajax_nopriv_get_grid_items', 'emc_get_grid_items');
 
 if (!function_exists('emc_get_grid_items')) {
     function emc_get_grid_items()
@@ -13,7 +14,10 @@ if (!function_exists('emc_get_grid_items')) {
             'post_type' => $type,
             'post_status' => 'publish',
             'posts_per_page' => 9,
-            'offset' => ($page - 1) * 9
+            'offset' => ($page - 1) * 9,
+            'meta_key' => 'date',
+            'orderby' => 'meta_value',
+            'order' => 'DESC',
         );
 
         if ($term != 'all') {
@@ -30,7 +34,12 @@ if (!function_exists('emc_get_grid_items')) {
             $query->the_post();
             $ID = get_the_ID();
             $thumbnail = get_the_post_thumbnail_url($ID);
-            $date = get_field('date', $ID);
+            try {
+                $date = DateTime::createFromFormat('d/m/Y', get_field('date', $ID));
+                $date = $date->getTimestamp();
+            } catch (Exception $e) {
+                $date = null;
+            }
             $hour = get_field('hour', $ID);
 
             if (!$thumbnail) {
@@ -44,7 +53,7 @@ if (!function_exists('emc_get_grid_items')) {
                 'excerpt' => get_the_excerpt($ID),
                 'url' => get_post_permalink($ID),
                 'thumbnail' => $thumbnail,
-                'date' => $date,
+                'date' => gmdate('r', $date),
                 'hour' => $hour
             ));
         }
@@ -70,6 +79,7 @@ if (!function_exists('emc_get_grid_items')) {
 }
 
 add_action('wp_ajax_get_grid_pages', 'emc_get_grid_pages');
+add_action('wp_ajax_nopriv_get_grid_pages', 'emc_get_grid_pages');
 
 if (!function_exists('emc_get_grid_pages')) {
     function emc_get_grid_pages()

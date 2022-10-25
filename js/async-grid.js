@@ -66,7 +66,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		return new Promise( function( res, rej ) {
 			try {
 				data = JSON.parse( data );
-				const posts = data.posts || [];
+				const posts = ( data.posts || [] ).map( ( e ) => {
+					e.date = new Date( e.date );
+					return e;
+				} );
 				const pages = data.pages || 0;
 				if ( posts.length === 0 ) {
 					rej( new Error( 'Empty response' ) );
@@ -98,7 +101,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
       '<b class="title is.3">' +
       datum.title +
       '</b>' +
-      ( datum.date ? '<br/>Data: ' + datum.date : '' ) +
+      ( datum.date ? '<br/>Data: ' + datum.date.toLocaleDateString() : '' ) +
       ( datum.hour ? '<br/>Horari: ' + datum.hour : '' );
 
 		anchor.appendChild( caption );
