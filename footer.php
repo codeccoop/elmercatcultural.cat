@@ -103,10 +103,10 @@
             <div class="footer__row">
                 <p class="footer__title small">Troba-ns a</p>
                 <ul class="footer__social">
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
+                    <li><a href="<?=get_theme_mod('instagram');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/instagram.png'; ?>" /></a></li>
+                    <li><a href="<?=get_theme_mod('twitter');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/twitter.png'; ?>" /></a></li>
+                    <li><a href="<?=get_theme_mod('whatsapp');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/whatsapp.png'; ?>" /></a></li>
+                    <li><a href="<?=get_theme_mod('telegram');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/telegram.png'; ?>" /></a></li>
                 </ul>
             </div>
         </div>
@@ -117,8 +117,8 @@
                 <p class="footer__text small">© El Mercat Cultural</a></p>
             </div>
             <div class="footer__row">
-                <p class="footer__text small">Amb el suport de</p>
-                <img src="<?= get_bloginfo('template_url') . '/assets/images/logo-ajuntament.png'; ?>" />
+                <p class="footer__text small">El mercat forma part de:</p>
+                <img src="<?= get_bloginfo('template_url') . '/assets/images/xec.png'; ?>" />
             </div>
         </div>
     </div>

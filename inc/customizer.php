@@ -62,6 +62,26 @@ function customize_register($wp_customize)
         'default' => 'FGC: S1 i S2 Peu del Funicular – Funicular fins a Vallvidrera Superior
 Autobusos: 111, 118 i 12'
     ));
+    $wp_customize->add_setting('instagram', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => ''
+    ));
+    $wp_customize->add_setting('twitter', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => ''
+    ));
+    $wp_customize->add_setting('whatsapp', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => ''
+    ));
+    $wp_customize->add_setting('telegram', array(
+        'type' => 'theme_mod',
+        'sanitize_callback' => 'sanitize_textarea_field',
+        'default' => ''
+    ));
 
     $wp_customize->add_control('contact', array(
         'type' => 'textarea',
@@ -89,6 +109,34 @@ Autobusos: 111, 118 i 12'
         'priority' => 5,
         'label' => 'Com arribar',
         'description' => 'Descripció de les opcions de transport públic',
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('instagram', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Instagram',
+        'description' => "Enllaç al perfil d'Instagram del Mercat",
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('twitter', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Twitter',
+        'description' => "Enllaç al perfil de Twitter del Mercat",
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('whatsapp', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Whatsapp',
+        'description' => "Enllaç al perfil de Whatsapp del Mercat",
+        'section' => 'footer'
+    ));
+    $wp_customize->add_control('telegram', array(
+        'type' => 'textarea',
+        'priority' => 5,
+        'label' => 'Telegram',
+        'description' => "Enllaç al perfil de Telegram del Mercat",
         'section' => 'footer'
     ));
 }

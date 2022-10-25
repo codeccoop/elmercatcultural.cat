@@ -236,11 +236,16 @@
   display: flex;
   width: fit-content;
   position: relative;
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+  font-family: $font__secondary;
+  font-size: $font__size-small;
+  font-weight: 400;
 }
 
 .async-page,
 .async-nav-btn {
-  color: $white;
+  color: $color__font-primary;
   padding: 0 0.4em;
   margin: 0 0.15em;
   cursor: pointer;
@@ -249,8 +254,8 @@
 
   &.active,
   &:hover {
-    color: $color__font-primary;
-    border-bottom: 1px solid $color__font-primary;
+    color: $white;
+    border-bottom: 1px solid $white;
   }
 
   &.active {
