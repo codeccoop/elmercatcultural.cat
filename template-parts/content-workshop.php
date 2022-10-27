@@ -14,9 +14,13 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="post-header">
         <?php $parent_page = get_page(28); ?>
-        <a href="<?= get_page_link($parent_page); ?>">
+        <div class="post-header__buttons">
             <p class="underline page-breadcrumb small">TALLERS I BOCINS</p>
-        </a>
+            <a href="<?= get_page_link($parent_page); ?>">
+                <p class="underline small">
+                    < &nbspTORNAR</p>
+            </a>
+        </div>
         <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
     </header><!-- .entry-header -->
 

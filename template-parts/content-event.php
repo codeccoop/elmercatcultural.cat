@@ -17,10 +17,11 @@
         <div class="post-header__buttons">
             <p class="underline page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
             <a href="<?= get_page_link($parent_page); ?>">
-            <p class="small"> < &nbsp&nbspTORNAR </p>
+                <p class="underline small">
+                    < &nbspTORNAR</p>
             </a>
         </div>
-        
+
         <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
     </header><!-- .entry-header -->
 
