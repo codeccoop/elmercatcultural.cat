@@ -6,21 +6,6 @@
   background-color: $color__theme-secondary;
 }
 
-.site-main {
-  padding: 0 $size__site-padding 2rem;
-
-  .page-header {
-    padding-top: 8rem;
-    padding-bottom: 3rem;
-    @include m-columns-width(10, all);
-  }
-
-  .page-title {
-    margin-top: 0px;
-    margin-bottom: 0px;
-  }
-}
-
 .archive__filters {
   display: block;
   padding: 0 0 2rem;

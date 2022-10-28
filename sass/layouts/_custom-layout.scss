@@ -32,10 +32,22 @@
   .page-header,
   .post-header {
     padding-top: 8rem;
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
     margin-bottom: 2.5rem;
-    .post-title {
-      margin-top: 1.2rem;
+
+    @include m-media(md) {
+      padding-right: columns-width(4);
+    }
+
+    .post-title,
+    .page-title {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    .post-breadcrumb,
+    .page-breadcrumb {
+      width: fit-content;
     }
   }
   .page-return {

@@ -1,15 +1,15 @@
-.site-main.post {
-  font-size: $font__size-page;
-  margin-bottom: 6.5rem;
+.site-main.post .type-event,
+.site-main.post .type-workshop {
   .post-header {
     border-bottom: 2px solid $color__theme-secondary;
-    .post-header__buttons{
+
+    .post-header__buttons {
       display: flex;
       justify-content: space-between;
-    }
 
-    .page-breadcrumb {
-      width: fit-content;
+      @include m-media(md) {
+        margin-right: calc(#{columns-width(2)} * -2);
+      }
     }
   }
 
@@ -29,8 +29,11 @@
 
     .post-content__inscription {
       flex: 1;
-      padding-right: 1.5rem;
       margin-top: 1.1rem;
+
+      @include m-media(md) {
+        padding-right: 3.5rem;
+      }
 
       p {
         margin-top: 0;
@@ -86,7 +89,6 @@
             @include m-columns-width(9, all);
             margin-left: auto;
             height: 40vh;
-            
           }
 
           @include m-media(lg) {
@@ -135,7 +137,7 @@
     }
 
     .slick-prev:before {
-      content: '<';
+      content: "<";
       position: absolute;
       bottom: 0;
       left: 23%;
@@ -145,7 +147,7 @@
     }
 
     .slick-next:before {
-      content: '>';
+      content: ">";
       position: absolute;
       bottom: 0;
       left: 76%;
