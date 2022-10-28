@@ -45,6 +45,16 @@
       margin-bottom: 0px;
     }
 
+    .post-breadcrumbs,
+    .page-breadcrumbs {
+      display: flex;
+      justify-content: space-between;
+
+      @include m-media(md) {
+        margin-right: calc(#{columns-width(2)} * -2);
+      }
+    }
+
     .post-breadcrumb,
     .page-breadcrumb {
       width: fit-content;

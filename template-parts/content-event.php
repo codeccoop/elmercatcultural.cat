@@ -14,10 +14,10 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="post-header">
         <?php $parent_page = get_page(22); ?>
-        <div class="post-header__buttons">
-            <p class="underline page-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
+        <div class="post-breadcrumbs">
+            <p class="post-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
             <a href="<?= get_page_link($parent_page); ?>">
-                <p class="underline small">
+                <p class="post-breadcrumb underline small">
                     < &nbspTORNAR</p>
             </a>
         </div>

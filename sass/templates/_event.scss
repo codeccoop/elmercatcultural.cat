@@ -2,15 +2,6 @@
 .site-main.post .type-workshop {
   .post-header {
     border-bottom: 2px solid $color__theme-secondary;
-
-    .post-header__buttons {
-      display: flex;
-      justify-content: space-between;
-
-      @include m-media(md) {
-        margin-right: calc(#{columns-width(2)} * -2);
-      }
-    }
   }
 
   .post-content {
