@@ -260,3 +260,82 @@ require get_template_directory() . '/post_types/workshop.php';
 
 /* AJAX actions */
 require get_template_directory() . '/ajax/async-grid.php';
+
+
+/*WOOCOMMERCE*/
+
+/*This file enables you to add custom code to your site*/
+
+function elmercatcultural_add_woocommerce_support() { 
+    add_theme_support( 'woocommerce' ); 
+} 
+    
+add_action( 'after_setup_theme', 'elmercatcultural_add_woocommerce_support' );
+
+
+/* EVENT POST TYPE LIFE CYCLE */
+
+add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
+function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
+{
+    if ($postarr['post_type'] === 'event' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
+        $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
+        // throw new Exception (print_r($slug));
+        $product = elmercatcultural_find_product_by_slug($slug);
+        if ($product == null){
+            $product = new WC_Product_Simple();
+            $product->set_slug( $slug.'-product' );
+            $product->set_name( $postarr['post_title'] );
+        };
+        
+         // product title
+        /** A partir d'aquí, Recuperar custom fields  */
+        //$product_price = get_post_custom_values('price', $postarr['ID']);
+        //$product->set_regular_price( $product_price); // in current shop currency
+        $product_desc = get_field('price', $postarr['ID']);
+        //echo $product_desc;
+        //throw new Exception($product_desc);
+        $product->set_short_description(  $product_desc);
+        //$product->set_date_on_sale_from( get_post_custom_values('price', $postarr['ID']) );
+        //$product->set_date_on_sale_to( '2022-05-31' );
+        // you can also add a full product description
+        // $product->set_description( 'long description here...' );
+        //$product->set_image_id( 90 );
+        // let's suppose that our 'Accessories' category has ID = 19 
+         /** Crear dues categories de producte: event i workshop  */
+        //$product->set_category_ids( array( 19 ) );
+        // you can also use $product->set_tag_ids() for tags, brands etc
+        $product->save();
+    }
+
+    return $data;
+}
+
+// add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
+// function elmercatcultural_on_delete_event($ID)
+// {
+//     if (get_post_type($ID) === 'event') {
+//         $slug = get_post_field('post_name', $ID);
+//         $product = elmercatcultural_find_product_by_slug($slug);
+//         if ($product == null) return;
+//         //modificar per delete post
+//         wp_delete_post((int) $term->term_id, '');
+//     }
+// }
+
+
+
+function elmercatcultural_find_product_by_slug($slug)
+{
+    $posts = get_posts( array(
+        'name' => $slug.'-product',
+        'post_type' => 'product'
+    ));
+    if(count($posts)==0){
+        return null;
+    }
+    $post=$posts[0];
+    return wc_get_product($post);
+}
+
+ /** Acabar el cicle fent que cada cop que elimines o recuperes un event s'elimina el producte */

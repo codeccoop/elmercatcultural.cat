@@ -26,9 +26,14 @@
     </header><!-- .entry-header -->
 
     <div class="post-content">
-        <?php $post_id = get_the_ID(); ?>
+        <?php $post_id = get_the_ID(); 
+        global $post;
+        $post_slug = $post->post_name;
+        ?>
         <div class="post-content__inscription">
-            <p class="event-bold event-title">INSCRIPCIÓ</p>
+            <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
+            <button type="submit" name="add-to-cart" value="368" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+            </form>
             <p class="small"> Presencial </p>
             <p class="event-bold event-title">DATA</p>
             <?php if (get_field('date', $post_id)) { ?>
