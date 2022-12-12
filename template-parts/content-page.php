@@ -10,7 +10,7 @@
 
 ?>
 
-<article id="page-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="page-<?php the_ID(); ?>" <?php post_class(is_cart() ? 'type-wc-cart' : ''); ?>>
     <header class="page-header">
         <?php $tags = wp_get_post_tags(get_the_ID()); ?>
         <div class="page-breadcrumbs">
@@ -24,7 +24,7 @@
                 $breadcrumb_url = wp_get_referer();
                 if ($breadcrumb_url) : ?>
                     <a href="<?= $breadcrumb_url ?>">
-                        <p class="page-breadcrumb underline small">
+                        <p class="post-breadcrumb underline small">
                             < &nbspTORNAR</p>
                     </a>
                 <?php endif; ?>

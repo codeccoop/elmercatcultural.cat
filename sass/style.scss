@@ -52,7 +52,7 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 --------------------------------------------------------------*/
 
 // Import variables and mixins.
-@import 'abstracts/abstracts';
+@import "abstracts/abstracts";
 
 /*--------------------------------------------------------------
 # Generic
@@ -60,27 +60,27 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Normalize
 --------------------------------------------- */
-@import 'generic/normalize';
+@import "generic/normalize";
 
 /* Box sizing
 --------------------------------------------- */
-@import 'generic/box-sizing';
+@import "generic/box-sizing";
 
 /*--------------------------------------------------------------
 # Base
 --------------------------------------------------------------*/
-@import 'base/base';
+@import "base/base";
 
 /*--------------------------------------------------------------
 # Layouts
 --------------------------------------------------------------*/
 // @import "layouts/content-sidebar"; // Uncomment this line for a sidebar on right side of your content.
-@import 'layouts/custom-layout';
+@import "layouts/custom-layout";
 
 /*--------------------------------------------------------------
 # Components
 --------------------------------------------------------------*/
-@import 'components/components';
+@import "components/components";
 
 /*--------------------------------------------------------------
 # Plugins
@@ -88,11 +88,11 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Jetpack infinite scroll
 --------------------------------------------- */
-@import 'plugins/jetpack/infinite-scroll';
+@import "plugins/jetpack/infinite-scroll";
 
 /* Async grids
 --------------------------------------------- */
-@import 'plugins/async_grid/grid';
+@import "plugins/async_grid/grid";
 
 /*--------------------------------------------------------------
 # Utilities
@@ -100,16 +100,17 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 
 /* Accessibility
 --------------------------------------------- */
-@import 'utilities/accessibility';
+@import "utilities/accessibility";
 
 /* Alignments
 --------------------------------------------- */
-@import 'utilities/alignments';
+@import "utilities/alignments";
 
 /* Templates
 --------------------------------------------- */
-@import 'templates/front-page';
-@import 'templates/archive';
-@import 'templates/page';
-@import 'templates/event';
-@import 'templates/workshop';
+@import "templates/front-page";
+@import "templates/archive";
+@import "templates/page";
+@import "templates/event";
+@import "templates/workshop";
+@import "templates/wc-cart";
