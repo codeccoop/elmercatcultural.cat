@@ -1,5 +1,8 @@
 .site-main.post .type-event,
 .site-main.post .type-workshop {
+  font-size: $font__size;
+  margin-bottom: 6.5rem;
+
   .post-header {
     border-bottom: 2px solid $color__theme-secondary;
   }
