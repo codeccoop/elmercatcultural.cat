@@ -29,12 +29,22 @@
         <?php $post_id = get_the_ID(); 
         global $post;
         $post_slug = $post->post_name;
+        $product_slug = $post_slug.'-product';
+        $product_obj = get_page_by_path( $product_slug, OBJECT, 'product' );
+        if($product_obj){
+            $prod_id= $product_obj -> ID;
+        }
+        
         ?>
         <div class="post-content__inscription">
+            <?php if ($product_obj) { ?>
             <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
-            <button type="submit" name="add-to-cart" value="368" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+            <button type="submit" name="add-to-cart" value="<?php echo $prod_id;?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
             </form>
+            <?php } else {?>
+            <p class="event-bold event-title">INSCRIPCIÓ</p>
             <p class="small"> Presencial </p>
+            <?php }?>
             <p class="event-bold event-title">DATA</p>
             <?php if (get_field('date', $post_id)) { ?>
                 <p class="small"><?php the_field('date', $post_id); ?></p>
@@ -76,7 +86,9 @@
                         <?php
                         if ($carroussel_event['image_carroussel_1']) {
                             $image_carroussel_1 = $carroussel_event['image_carroussel_1'];
-                            $carroussel_data_1 = wp_get_attachment_image_src($image_carroussel_1, 'full', false); ?>
+                            $carroussel_data_1 = wp_get_attachment_image_src($image_carroussel_1, 'full', false);
+                            $carroussel_image_test = wp_get_attachment_image($image_carroussel_1, 'full');
+                            echo print_r($carroussel_data_1); ?>
                             <div><img class="carroussel-image" src="<?php echo $carroussel_data_1[0]; ?>" alt="Imatge del carroussel"></div>
                         <?php }
                         if ($carroussel_event['image_carroussel_2']) {

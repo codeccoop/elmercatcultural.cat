@@ -286,21 +286,30 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product = new WC_Product_Simple();
             $product->set_slug( $slug.'-product' );
             $product->set_name( $postarr['post_title'] );
+            $product->save();
         };
         
          // product title
         /** A partir d'aquí, Recuperar custom fields  */
         //$product_price = get_post_custom_values('price', $postarr['ID']);
-        //$product->set_regular_price( $product_price); // in current shop currency
-        $product_desc = get_field('price', $postarr['ID']);
-        //echo $product_desc;
-        //throw new Exception($product_desc);
-        $product->set_short_description(  $product_desc);
-        //$product->set_date_on_sale_from( get_post_custom_values('price', $postarr['ID']) );
-        //$product->set_date_on_sale_to( '2022-05-31' );
-        // you can also add a full product description
-        // $product->set_description( 'long description here...' );
-        //$product->set_image_id( 90 );
+        $product_price = get_field('price', $postarr['ID']);
+        $product->set_regular_price( $product_price); // in current shop currency
+        $product_desc = get_field('description_event', $postarr['ID']);
+        $product->set_description(  $product_desc);
+        $product->set_manage_stock( true );
+        $product_stock = get_field('available_stock', $postarr['ID']);
+        $product->set_stock_quantity( $product_stock );
+        $product->set_sold_individually( true );
+        $product_carroussel = get_field('carroussel_event', $postarr['ID']);
+        $image_1 = $product_carroussel['image_carroussel_1'];
+        $image_data_1 = wp_get_attachment_image($image_1, 'full', false);
+        //throw new Exception (print_r($image_1));
+        //$product->set_image_id( 10 );
+        $product_date_from = get_field('date_sale_from', $postarr['ID']);
+        $product->set_date_on_sale_from( $product_date_from );
+        $product_date_to = get_field('date_sale_to', $postarr['ID']);
+        $product->set_date_on_sale_to( $product_date_to );
+    
         // let's suppose that our 'Accessories' category has ID = 19 
          /** Crear dues categories de producte: event i workshop  */
         //$product->set_category_ids( array( 19 ) );
