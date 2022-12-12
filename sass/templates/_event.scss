@@ -2,6 +2,16 @@
 .site-main.post .type-workshop {
   font-size: $font__size;
   margin-bottom: 6.5rem;
+  position: relative;
+
+  .woocommerce-notices-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+  }
 
   .post-header {
     border-bottom: 2px solid $color__theme-secondary;

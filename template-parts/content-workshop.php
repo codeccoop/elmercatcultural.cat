@@ -13,10 +13,15 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <header class="post-header">
-        <?php $parent_page = get_page(28); ?>
         <div class="post-breadcrumbs">
             <p class="post-breadcrumb small">TALLERS I BOCINS</p>
-            <a href="<?= get_page_link($parent_page); ?>">
+            <?php
+            $breadcrumb_url = wp_get_referer();
+            if (!$breadcrumb_url) {
+                $parent_page = get_page(28);
+                $breadcrumb_url = get_page_link($parent_page);
+            } ?>
+            <a href="<?= $breadcrumb_url; ?>">
                 <p class="post-breadcrumb underline small">
                     < &nbspTORNAR</p>
             </a>

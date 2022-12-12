@@ -19,10 +19,16 @@
             <?php else : ?>
                 <p class="page-breadcrumb small">EL MERCAT</p>
             <?php endif; ?>
-            <a href="/">
-                <p class="page-breadcrumb underline small">
-                    < &nbspTORNAR</p>
-            </a>
+            <?php if (is_cart()) : ?>
+                <?php
+                $breadcrumb_url = wp_get_referer();
+                if ($breadcrumb_url) : ?>
+                    <a href="<?= $breadcrumb_url ?>">
+                        <p class="page-breadcrumb underline small">
+                            < &nbspTORNAR</p>
+                    </a>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
         <?php the_title('<h2 class="page-title">', '</h2>'); ?>
     </header><!-- .entry-header -->

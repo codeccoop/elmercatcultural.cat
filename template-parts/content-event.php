@@ -8,15 +8,21 @@
  * @package elmercatcultural.cat
  */
 
+defined('ABSPATH') || exit;
 ?>
 
-
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <?php do_action('woocommerce_before_cart'); ?>
     <header class="post-header">
-        <?php $parent_page = get_page(22); ?>
         <div class="post-breadcrumbs">
             <p class="post-breadcrumb small">PROGRAMACIÓ CULTURAL</p>
-            <a href="<?= get_page_link($parent_page); ?>">
+            <?php
+            $breadcrumb_url = wp_get_referer();
+            if (!$breadcrumb_url) {
+                $parent_page = get_page(22);
+                $breadcrumb_url = get_page_link($parent_page);
+            } ?>
+            <a href="<?= $breadcrumb_url; ?>">
                 <p class="post-breadcrumb underline small">
                     < &nbspTORNAR</p>
             </a>
@@ -26,25 +32,25 @@
     </header><!-- .entry-header -->
 
     <div class="post-content">
-        <?php $post_id = get_the_ID(); 
+        <?php $post_id = get_the_ID();
         global $post;
         $post_slug = $post->post_name;
-        $product_slug = $post_slug.'-product';
-        $product_obj = get_page_by_path( $product_slug, OBJECT, 'product' );
-        if($product_obj){
-            $prod_id= $product_obj -> ID;
+        $product_slug = $post_slug . '-product';
+        $product_obj = get_page_by_path($product_slug, OBJECT, 'product');
+        if ($product_obj) {
+            $prod_id = $product_obj->ID;
         }
-        
+
         ?>
         <div class="post-content__inscription">
             <?php if ($product_obj) { ?>
-            <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
-            <button type="submit" name="add-to-cart" value="<?php echo $prod_id;?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
-            </form>
-            <?php } else {?>
-            <p class="event-bold event-title">INSCRIPCIÓ</p>
-            <p class="small"> Presencial </p>
-            <?php }?>
+                <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug; ?>" method="post" enctype="multipart/form-data">
+                    <button type="submit" name="add-to-cart" value="<?php echo $prod_id; ?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+                </form>
+            <?php } else { ?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small"> Presencial </p>
+            <?php } ?>
             <p class="event-bold event-title">DATA</p>
             <?php if (get_field('date', $post_id)) { ?>
                 <p class="small"><?php the_field('date', $post_id); ?></p>
