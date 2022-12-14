@@ -4,7 +4,19 @@
   }
 
   .woocommerce-cart-form {
+    .table.shop_table_responsive tr td::before {
+      display: none;
+    }
+
     table {
+      tr {
+        display: grid;
+
+        @include m-media(md) {
+          display: table-row;
+        }
+      }
+
       th {
         text-transform: uppercase;
         padding: 0.2em 2em 1em;
@@ -30,8 +42,18 @@
       }
 
       td {
-        padding: 0 2em;
-        border-right: 2px solid $color__theme-primary;
+        @include m-media(md) {
+          padding: 0 2em;
+          border-right: 2px solid $color__theme-primary;
+        }
+
+        &.product-cover:before {
+          display: none;
+
+          @include m-media(md) {
+            display: block;
+          }
+        }
 
         &:first-child {
           padding: 0;
@@ -60,15 +82,24 @@
 
   .cart-collaterals {
     display: flex;
+    flex-direction: column;
     border-top: 2px solid $color__theme-primary;
     padding-top: 2.5rem;
+
+    @include m-media(md) {
+      flex-direction: row;
+    }
 
     > div {
       padding: 0 2rem;
     }
 
     .coupon {
-      border-right: 2px solid $color__theme-primary;
+      border-bottom: 2px solid $color__theme-primary;
+
+      @include m-media(md) {
+        border-right: 2px solid $color__theme-primary;
+      }
     }
   }
 }

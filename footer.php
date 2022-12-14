@@ -58,7 +58,7 @@
                 <div class="footer__subscription">
                     <form id="mcSubscriptionForm" action=https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                         <div class="footer__subscription-field">
-                            <input placeholder="elteucorreu@correu.cat"="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
+                            <input placeholder="elteucorreu@correu.cat" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
                             <i tabindex="0"="button"></i>
                         </div>
                     </form>
@@ -103,10 +103,10 @@
             <div class="footer__row">
                 <p class="footer__title medium">Troba-ns a</p>
                 <ul class="footer__social">
-                    <li><a href="<?=get_theme_mod('instagram');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/instagram.png'; ?>" /></a></li>
-                    <li><a href="<?=get_theme_mod('twitter');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/twitter.png'; ?>" /></a></li>
-                    <li><a href="<?=get_theme_mod('whatsapp');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/whatsapp.png'; ?>" /></a></li>
-                    <li><a href="<?=get_theme_mod('telegram');?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/telegram.png'; ?>" /></a></li>
+                    <li><a href="<?= get_theme_mod('instagram'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/instagram.png'; ?>" /></a></li>
+                    <li><a href="<?= get_theme_mod('twitter'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/twitter.png'; ?>" /></a></li>
+                    <li><a href="<?= get_theme_mod('whatsapp'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/whatsapp.png'; ?>" /></a></li>
+                    <li><a href="<?= get_theme_mod('telegram'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/telegram.png'; ?>" /></a></li>
                 </ul>
             </div>
         </div>
