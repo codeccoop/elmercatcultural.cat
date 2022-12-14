@@ -280,57 +280,69 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
 {
     if ($postarr['post_type'] === 'event' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
         $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
-        // throw new Exception (print_r($slug));
+      
         $product = elmercatcultural_find_product_by_slug($slug);
-        if ($product == null){
+        
+        $custom_keys = array(
+            'data_esdeveniment' => 0,
+            'hora_esdeveniment' => 1,
+            'preu_esdeveniment' => 2,
+            'stock' => 3,
+            'data_inici' => 4,
+            'data_fi' => 5,
+            'fitxa_artistica'=> 6,
+            'descipcio_esdeveniment'=> 7,
+            'carroussel'=> 8,
+            'video' => 9,
+            'checkbox' => 10
+        );
+
+        $ACF_keys=array_keys($postarr['acf']);
+        $has_bound_product= $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
+        if ($product == null && $has_bound_product == true){
             $product = new WC_Product_Simple();
             $product->set_slug( $slug.'-product' );
             $product->set_name( $postarr['post_title'] );
             $product->save();
         };
-        
-         // product title
-        /** A partir d'aquí, Recuperar custom fields  */
-        //$product_price = get_post_custom_values('price', $postarr['ID']);
-        $product_price = get_field('price', $postarr['ID']);
-        $product->set_regular_price( $product_price); // in current shop currency
-        $product_desc = get_field('description_event', $postarr['ID']);
-        $product->set_description(  $product_desc);
-        $product->set_manage_stock( true );
-        $product_stock = get_field('available_stock', $postarr['ID']);
-        $product->set_stock_quantity( $product_stock );
-        $product->set_sold_individually( true );
-        $product_carroussel = get_field('carroussel_event', $postarr['ID']);
-        $image_1 = $product_carroussel['image_carroussel_1'];
-        $image_data_1 = wp_get_attachment_image($image_1, 'full', false);
-        //throw new Exception (print_r($image_1));
-        //$product->set_image_id( 10 );
-        $product_date_from = get_field('date_sale_from', $postarr['ID']);
-        $product->set_date_on_sale_from( $product_date_from );
-        $product_date_to = get_field('date_sale_to', $postarr['ID']);
-        $product->set_date_on_sale_to( $product_date_to );
-    
-        // let's suppose that our 'Accessories' category has ID = 19 
-         /** Crear dues categories de producte: event i workshop  */
-        //$product->set_category_ids( array( 19 ) );
-        // you can also use $product->set_tag_ids() for tags, brands etc
-        $product->save();
+        if($has_bound_product == true){
+       $product_price = $postarr['acf'][$ACF_keys[$custom_keys['preu_esdeveniment']]];
+       $product->set_regular_price( $product_price); // in current shop currency
+       $product_desc = $postarr['acf'][$ACF_keys[$custom_keys['descipcio_esdeveniment']]];
+       $product->set_description(  $product_desc);
+       $product->set_manage_stock( true );
+       $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['stock']]];
+       $product->set_stock_quantity( $product_stock );
+       $product->set_sold_individually( true );
+       $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
+       $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
+       $product->set_image_id( $image_carroussel_1 );
+       $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
+       $product_date_from = str_replace('/', '-', $product_date_from);
+       $product_date_from = date("c", strtotime($product_date_from));
+       $product->set_date_on_sale_from( $product_date_from);
+       $product_date_to = $postarr['acf'][$ACF_keys[$custom_keys['data_fi']]];
+       $product_date_to = str_replace('/', '-', $product_date_to);
+       $product_date_to = date("c", strtotime($product_date_to));
+       $product->set_date_on_sale_to( $product_date_to );
+   
+       $product->save();
+     } 
     }
 
     return $data;
 }
 
-// add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
-// function elmercatcultural_on_delete_event($ID)
-// {
-//     if (get_post_type($ID) === 'event') {
-//         $slug = get_post_field('post_name', $ID);
-//         $product = elmercatcultural_find_product_by_slug($slug);
-//         if ($product == null) return;
-//         //modificar per delete post
-//         wp_delete_post((int) $term->term_id, '');
-//     }
-// }
+add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
+function elmercatcultural_on_delete_event($ID)
+{
+    if (get_post_type($ID) === 'event') {
+        $slug = get_post_field('post_name', $ID);
+        $product = elmercatcultural_find_product_by_slug($slug);
+        if ($product == null) return;
+        $product -> delete ();
+    }
+}
 
 
 
@@ -346,5 +358,3 @@ function elmercatcultural_find_product_by_slug($slug)
     $post=$posts[0];
     return wc_get_product($post);
 }
-
- /** Acabar el cicle fent que cada cop que elimines o recuperes un event s'elimina el producte */

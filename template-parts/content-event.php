@@ -31,19 +31,35 @@
         $post_slug = $post->post_name;
         $product_slug = $post_slug.'-product';
         $product_obj = get_page_by_path( $product_slug, OBJECT, 'product' );
+        $product_id = $product_obj -> ID;
+        $product = wc_get_product($product_id);
+        $current_date = date("c");
+        $current_date = str_replace('/', '-',  $current_date);
+        $current_date = strtotime($current_date);
+        $end_date = $product->get_date_on_sale_to();
+        $end_date = strtotime($end_date);
+        $start_date = $product->get_date_on_sale_from();
+        $start_date = strtotime($start_date);
+        $stock=$product->get_stock_quantity();
         if($product_obj){
-            $prod_id= $product_obj -> ID;
+            $prod_id= $product_id;
         }
         
         ?>
         <div class="post-content__inscription">
-            <?php if ($product_obj) { ?>
-            <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
-            <button type="submit" name="add-to-cart" value="<?php echo $prod_id;?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
-            </form>
-            <?php } else {?>
-            <p class="event-bold event-title">INSCRIPCIÓ</p>
-            <p class="small"> Presencial </p>
+            <?php 
+            if($stock && $end_date >= $current_date && $start_date <= $current_date){
+                if ($product_obj) { ?>
+                <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
+                <button type="submit" name="add-to-cart" value="<?php echo $prod_id;?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+                </form>
+                <?php } else {?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small"> Presencial </p>
+                <?php }
+            } else {?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small"> Places esgotades </p>
             <?php }?>
             <p class="event-bold event-title">DATA</p>
             <?php if (get_field('date', $post_id)) { ?>
@@ -87,8 +103,8 @@
                         if ($carroussel_event['image_carroussel_1']) {
                             $image_carroussel_1 = $carroussel_event['image_carroussel_1'];
                             $carroussel_data_1 = wp_get_attachment_image_src($image_carroussel_1, 'full', false);
-                            $carroussel_image_test = wp_get_attachment_image($image_carroussel_1, 'full');
-                            echo print_r($carroussel_data_1); ?>
+                            ?>
+                            
                             <div><img class="carroussel-image" src="<?php echo $carroussel_data_1[0]; ?>" alt="Imatge del carroussel"></div>
                         <?php }
                         if ($carroussel_event['image_carroussel_2']) {
