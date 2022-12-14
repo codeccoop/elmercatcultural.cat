@@ -41,6 +41,16 @@
             <nav id="site-navigation" class="main-navigation">
                 <div class="main-navigation-container">
                     <?php
+                    $cart = WC()->cart->get_cart();
+                    $cart_items = sizeof($cart);
+                    if ($cart_items > 0 && !is_cart()) : ?>
+                        <div class="cart-item-container">
+                            <div class="cart-item" data-items="<?= $cart_items; ?>">
+                                <a href="<?= wc_get_cart_url(); ?>"></a>
+                            </div>
+                        </div>
+                    <? endif; ?>
+                    <?php
                     wp_nav_menu(
                         array(
                             'theme_location' => 'menu-1',

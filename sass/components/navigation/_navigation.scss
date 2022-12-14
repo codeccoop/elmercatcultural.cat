@@ -6,6 +6,60 @@
   justify-content: flex-end;
   position: relative;
 
+  .main-navigation-container {
+    display: flex;
+  }
+
+  .cart-item-container {
+    position: absolute;
+    right: 0;
+    top: calc(#{$size__site-header} + 10px);
+
+    .toggled & {
+      right: 1rem;
+    }
+
+    @include m-media(sm) {
+      right: 1rem;
+    }
+  }
+
+  .cart-item {
+    height: calc(#{$size__site-header} - 0.5rem);
+    width: calc(#{$size__site-header} - 0.5rem);
+    margin: 0.25rem 0;
+    position: relative;
+    background-image: url(/wp-content/themes/elmercatcultural.cat/assets/images/cart-icon.png);
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    background-color: black;
+    box-shadow: 1px 1px 16px 2px #0004;
+
+    &::before {
+      display: block;
+      content: attr(data-items);
+      background-color: white;
+      color: black;
+      font-size: 0.65em;
+      line-height: 1.5em;
+      border: 0.1px solid;
+      position: absolute;
+      right: -0.5em;
+      bottom: -0.25em;
+      height: 1.5em;
+      width: 1.5em;
+      border-radius: 50%;
+      text-align: center;
+    }
+
+    a {
+      display: block;
+      height: 100%;
+    }
+  }
+
   ul {
     align-items: center;
     display: flex;
@@ -117,7 +171,7 @@
     #menu-close:after {
       position: absolute;
       left: 15px;
-      content: ' ';
+      content: " ";
       height: 33px;
       width: 2px;
       background-color: $color__theme-primary;
@@ -164,6 +218,9 @@
     left: 0px;
     background-color: white;
   }
+  .cart-item-container {
+    right: 1rem;
+  }
   #primary-menu {
     display: block;
     width: 220px;
@@ -175,15 +232,15 @@
     li {
       display: block;
       border: none;
-     
-      a{
+
+      a {
         padding: 1rem;
       }
       ul.sub-menu {
         display: none;
         li {
           border-bottom: 1px solid $color__theme-primary;
-          &:hover{
+          &:hover {
             background-color: black;
             color: white;
           }
@@ -249,12 +306,12 @@
   }
 
   .burger::before {
-    content: ' ';
+    content: " ";
     top: 25%;
   }
 
   .burger::after {
-    content: ' ';
+    content: " ";
     bottom: 25%;
   }
 }
