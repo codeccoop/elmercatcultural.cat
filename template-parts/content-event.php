@@ -31,35 +31,40 @@
         $post_slug = $post->post_name;
         $product_slug = $post_slug.'-product';
         $product_obj = get_page_by_path( $product_slug, OBJECT, 'product' );
-        $product_id = $product_obj -> ID;
-        $product = wc_get_product($product_id);
-        $current_date = date("c");
-        $current_date = str_replace('/', '-',  $current_date);
-        $current_date = strtotime($current_date);
-        $end_date = $product->get_date_on_sale_to();
-        $end_date = strtotime($end_date);
-        $start_date = $product->get_date_on_sale_from();
-        $start_date = strtotime($start_date);
-        $stock=$product->get_stock_quantity();
         if($product_obj){
-            $prod_id= $product_id;
+            $product_id = $product_obj -> ID;
+            $product = wc_get_product($product_id);
+        
+            $current_date = strtotime(date("c"));
+            $end_date = strtotime($product->get_date_on_sale_to());
+            if (! $end_date){
+                $end_date = get_field('date', $post_id);
+                $end_date = strtotime(str_replace('/', '-', $end_date ));
+
+            }
+            $start_date = strtotime($product->get_date_on_sale_from());
+            if (! $start_date){
+                $start_date = $current_date; 
+
+            }
+            $stock=$product->get_stock_quantity();
         }
         
         ?>
         <div class="post-content__inscription">
             <?php 
-            if($stock && $end_date >= $current_date && $start_date <= $current_date){
-                if ($product_obj) { ?>
+            if($product_obj){
+                if ( $stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
                 <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug;?>" method="post" enctype="multipart/form-data">
                 <button type="submit" name="add-to-cart" value="<?php echo $prod_id;?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
                 </form>
                 <?php } else {?>
-                <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small"> Presencial </p>
+                    <p class="event-bold event-title">INSCRIPCIÓ</p>
+                    <p class="small"> Inscripció tancada </p>
                 <?php }
             } else {?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small"> Places esgotades </p>
+                <p class="small"> Presencial </p>
             <?php }?>
             <p class="event-bold event-title">DATA</p>
             <?php if (get_field('date', $post_id)) { ?>
