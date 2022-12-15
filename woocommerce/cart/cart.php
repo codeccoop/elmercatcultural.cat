@@ -26,12 +26,10 @@ do_action('woocommerce_before_cart'); ?>
     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
         <thead>
             <tr>
-                <th class="product-remove small"><span class="screen-reader-text"><?php esc_html_e('Remove item', 'woocommerce'); ?></span></th>
-                <!-- <th class="product-thumbnail"><span class="screen-reader-text"><?php esc_html_e('Thumbnail image', 'woocommerce'); ?></span></th> -->
-                <th class="product-cover"><?php esc_html_e('Product', 'woocommerce'); ?></th>
+                <th class="product-cover"<h3 class="sans-serif"><?php esc_html_e('Product', 'woocommerce'); ?></h3></th>
                 <th class="product-price"><?php esc_html_e('Price', 'woocommerce'); ?></th>
                 <th class="product-quantity"><?php esc_html_e('Quantity', 'woocommerce'); ?></th>
-                <!-- <th class="product-subtotal"><?php esc_html_e('Subtotal', 'woocommerce'); ?></th> -->
+                <th class="product-remove small"><span class="screen-reader-text"></th>
             </tr>
         </thead>
         <tbody>
@@ -50,38 +48,9 @@ do_action('woocommerce_before_cart'); ?>
                 }
 
                 if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)) {
-                    // $product_permalink = apply_filters('woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink($cart_item) : '', $cart_item, $cart_item_key);
                     $product_permalink = get_post_permalink($post);
             ?>
                     <tr class="woocommerce-cart-form__cart-item <?php echo esc_attr(apply_filters('woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key)); ?>">
-
-                        <td class="product-remove">
-                            <?php
-                            echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                'woocommerce_cart_item_remove_link',
-                                sprintf(
-                                    '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
-                                    esc_url(wc_get_cart_remove_url($cart_item_key)),
-                                    esc_html__('Remove this item', 'woocommerce'),
-                                    esc_attr($product_id),
-                                    esc_attr($_product->get_sku())
-                                ),
-                                $cart_item_key
-                            );
-                            ?>
-                        </td>
-
-                        <!-- <td class="product-thumbnail">
-                            <?php
-                            $thumbnail = apply_filters('woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key);
-
-                            if (!$product_permalink) {
-                                echo $thumbnail; // PHPCS: XSS ok.
-                            } else {
-                                printf('<a href="%s">%s</a>', esc_url($product_permalink), $thumbnail); // PHPCS: XSS ok.
-                            }
-                            ?>
-                        </td> -->
 
                         <td class="product-cover" data-title="<?php esc_attr_e('Product', 'woocommerce'); ?>">
                             <div class="product-thumbnail">
@@ -91,7 +60,7 @@ do_action('woocommerce_before_cart'); ?>
                                     $thumbnail_url = get_template_directory_uri() . '/assets/images/event--default.png';
                                 }
 
-                                $thumbnail = '<img  height="300" width="300" src="' . $thumbnail_url . '">';
+                                $thumbnail = '<img  height="250" width="250" src="' . $thumbnail_url . '">';
                                 if (!$product_permalink) {
                                     echo $thumbnail; // PHPCS: XSS ok.
                                 } else {
@@ -147,12 +116,22 @@ do_action('woocommerce_before_cart'); ?>
                             echo apply_filters('woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item); // PHPCS: XSS ok.
                             ?>
                         </td>
-
-                        <!-- <td class="product-subtotal" data-title="<?php esc_attr_e('Subtotal', 'woocommerce'); ?>">
+                        <td class="product-remove">
                             <?php
-                            echo apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal($_product, $cart_item['quantity']), $cart_item, $cart_item_key); // PHPCS: XSS ok.
+                            echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                'woocommerce_cart_item_remove_link',
+                                sprintf(
+                                    '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+                                    esc_url(wc_get_cart_remove_url($cart_item_key)),
+                                    esc_html__('Remove this item', 'woocommerce'),
+                                    esc_attr($product_id),
+                                    esc_attr($_product->get_sku())
+                                ),
+                                $cart_item_key
+                            );
                             ?>
-                        </td> -->
+                        </td>
+
                     </tr>
             <?php
                 }
@@ -191,9 +170,11 @@ do_action('woocommerce_before_cart'); ?>
     <?php
     if (wc_coupons_enabled()) : ?>
         <div class="coupon">
-            <h3>Codi promocional</h3>
-            <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Codi promocional', 'woocommerce'); ?>" /> 
-            <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
+            <h3 class="sans-serif">Codi promocional</h3>
+            <div class="text-input-wrapper">
+                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Insereix el codi" /> 
+                <i tabindex="0" role="button"></i>
+            </div>
             <?php do_action('woocommerce_cart_coupon'); ?>
         </div>
     <? endif;
