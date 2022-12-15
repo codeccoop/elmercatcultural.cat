@@ -59,7 +59,7 @@
                     <form id="mcSubscriptionForm" action=https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                         <div class="footer__subscription-field">
                             <input placeholder="elteucorreu@correu.cat" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
-                            <i tabindex="0"="button"></i>
+                            <i tabindex="0" role="button"></i>
                         </div>
                     </form>
                 </div>
