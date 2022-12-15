@@ -33,7 +33,7 @@ if (!function_exists('emc_get_grid_items')) {
         while ($query->have_posts()) {
             $query->the_post();
             $ID = get_the_ID();
-            $thumbnail = get_the_post_thumbnail_url($ID);
+            $thumbnail = get_the_post_thumbnail_url($ID, 'medium');
             try {
                 $date = DateTime::createFromFormat('d/m/Y', get_field('date', $ID));
                 $date = $date->getTimestamp();
@@ -60,7 +60,6 @@ if (!function_exists('emc_get_grid_items')) {
 
         if ($term != 'all') {
             $cat = get_term_by('slug', $term, 'category');
-            // $cat = get_category($catID);
             $count = $cat->count;
         } else {
             $count = wp_count_posts($type);
