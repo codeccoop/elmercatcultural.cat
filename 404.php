@@ -15,43 +15,16 @@ get_header();
 
     <section class="error-404 not-found">
         <header class="page-header">
-            <h1 class="page-title"><?php esc_html_e('Oops! That page can&rsquo;t be found.', 'elmercatcultural.cat'); ?></h1>
+            <h1 class="page-title">Alguna cosa ha anat malament :(</h1>
         </header><!-- .page-header -->
 
         <div class="page-content">
-            <p><?php esc_html_e('It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'elmercatcultural.cat'); ?></p>
-
-            <?php
-            get_search_form();
-
-            the_widget('WP_Widget_Recent_Posts');
-            ?>
-
-            <div class="widget widget_categories">
-                <h2 class="widget-title"><?php esc_html_e('Most Used Categories', 'elmercatcultural.cat'); ?></h2>
-                <ul>
-                    <?php
-                    wp_list_categories(
-                        array(
-                            'orderby'    => 'count',
-                            'order'      => 'DESC',
-                            'show_count' => 1,
-                            'title_li'   => '',
-                            'number'     => 10,
-                        )
-                    );
-                    ?>
-                </ul>
-            </div><!-- .widget -->
-
-            <?php
-            /* translators: %1$s: smiley */
-            $archive_content = '<p>' . sprintf(esc_html__('Try looking in the monthly archives. %1$s', 'elmercatcultural.cat'), convert_smilies(':)')) . '</p>';
-            the_widget('WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content");
-
-            the_widget('WP_Widget_Tag_Cloud');
-            ?>
-
+            <p>No trobem cap contingut associat a aquesta ruta. Si has introduit manualment l'enllaç, comproba que no hi hagi cap error. Si creus que és un error de la pàgina, pots possar-te en contacte amb nosaltres a través del nostre correu <a href="mailto:info@elmercatcultural.cat" class="underline">info@elmercatcultural.cat</a></p>
+            <p class="return-to-shop">
+                <a class="button wc-backward<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" href="/">
+                    Tornar a l'inici
+                </a>
+            </p>
         </div><!-- .page-content -->
     </section><!-- .error-404 -->
 
