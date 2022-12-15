@@ -112,8 +112,9 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__text small"><a>Avís legal</a></p>
-                <p class="footer__text small"><a>Política de privacitat</a></p>
+                <p class="footer__text small"><a href="/avis-legal">Avís legal</a></p>
+                <p class="footer__text small"><a href="/politica-de-privacitat">Política de privacitat</a></p>
+                <p class="footer__text small"><a href="/politica-de-cookies">Política de cookies</a></p>
                 <p class="footer__text small">© El Mercat Cultural</a></p>
             </div>
             <div class="footer__row">
