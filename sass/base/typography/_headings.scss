@@ -12,6 +12,10 @@ h6,
   & .highlight {
     color: $color__font-highlight;
   }
+
+  &.sans-serif {
+    font-family: $font__primary;
+  }
 }
 
 h1,
