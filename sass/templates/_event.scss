@@ -7,10 +7,14 @@
   .woocommerce-notices-wrapper {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 0.5rem;
     right: 0;
     margin: auto;
     z-index: 1;
+
+    @include m-media(md) {
+      top: 1rem;
+    }
   }
 
   .post-header {

@@ -205,23 +205,33 @@ p.stars {
 /**
  * Notices
  */
+.woocommerce-info,
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-noreviews {
+  border: 2px solid;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error,
 .woocommerce-noreviews,
 p.no-comments {
-  background-color: $woocommerce__color-success;
+  color: $woocommerce__color-success;
   clear: both;
 }
 
 .woocommerce-info,
 .woocommerce-noreviews,
 p.no-comments {
-  background-color: $woocommerce__color-info;
+  color: $woocommerce__color-info;
 }
 
 .woocommerce-error {
-  background-color: $woocommerce__color-error;
+  color: $woocommerce__color-error;
 }
 
 .demo_store {

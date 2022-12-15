@@ -1,0 +1,59 @@
+.woocommerce-notices-wrapper {
+  display: block;
+}
+
+.woocommerce-info,
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-noreviews {
+  border: 2px solid;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.75rem;
+
+  @include m-media(md) {
+    font-size: 1rem;
+  }
+
+  a {
+    display: block;
+    text-transform: unset;
+
+    @include m-media(md) {
+      float: right;
+    }
+  }
+}
+
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error,
+.woocommerce-noreviews,
+p.no-comments {
+  color: $woocommerce__color-success;
+  clear: both;
+}
+
+.woocommerce-info,
+.woocommerce-noreviews,
+p.no-comments {
+  color: $woocommerce__color-info;
+}
+
+.woocommerce-error {
+  color: $woocommerce__color-error;
+  list-style: none;
+  margin: 0;
+}
+
+.demo_store {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 1em;
+  background-color: $woocommerce__color-info;
+  z-index: 9999;
+}

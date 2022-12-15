@@ -19,9 +19,16 @@
 
       th {
         text-transform: uppercase;
-        padding: 0.2em 2em 1em;
+        padding: 0.2em 0 1em;
         font-weight: 400;
         border-right: 2px solid $color__theme-primary;
+
+        @include m-media(md) {
+          &:nth-child(n + 3) {
+            padding-right: 2em;
+            padding-left: 2em;
+          }
+        }
 
         &:first-child {
           padding: 0;
@@ -43,16 +50,19 @@
 
       td {
         @include m-media(md) {
-          padding: 0 2em;
           border-right: 2px solid $color__theme-primary;
+
+          &:nth-child(n + 3) {
+            padding: 0 2em;
+          }
         }
 
         &.product-cover:before {
           display: none;
+        }
 
-          @include m-media(md) {
-            display: block;
-          }
+        &.product-remove {
+          font-size: 2rem;
         }
 
         &:first-child {
