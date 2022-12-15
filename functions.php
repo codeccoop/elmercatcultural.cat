@@ -278,7 +278,7 @@ add_action( 'after_setup_theme', 'elmercatcultural_add_woocommerce_support' );
 add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
 function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
 {
-    if ($postarr['post_type'] === 'event' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
+    if ($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
         $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
       
         $product = elmercatcultural_find_product_by_slug($slug);
@@ -296,7 +296,9 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             'video' => 9,
             'checkbox' => 10
         );
-
+     
+        $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
+        
         $ACF_keys=array_keys($postarr['acf']);
         $has_bound_product= $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
         if ($product == null && $has_bound_product == true){
@@ -314,9 +316,11 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
        $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['stock']]];
        $product->set_stock_quantity( $product_stock );
        $product->set_sold_individually( true );
-       $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
-       $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
-       $product->set_image_id( $image_carroussel_1 );
+       //to set image carroussel 1 as product image
+    //    $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
+    //    $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
+        //set post thumbnail as product image
+       $product->set_image_id( $post_thumbnail_id );
        $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
        $product_date_from = str_replace('/', '-', $product_date_from);
        $product_date_from = date("c", strtotime($product_date_from));
@@ -336,7 +340,7 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
 add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
 function elmercatcultural_on_delete_event($ID)
 {
-    if (get_post_type($ID) === 'event') {
+    if (get_post_type($ID) === 'event' || get_post_type($ID) === 'workshop' ) {
         $slug = get_post_field('post_name', $ID);
         $product = elmercatcultural_find_product_by_slug($slug);
         if ($product == null) return;
