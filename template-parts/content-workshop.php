@@ -8,10 +8,12 @@
  * @package elmercatcultural.cat
  */
 
+defined('ABSPATH') || exit;
 ?>
 
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <?php do_action('woocommerce_before_cart'); ?>
     <header class="post-header">
         <div class="post-breadcrumbs">
             <p class="post-breadcrumb small">TALLERS I BOCINS</p>
@@ -48,7 +50,7 @@
                 $start_date = $current_date;
             }
             $stock = $product->get_stock_quantity();
-        }?>
+        } ?>
         <div class="post-content__inscription">
             <?php
             if ($product_obj) {
