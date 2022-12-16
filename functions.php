@@ -287,13 +287,35 @@ function wc_remove_checkout_fields( $fields ) {
   
 
     // Shipping fields
-    
-
     // Order fields
-
     return $fields;
 }
 add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
+/***
+ Unrequire billing fields
+ **/
+
+ function unrequire_checkout_fields( $fields ) {
+     $fields['billing']['billing_city']['required']      = false;
+     $fields['billing']['billing_city']['class']      = array('field-remove');
+     $fields['billing']['billing_country']['required']   = false;
+     $fields['billing']['billing_country']['class']      = array('field-remove');
+     $fields['billing']['billing_state']['required']     = false;
+     $fields['billing']['billing_state']['class']      = array('field-remove');
+     $fields['billing']['billing_address_1']['required'] = false;
+     $fields['billing']['billing_address_1']['class']      = array('field-remove');
+     $fields['billing']['billing_address_2']['required'] = false;
+     $fields['billing']['billing_address_2']['class']      = array('field-remove');
+     return $fields;
+ }
+
+ add_filter( 'woocommerce_checkout_fields', 'unrequire_checkout_fields' );
+
+
+
+// remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
+// add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
+// remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
 
 /***
  Add custom billing fields
@@ -305,17 +327,17 @@ add_filter( 'woocommerce_checkout_fields' , 'elmercatcultural_override_checkout_
 function elmercatcultural_override_checkout_fields( $fields ) {
      $fields['billing']['billing_DNI'] = array(
         'label'     => __('DNI', 'woocommerce'),
-    'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
-    'required'  => true,
-    'class'     => array('form-row-wide'),
-    'clear'     => true
+        'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
+        'required'  => true,
+        'class'     => array('form-row-wide'),
+        'clear'     => true
      );
      $fields['billing']['billing_neighbour'] = array(
         'label'     => __('VEÏNA DELS BARRIS DE MUNTANYA?', 'woocommerce'),
-    'placeholder'   => _x('VEÏNA DELS BARRIS DE MUNTANYA?', 'placeholder', 'woocommerce'),
-    'required'  => true,
-    'class'     => array('pau-class'),
-    'clear'     => true
+        'placeholder'   => _x('VEÏNA DELS BARRIS DE MUNTANYA?', 'placeholder', 'woocommerce'),
+        'required'  => true,
+        'class'     => array('pau-class'),
+        'clear'     => true
      );
 
      return $fields;
