@@ -272,13 +272,89 @@ function elmercatcultural_add_woocommerce_support() {
     
 add_action( 'after_setup_theme', 'elmercatcultural_add_woocommerce_support' );
 
+/***
+ Remove billing fields
+ **/
+function wc_remove_checkout_fields( $fields ) {
+
+    // Billing fields
+    
+    unset( $fields['billing']['billing_state'] );
+    unset( $fields['billing']['billing_country'] );
+    unset( $fields['billing']['billing_address_1'] );
+    unset( $fields['billing']['billing_address_2'] );
+    unset( $fields['billing']['billing_city'] );
+  
+
+    // Shipping fields
+    
+
+    // Order fields
+
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
+
+/***
+ Add custom billing fields
+ **/
+// Hook in
+add_filter( 'woocommerce_checkout_fields' , 'elmercatcultural_override_checkout_fields' );
+
+// Our hooked in function – $fields is passed via the filter!
+function elmercatcultural_override_checkout_fields( $fields ) {
+     $fields['billing']['billing_DNI'] = array(
+        'label'     => __('DNI', 'woocommerce'),
+    'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
+    'required'  => true,
+    'class'     => array('form-row-wide'),
+    'clear'     => true
+     );
+     $fields['billing']['billing_neighbour'] = array(
+        'label'     => __('VEÏNA DELS BARRIS DE MUNTANYA?', 'woocommerce'),
+    'placeholder'   => _x('VEÏNA DELS BARRIS DE MUNTANYA?', 'placeholder', 'woocommerce'),
+    'required'  => true,
+    'class'     => array('pau-class'),
+    'clear'     => true
+     );
+
+     return $fields;
+}
+
+
+//Display field value on the order edit page
+
+ 
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'elmercatcultural_checkout_field_display_admin_order_meta', 10, 1 );
+
+function elmercatcultural_checkout_field_display_admin_order_meta($order){
+    echo '<p><strong>'.__('DNI').':</strong> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+}
+
+
+/***
+ Add custom billing fields priority
+ **/
+
+ add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_billing_fields_priority' );
+
+ function elmercatcultural_billing_fields_priority( $fields ) {
+    $fields[ 'billing' ][ 'billing_first_name' ][ 'priority' ] = 10;
+    $fields[ 'billing' ][ 'billing_last_name' ][ 'priority' ] = 11;
+    $fields[ 'billing' ][ 'billing_DNI' ][ 'priority' ] = 12;
+    $fields[ 'billing' ][ 'billing_email' ][ 'priority' ] = 13;
+    $fields[ 'billing' ][ 'billing_phone' ][ 'priority' ] = 14;
+    $fields[ 'billing' ][ 'billing_company' ][ 'priority' ] = 15;
+    $fields[ 'billing' ][ 'billing_postcode' ][ 'priority' ] = 16;
+     return $fields;
+ }
 
 /* EVENT POST TYPE LIFE CYCLE */
 
 add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
 function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
 {
-    if ($postarr['post_type'] === 'event' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
+    if ($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop' && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
         $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
       
         $product = elmercatcultural_find_product_by_slug($slug);
@@ -296,7 +372,9 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             'video' => 9,
             'checkbox' => 10
         );
-
+     
+        $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
+        
         $ACF_keys=array_keys($postarr['acf']);
         $has_bound_product= $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
         if ($product == null && $has_bound_product == true){
@@ -314,9 +392,11 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
        $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['stock']]];
        $product->set_stock_quantity( $product_stock );
        $product->set_sold_individually( true );
-       $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
-       $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
-       $product->set_image_id( $image_carroussel_1 );
+       //to set image carroussel 1 as product image
+    //    $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
+    //    $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
+        //set post thumbnail as product image
+       $product->set_image_id( $post_thumbnail_id );
        $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
        $product_date_from = str_replace('/', '-', $product_date_from);
        $product_date_from = date("c", strtotime($product_date_from));
@@ -336,7 +416,7 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
 add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
 function elmercatcultural_on_delete_event($ID)
 {
-    if (get_post_type($ID) === 'event') {
+    if (get_post_type($ID) === 'event' || get_post_type($ID) === 'workshop' ) {
         $slug = get_post_field('post_name', $ID);
         $product = elmercatcultural_find_product_by_slug($slug);
         if ($product == null) return;

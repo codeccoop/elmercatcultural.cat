@@ -1,18 +1,33 @@
-@media screen and (min-width: 768px) {
-  .col2-set {
-    .form-row-first {
-      float: left;
-      // margin-right: $columns__margin;
-    }
-
-    .form-row-last {
-      float: right;
-      margin-right: 0;
-    }
-
-    .form-row-first,
-    .form-row-last {
-      @include m-columns_width(2);
-    }
+.woocommerce-billing-fields__field-wrapper{
+  display: flex;
+  flex-direction: column;
+  //flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
+  .pau-class{
+    color: red;
+  }
+  .form-row{
+    width: fit-content;
+    //margin-left: 6rem;
   }
 }
+
+// @media screen and (min-width: 768px) {
+//   .col2-set {
+//     .form-row-first {
+//       float: left;
+//       // margin-right: $columns__margin;
+//     }
+
+//     .form-row-last {
+//       float: right;
+//       margin-right: 0;
+//     }
+
+//     .form-row-first,
+//     .form-row-last {
+//       @include m-columns_width(2);
+//     }
+//   }
+// }

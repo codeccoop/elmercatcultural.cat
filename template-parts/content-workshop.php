@@ -28,10 +28,42 @@
     </header><!-- .entry-header -->
 
     <div class="post-content">
-        <?php $post_id = get_the_ID(); ?>
+        <?php $post_id = get_the_ID();
+        global $post;
+        $post_slug = $post->post_name;
+        $product_slug = $post_slug . '-product';
+        $product_obj = get_page_by_path($product_slug, OBJECT, 'product');
+        if ($product_obj) {
+            $product_id = $product_obj->ID;
+            $product = wc_get_product($product_id);
+
+            $current_date = strtotime(date("c"));
+            $end_date = strtotime($product->get_date_on_sale_to());
+            if (!$end_date) {
+                $end_date = get_field('date', $post_id);
+                $end_date = strtotime(str_replace('/', '-', $end_date));
+            }
+            $start_date = strtotime($product->get_date_on_sale_from());
+            if (!$start_date) {
+                $start_date = $current_date;
+            }
+            $stock = $product->get_stock_quantity();
+        }?>
         <div class="post-content__inscription">
-            <p class="event-bold event-title">INSCRIPCIÓ</p>
-            <p class="small"> Presencial </p>
+            <?php
+            if ($product_obj) {
+                if ($stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
+                    <form class="cart" action="https://elmercatcultural.cat/workshop/<?php echo $post_slug; ?>" method="post" enctype="multipart/form-data">
+                        <button type="submit" name="add-to-cart" value="<?php echo $product_id; ?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+                    </form>
+                <?php } else { ?>
+                    <p class="event-bold event-title">INSCRIPCIÓ</p>
+                    <p class="small"> Inscripció tancada </p>
+                <?php }
+            } else { ?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small"> Presencial </p>
+            <?php } ?>
             <p class="event-bold event-title">DATES</p>
             <?php if (get_field('date', $post_id)) { ?>
                 <p class="small"><?php the_field('date', $post_id); ?></p>
