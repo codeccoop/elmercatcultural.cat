@@ -272,6 +272,82 @@ function elmercatcultural_add_woocommerce_support() {
     
 add_action( 'after_setup_theme', 'elmercatcultural_add_woocommerce_support' );
 
+/***
+ Remove billing fields
+ **/
+function wc_remove_checkout_fields( $fields ) {
+
+    // Billing fields
+    
+    unset( $fields['billing']['billing_state'] );
+    unset( $fields['billing']['billing_country'] );
+    unset( $fields['billing']['billing_address_1'] );
+    unset( $fields['billing']['billing_address_2'] );
+    unset( $fields['billing']['billing_city'] );
+  
+
+    // Shipping fields
+    
+
+    // Order fields
+
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
+
+/***
+ Add custom billing fields
+ **/
+// Hook in
+add_filter( 'woocommerce_checkout_fields' , 'elmercatcultural_override_checkout_fields' );
+
+// Our hooked in function – $fields is passed via the filter!
+function elmercatcultural_override_checkout_fields( $fields ) {
+     $fields['billing']['billing_DNI'] = array(
+        'label'     => __('DNI', 'woocommerce'),
+    'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
+    'required'  => true,
+    'class'     => array('form-row-wide'),
+    'clear'     => true
+     );
+     $fields['billing']['billing_neighbour'] = array(
+        'label'     => __('VEÏNA DELS BARRIS DE MUNTANYA?', 'woocommerce'),
+    'placeholder'   => _x('VEÏNA DELS BARRIS DE MUNTANYA?', 'placeholder', 'woocommerce'),
+    'required'  => true,
+    'class'     => array('pau-class'),
+    'clear'     => true
+     );
+
+     return $fields;
+}
+
+
+//Display field value on the order edit page
+
+ 
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'elmercatcultural_checkout_field_display_admin_order_meta', 10, 1 );
+
+function elmercatcultural_checkout_field_display_admin_order_meta($order){
+    echo '<p><strong>'.__('DNI').':</strong> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+}
+
+
+/***
+ Add custom billing fields priority
+ **/
+
+ add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_billing_fields_priority' );
+
+ function elmercatcultural_billing_fields_priority( $fields ) {
+    $fields[ 'billing' ][ 'billing_first_name' ][ 'priority' ] = 10;
+    $fields[ 'billing' ][ 'billing_last_name' ][ 'priority' ] = 11;
+    $fields[ 'billing' ][ 'billing_DNI' ][ 'priority' ] = 12;
+    $fields[ 'billing' ][ 'billing_email' ][ 'priority' ] = 13;
+    $fields[ 'billing' ][ 'billing_phone' ][ 'priority' ] = 14;
+    $fields[ 'billing' ][ 'billing_company' ][ 'priority' ] = 15;
+    $fields[ 'billing' ][ 'billing_postcode' ][ 'priority' ] = 16;
+     return $fields;
+ }
 
 /* EVENT POST TYPE LIFE CYCLE */
 
