@@ -118,6 +118,10 @@
                 <p class="footer__text small">© El Mercat Cultural</a></p>
             </div>
             <div class="footer__row">
+                <p class="footer__text small">Amb el suport de:</p>
+                <img src="<?= get_bloginfo('template_url') . '/assets/images/bcn-banner.png'; ?>" />
+            </div>
+            <div class="footer__row">
                 <p class="footer__text small">El mercat forma part de:</p>
                 <img src="<?= get_bloginfo('template_url') . '/assets/images/xec.png'; ?>" />
             </div>
