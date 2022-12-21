@@ -19,26 +19,36 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <div class="woocommerce-billing-fields">
-	<?php if ( wc_ship_to_billing_address_only() && WC()->cart->needs_shipping() ) : ?>
-
-		<h3><?php esc_html_e( 'Billing &amp; Shipping', 'woocommerce' ); ?></h3>
-
-	<?php else : ?>
-
-		<h3><?php esc_html_e( 'Billing details', 'woocommerce' ); ?></h3>
-
-	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
 	<div class="woocommerce-billing-fields__field-wrapper">
 		<?php
 		$fields = $checkout->get_checkout_fields( 'billing' );
-
-		foreach ( $fields as $key => $field ) {
-			woocommerce_form_field( $key, $field, $checkout->get_value( $key ) );
-		}
 		?>
+		
+		<div class="elmercat-form-field-customer-details">
+			<?php woocommerce_form_field( 'billing_first_name', $fields['billing_first_name'], $checkout->get_value( 'billing_first_name' ));?>
+			<?php woocommerce_form_field( 'billing_last_name', $fields['billing_last_name'], $checkout->get_value( 'billing_last_name' ));?>
+			<?php woocommerce_form_field( 'billing_DNI', $fields['billing_DNI'], $checkout->get_value( 'billing_DNI' ));?>
+		</div>
+		<div class="elmercat-form-field-contact-details">
+			<?php woocommerce_form_field( 'billing_email', $fields['billing_email'], $checkout->get_value( 'billing_email' ));?>
+			<?php woocommerce_form_field( 'billing_phone', $fields['billing_phone'], $checkout->get_value( 'billing_phone' ));?>
+			<?php woocommerce_form_field( 'billing_company', $fields['billing_company'], $checkout->get_value( 'billing_company' ));?>
+		</div>
+		<div class="elmercat-form-field-adress-details">
+			<?php woocommerce_form_field( 'billing_postcode', $fields['billing_postcode'], $checkout->get_value( 'billing_postcode' ));
+			do_action("radio_input_veina", $checkout);?>
+		</div>
+		<div class="elmercat-form-field-adress-details">
+			<?php woocommerce_form_field( 'billing_address_1', $fields['billing_address_1'], $checkout->get_value( 'billing_address_1' ));
+			 woocommerce_form_field( 'billing_address_2', $fields['billing_address_2'], $checkout->get_value( 'billing_address_2' ));
+			 woocommerce_form_field( 'billing_city', $fields['billing_city'], $checkout->get_value( 'billing_city' ));
+			 woocommerce_form_field( 'billing_state', $fields['billing_state'], $checkout->get_value( 'billing_state' ));
+			 woocommerce_form_field( 'billing_country', $fields['billing_country'], $checkout->get_value( 'billing_country' ));
+			 ?>
+		</div>
 	</div>
 
 	<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>

@@ -178,7 +178,7 @@ function scripts()
     wp_enqueue_script('elmercatcultural-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ELMERCATCULTURAL_VERSION, true);
     wp_enqueue_script('elmercatcultural-viewport', get_template_directory_uri() . '/js/viewport.js', array(), ELMERCATCULTURAL_VERSION, true);
     wp_enqueue_script('elmercatcultural-device', get_template_directory_uri() . '/js/device-detect.js', array(), ELMERCATCULTURAL_VERSION, true);
-
+    
     if (is_single()) {
         wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true);
         wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), ELMERCATCULTURAL_VERSION, true);
@@ -198,6 +198,8 @@ function scripts()
                 'ajax_url' => admin_url('admin-ajax.php'),
             )
         );
+    } else if (is_page('finalitza-la-compra')) {
+        wp_enqueue_script('elmercatcultural-checkout', get_template_directory_uri() . '/js/checkout-veina-muntanya.js', array(), ELMERCATCULTURAL_VERSION, true);
     }
 
     /* if (is_singular() && comments_open() && get_option('thread_comments')) {
@@ -275,22 +277,28 @@ add_action( 'after_setup_theme', 'elmercatcultural_add_woocommerce_support' );
 /***
  Remove billing fields
  **/
-function wc_remove_checkout_fields( $fields ) {
+function elmercatcultural_remove_checkout_fields( $fields ) {
 
     // Billing fields
     
     unset( $fields['billing']['billing_state'] );
     unset( $fields['billing']['billing_country'] );
     unset( $fields['billing']['billing_address_1'] );
-    unset( $fields['billing']['billing_address_2'] );
+    unset( $fields['billing']['billing_address_2']);
     unset( $fields['billing']['billing_city'] );
   
 
     // Shipping fields
+    unset( $fields['shipping']['shipping_state'] );
+    unset( $fields['shipping']['shipping_country'] );
+    unset( $fields['shipping']['shipping_address_1'] );
+    unset( $fields['shipping']['shipping_address_2']);
+    unset( $fields['shipping']['shipping_city'] );
     // Order fields
+
     return $fields;
 }
-add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
+add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_remove_checkout_fields' );
 /***
  Unrequire billing fields
  **/
@@ -306,70 +314,119 @@ add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
      $fields['billing']['billing_address_1']['class']      = array('field-remove');
      $fields['billing']['billing_address_2']['required'] = false;
      $fields['billing']['billing_address_2']['class']      = array('field-remove');
+     
+
+     $fields['shipping']['shipping_city']['required']      = false;
+     $fields['shipping']['shipping_city']['class']      = array('field-remove');
+     $fields['shipping']['shipping_country']['required']   = false;
+     $fields['shipping']['shipping_country']['class']      = array('field-remove');
+     $fields['shipping']['shipping_state']['required']     = false;
+     $fields['shipping']['shipping_state']['class']      = array('field-remove');
+     $fields['shipping']['shipping_address_1']['required'] = false;
+     $fields['shipping']['shipping_address_1']['class']      = array('field-remove');
+     $fields['shipping']['shipping_address_2']['required'] = false;
+     $fields['shipping']['shipping_address_2']['class']      = array('field-remove');
+     
      return $fields;
  }
 
  add_filter( 'woocommerce_checkout_fields', 'unrequire_checkout_fields' );
 
 
+ 
+
+
 
 // remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
 // add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
-// remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
+//remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
 
 /***
  Add custom billing fields
  **/
+
 // Hook in
 add_filter( 'woocommerce_checkout_fields' , 'elmercatcultural_override_checkout_fields' );
 
 // Our hooked in function – $fields is passed via the filter!
 function elmercatcultural_override_checkout_fields( $fields ) {
      $fields['billing']['billing_DNI'] = array(
-        'label'     => __('DNI', 'woocommerce'),
         'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
         'required'  => true,
         'class'     => array('form-row-wide'),
-        'clear'     => true
+        'clear'     => true,
+        'priority' => 9    
      );
-     $fields['billing']['billing_neighbour'] = array(
-        'label'     => __('VEÏNA DELS BARRIS DE MUNTANYA?', 'woocommerce'),
-        'placeholder'   => _x('VEÏNA DELS BARRIS DE MUNTANYA?', 'placeholder', 'woocommerce'),
-        'required'  => true,
-        'class'     => array('pau-class'),
-        'clear'     => true
-     );
+     //add placeholder to native fields
 
+     $fields['billing']['billing_first_name'] = array(
+        'placeholder'   => _x('NOM', 'placeholder', 'woocommerce'),
+        'required'  => true
+     );
+     $fields['billing']['billing_last_name'] = array(
+        'placeholder'   => _x('COGNOMS', 'placeholder', 'woocommerce'),
+        'required'  => true
+     );
+     $fields['billing']['billing_email'] = array(
+        'placeholder'   => _x('CORREU ELECTRÒNIC', 'placeholder', 'woocommerce'),
+        'required'  => true
+     );
+     $fields['billing']['billing_phone'] = array(
+        'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
+        'required'  => true
+     );
+     $fields['billing']['billing_company'] = array(
+        'placeholder'   => _x('EMPRESA (OPCIONAL)', 'placeholder', 'woocommerce')
+     );
+     $fields['billing']['billing_postcode'] = array(
+        'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
+        'class'     => array('form-row-wide'),
+        'required'  => true
+     );
+     
      return $fields;
 }
+//Create radio button
+add_action( 'radio_input_veina', 'new_radio_field' );
+
+function new_radio_field( $checkout ) {
+    woocommerce_form_field( 'billing_neighbour', array(
+	'type' => 'radio',
+   	'class' => array( 'veina-radio-input','form-row-wide', 'update_totals_on_change' ),
+   	'options' => array('1' => 'Si','2' => 'No',),
+   	'label'  => __("VEÏNA DELS BARRIS DE MUNTANYA?"),
+	'required'=>true,
+    ), $checkout->get_value('billing_neighbour'));
+}
+
 
 
 //Display field value on the order edit page
 
  
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'elmercatcultural_checkout_field_display_admin_order_meta', 10, 1 );
+// add_action( 'woocommerce_admin_order_data_after_billing_address', 'elmercatcultural_checkout_field_display_admin_order_meta', 10, 1 );
 
-function elmercatcultural_checkout_field_display_admin_order_meta($order){
-    echo '<p><strong>'.__('DNI').':</strong> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
-}
+// function elmercatcultural_checkout_field_display_admin_order_meta($order){
+//     echo '<p><strong>'.__('DNI').':</strong> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
+// }
 
 
 /***
  Add custom billing fields priority
  **/
 
- add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_billing_fields_priority' );
+//  add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_billing_fields_priority' );
 
- function elmercatcultural_billing_fields_priority( $fields ) {
-    $fields[ 'billing' ][ 'billing_first_name' ][ 'priority' ] = 10;
-    $fields[ 'billing' ][ 'billing_last_name' ][ 'priority' ] = 11;
-    $fields[ 'billing' ][ 'billing_DNI' ][ 'priority' ] = 12;
-    $fields[ 'billing' ][ 'billing_email' ][ 'priority' ] = 13;
-    $fields[ 'billing' ][ 'billing_phone' ][ 'priority' ] = 14;
-    $fields[ 'billing' ][ 'billing_company' ][ 'priority' ] = 15;
-    $fields[ 'billing' ][ 'billing_postcode' ][ 'priority' ] = 16;
-     return $fields;
- }
+//  function elmercatcultural_billing_fields_priority( $fields ) {
+//     $fields[ 'billing' ][ 'billing_first_name' ][ 'priority' ] = 10;
+//     $fields[ 'billing' ][ 'billing_last_name' ][ 'priority' ] = 10;
+//     //$fields[ 'billing' ][ 'billing_DNI' ][ 'priority' ] = 100;
+//     $fields[ 'billing' ][ 'billing_email' ][ 'priority' ] = 99;
+//     $fields[ 'billing' ][ 'billing_phone' ][ 'priority' ] = 100;
+//     $fields[ 'billing' ][ 'billing_company' ][ 'priority' ] = 101;
+//     $fields[ 'billing' ][ 'billing_postcode' ][ 'priority' ] = 102;
+//      return $fields;
+//  }
 
 /* EVENT POST TYPE LIFE CYCLE */
 
@@ -396,7 +453,6 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
         );
      
         $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
-        
         $ACF_keys=array_keys($postarr['acf']);
         $has_bound_product= $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
         if ($product == null && $has_bound_product == true){
