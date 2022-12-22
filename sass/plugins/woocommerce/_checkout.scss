@@ -1,33 +1,157 @@
-.woocommerce-billing-fields__field-wrapper{
-  display: flex;
-  flex-direction: column;
-  //flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0;
-  .pau-class{
-    color: red;
+.woocommerce{
+
+  .woocommerce-billing-fields__field-wrapper{
+    .elmercat-form-field-contact-details,
+    .elmercat-form-field-customer-details,
+    .elmercat-form-field-adress-details{
+      
+      display: flex;
+      padding: 0;
+      flex-direction: column;
+      align-items: center;
+      &:first-child {
+        margin-top: 2rem;
+      }
+        p:not(.veina-radio-input):after{
+          content:'>';
+          
+          position: relative;
+          display: inline-block;
+          right: 10px;
+          top: 0;
+        }
+        @include m-media(md) {
+          margin-top: 2rem;
+          justify-content: space-between;
+          position: relative;
+          flex-direction: row;
+          align-items: flex-start;
+        }
+    }
+    
+    .elmercat-form-field-adress-details{
+      justify-content: flex-start;
+      #billing_neighbour_field{
+        margin-left: 2rem;
+        margin-bottom: 5rem;
+        @include m-media(md) {
+          margin-left: 5rem;
+        }
+          
+        .woocommerce-input-wrapper{
+          input{
+            visibility: hidden;
+          }
+          label{
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: $font__secondary;
+            &.clicked{
+              color: $color__theme-primary;
+              text-decoration: underline 3px;
+            }
+          }
+        }
+      }
+      
+    }
+    .field-remove{
+      display: none;
+    }
+    .form-row {
+      width: fit-content;
+      
+      .woocommerce-input-wrapper input{
+        border: none;
+        border-radius: 0;
+        border-bottom: 2px solid $color__theme-primary;
+        outline: none;
+        @include m-media(md){
+          @include m-columns-width(4);
+        }
+        
+        
+      }
+      &.woocommerce-validated,
+      &.woocommerce-invalid {
+        input {
+          box-shadow: none;
+        }
+        
+      }
+      
+    }
+    #billing_neighbour_field{
+      .woocommerce-input-wrapper{
+        input{
+          width: fit-content;
+        }
+        
+      }
+    }
   }
-  .form-row{
-    width: fit-content;
-    //margin-left: 6rem;
+
+  #order_review_heading{
+    text-transform: uppercase;
+    border-bottom: 2px solid $color__theme-primary;
+    padding-bottom: 2rem;
+  }
+  #order_review{
+
+    table {
+      margin: 3rem 0;
+      border-collapse: collapse;
+      display: flex;
+      @include m-media(md){
+        display: table;
+      }
+
+      tr{
+        display: flex;
+        flex-direction: column;
+        @include m-media(md){
+          display: table-row;
+        }
+        th, td {
+          text-align: left;
+        
+          @include m-media(md){
+            border-right: 2px solid $color__theme-primary;
+          }
+        }
+
+        th{
+          text-transform: uppercase;
+          padding: 1rem 1.1rem;
+          font-weight: 400;
+          border-right: 2px solid $color__theme-primary;
+          
+          @include m-media(md){
+            
+            padding: 0.5rem 3.6rem;
+          }
+        }
+        td {
+          padding: 1rem 1.1rem;
+          @include m-media(md){
+            padding: 3.6rem 3.6rem;
+          }
+        }
+      }
+      tbody {
+        td{
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+      }
+    }
+    #payment{
+      ul.wc_payment_methods{
+        display: none;
+      }
+      .woocommerce-privacy-policy-text{
+        font-size: 12px;
+      }
+    }
   }
 }
-
-// @media screen and (min-width: 768px) {
-//   .col2-set {
-//     .form-row-first {
-//       float: left;
-//       // margin-right: $columns__margin;
-//     }
-
-//     .form-row-last {
-//       float: right;
-//       margin-right: 0;
-//     }
-
-//     .form-row-first,
-//     .form-row-last {
-//       @include m-columns_width(2);
-//     }
-//   }
-// }
