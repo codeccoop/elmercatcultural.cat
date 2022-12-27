@@ -1,6 +1,14 @@
 .woocommerce{
 
   .woocommerce-billing-fields__field-wrapper{
+    .required-fields__message{
+      p{
+        font-style: italic;
+        .required-simbol{
+          color: red;
+        }
+      }
+    }
     .elmercat-form-field-contact-details,
     .elmercat-form-field-customer-details,
     .elmercat-form-field-adress-details{
@@ -12,13 +20,24 @@
       &:first-child {
         margin-top: 2rem;
       }
+        p:not(#billing_phone_field):not(#billing_postcode_field):before{
+          content: '* ';
+          position: relative;
+          display: inline-block;
+          right: 2px;
+          top: 0;
+          color: red;
+        }
         p:not(.veina-radio-input):after{
-          content:'>';
-          
+          content: '>';
           position: relative;
           display: inline-block;
           right: 10px;
           top: 0;
+        }
+        p abbr.required{
+          display: none;
+
         }
         @include m-media(md) {
           margin-top: 2rem;

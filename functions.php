@@ -357,6 +357,13 @@ function elmercatcultural_override_checkout_fields( $fields ) {
         'clear'     => true,
         'priority' => 9    
      );
+     $fields['billing']['billing_birthday'] = array(
+        'placeholder'   => _x('DATA NAIXEMENT (dd/mm/aaaa)', 'placeholder', 'woocommerce'),
+        'required'  => true,
+        'class'     => array('form-row-wide'),
+        'clear'     => true,
+        'maxlength' => 10
+     );
      //add placeholder to native fields
 
      $fields['billing']['billing_first_name'] = array(
@@ -373,15 +380,12 @@ function elmercatcultural_override_checkout_fields( $fields ) {
      );
      $fields['billing']['billing_phone'] = array(
         'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
-        'required'  => true
-     );
-     $fields['billing']['billing_company'] = array(
-        'placeholder'   => _x('EMPRESA (OPCIONAL)', 'placeholder', 'woocommerce')
+        'required'  => false
      );
      $fields['billing']['billing_postcode'] = array(
         'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
         'class'     => array('form-row-wide'),
-        'required'  => true
+        'required'  => false
      );
      
      return $fields;
