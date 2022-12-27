@@ -148,6 +148,10 @@
           border: none;
         }
       }
+
+      .actions {
+        display: none;
+      }
     }
   }
 
@@ -252,6 +256,10 @@
             }
           }
         }
+      }
+
+      .woocommerce-remove-coupon {
+        display: none;
       }
     }
   }
