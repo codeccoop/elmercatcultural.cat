@@ -418,37 +418,39 @@ function new_radio_field($checkout)
 /**
  * DISPLAY CUSTOM MESSAGES WHEN FIELDS ARE EMPTY
  */
-add_action( 'woocommerce_after_checkout_validation', 'quadlayers', 9999, 2);
-function quadlayers( $fields, $errors ){
-// in case any validation errors
-if( !empty( $errors->get_error_codes() ) ) {
+add_action('woocommerce_after_checkout_validation', 'quadlayers', 9999, 2);
+function quadlayers($fields, $errors)
+{
+    // in case any validation errors
+    if (!empty($errors->get_error_codes())) {
 
-// omit all existing error messages
-foreach( $errors->get_error_codes() as $code ) {
-$errors->remove( $code );
-}
-// display custom single error message
-$errors->add( 'validation', '' );
-}
+        // omit all existing error messages
+        foreach ($errors->get_error_codes() as $code) {
+            $errors->remove($code);
+        }
+        // display custom single error message
+        $errors->add('validation', '');
+    }
 }
 
 
 add_action('woocommerce_checkout_process', 'elmercatcultural_checkout_field_process');
 
-function elmercatcultural_checkout_field_process() {
+function elmercatcultural_checkout_field_process()
+{
     // Check if set, if its not set add an error.
-    if ( ! $_POST['billing_first_name'] ){
-        wc_add_notice( __( 'És obligatori introduïr el NOM' ), 'error' );
+    if (!$_POST['billing_first_name']) {
+        wc_add_notice(__('És obligatori introduïr el NOM'), 'error');
     }
-    if ( ! $_POST['billing_last_name'] ){
-        wc_add_notice( __( 'És obligatori introduïr els COGNOMS' ), 'error' );
+    if (!$_POST['billing_last_name']) {
+        wc_add_notice(__('És obligatori introduïr els COGNOMS'), 'error');
     }
 
-    if ( ! $_POST['billing_email'] ){
-        wc_add_notice( __( 'És obligatori introduïr els CORREU ELECTRÒNIC vàlid' ), 'error' );
+    if (!$_POST['billing_email']) {
+        wc_add_notice(__('És obligatori introduïr els CORREU ELECTRÒNIC vàlid'), 'error');
     }
-    if ( ! $_POST['billing_neighbour'] ){
-        wc_add_notice( __( 'És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?' ), 'error' );
+    if (!$_POST['billing_neighbour']) {
+        wc_add_notice(__('És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?'), 'error');
     }
 }
 
@@ -458,8 +460,7 @@ add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
 function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
 {
     if (($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop') && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
-        $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
-
+        $slug = sanitize_title(wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null));
         $product = elmercatcultural_find_product_by_slug($slug);
 
         $custom_keys = array(
@@ -492,12 +493,10 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product->set_description($product_desc);
             $product->set_manage_stock(true);
             $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['stock']]];
-            $product->set_stock_quantity($product_stock);
+            if ($product->get_stock_quantity() === null) {
+                $product->set_stock_quantity($product_stock);
+            }
             $product->set_sold_individually(true);
-            //to set image carroussel 1 as product image
-            //    $product_carroussel = $postarr['acf'][$ACF_keys[$custom_keys['carroussel']]];
-            //    $image_carroussel_1 = $product_carroussel['field_6335592ed3740'];
-            //set post thumbnail as product image
             $product->set_image_id($post_thumbnail_id);
             $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
             $product_date_from = str_replace('/', '-', $product_date_from);
