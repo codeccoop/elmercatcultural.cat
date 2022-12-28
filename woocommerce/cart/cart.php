@@ -173,9 +173,9 @@ do_action('woocommerce_before_cart'); ?>
     if (wc_coupons_enabled()) : ?>
         <div class="coupon">
             <h3 class="sans-serif">Descomptes</h3>
-            <div class="text-input-wrapper">
                 <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
-                <p>Estàs jubilada, a l'atur o ets menor d'edat? Gaudeix d'un descompte de 5€ en el preu de les teves inscripcions</p>
+            <p>Estàs jubilada, a l'atur o ets menor de 35 anys? Gaudeix d'un descompte de 5€ en el preu de les teves inscripcions</p>
+            <div class="checkbox-input-wrapper">
                 <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox" id="coupon_checkbox" />
                 <label for="aplicar_descompte">Aplica el descompte</label>
             </div>
@@ -183,6 +183,7 @@ do_action('woocommerce_before_cart'); ?>
         <script>
         document.addEventListener("DOMContentLoaded", function () {
             const checkbox = document.getElementById("coupon_checkbox");
+            const label = checkbox.nextSibling;
             const couponCode = document.getElementById("coupon_code");
             const submitBtn = document.getElementsByName("apply_coupon")[0];
             const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");

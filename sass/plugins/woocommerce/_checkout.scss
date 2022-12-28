@@ -55,7 +55,7 @@
         }
 
         #billing_DNI.wrong,
-        #billing_birthday.wrong{
+        #billing_birthday.wrong {
           color: red;
         }
 
@@ -74,10 +74,9 @@
         margin-left: 0;
         margin-bottom: 5rem;
         width: 60vw;
-        @include m-media(md){
+        @include m-media(md) {
           @include m-columns-width(4);
         }
-        
 
         .woocommerce-input-wrapper {
           input {
@@ -142,10 +141,15 @@
   #order_review {
     table {
       margin: 3rem 0;
+      padding-bottom: 3rem;
       border-collapse: collapse;
       display: flex;
+      border-bottom: 2px solid $color__theme-primary;
+
       @include m-media(md) {
         display: table;
+        border-bottom: none;
+        padding-bottom: 0px;
       }
 
       tr {
@@ -157,7 +161,7 @@
         th,
         td {
           text-align: left;
-          &:not(:last-child){
+          &:not(:last-child) {
             @include m-media(md) {
               border-right: 2px solid $color__theme-primary;
             }
@@ -168,12 +172,12 @@
           text-transform: uppercase;
           padding: 1rem 1.1rem;
           font-weight: 400;
-          border-right: 2px solid $color__theme-primary;
-  
 
           @include m-media(md) {
+            border-right: 2px solid $color__theme-primary;
             padding: 0.5rem 3.6rem;
-            &:last-child{
+
+            &:last-child {
               border-right: none;
             }
           }

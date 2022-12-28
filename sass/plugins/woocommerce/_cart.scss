@@ -194,29 +194,14 @@
         padding-right: 4rem;
       }
 
-      .text-input-wrapper {
-        position: relative;
+      > p,
+      .checkbox-input-wrapper {
+        width: 100%;
+        text-align: center;
 
-        > i {
-          cursor: pointer;
-          position: absolute;
-          right: 0px;
-          top: 50%;
-          transform: translateY(-50%);
-          height: 0.8em;
-          width: 0.8em;
-          background-image: url(/wp-content/themes/elmercatcultural.cat/assets/images/chevron--icon.png);
-          background-size: contain;
-          background-position: center;
-          background-repeat: no-repeat;
+        @include m-media(md) {
+          text-align: start;
         }
-      }
-
-      .input-text {
-        border: none;
-        border-radius: 0;
-        border-bottom: 1px solid;
-        outline: none;
       }
     }
 
