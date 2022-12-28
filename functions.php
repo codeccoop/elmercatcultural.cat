@@ -198,8 +198,9 @@ function scripts()
                 'ajax_url' => admin_url('admin-ajax.php'),
             )
         );
-    } else if (is_page('finalitza-la-compra')) {
-        wp_enqueue_script('elmercatcultural-checkout', get_template_directory_uri() . '/js/checkout-veina-muntanya.js', array(), ELMERCATCULTURAL_VERSION, true);
+    } else if (is_checkout()) {
+        wp_enqueue_script('elmercatcultural-validateID', get_template_directory_uri() . '/js/validateID.js', array(), ELMERCATCULTURAL_VERSION, true);
+        wp_enqueue_script('elmercatcultural-checkout', get_template_directory_uri() . '/js/checkout-fields-validator.js', array(), ELMERCATCULTURAL_VERSION, true);
     }
 
     /* if (is_singular() && comments_open() && get_option('thread_comments')) {
@@ -414,34 +415,42 @@ function new_radio_field($checkout)
     ), $checkout->get_value('billing_neighbour'));
 }
 
+/**
+ * DISPLAY CUSTOM MESSAGES WHEN FIELDS ARE EMPTY
+ */
+add_action( 'woocommerce_after_checkout_validation', 'quadlayers', 9999, 2);
+function quadlayers( $fields, $errors ){
+// in case any validation errors
+if( !empty( $errors->get_error_codes() ) ) {
+
+// omit all existing error messages
+foreach( $errors->get_error_codes() as $code ) {
+$errors->remove( $code );
+}
+// display custom single error message
+$errors->add( 'validation', '' );
+}
+}
 
 
-//Display field value on the order edit page
+add_action('woocommerce_checkout_process', 'elmercatcultural_checkout_field_process');
 
+function elmercatcultural_checkout_field_process() {
+    // Check if set, if its not set add an error.
+    if ( ! $_POST['billing_first_name'] ){
+        wc_add_notice( __( 'És obligatori introduïr el NOM' ), 'error' );
+    }
+    if ( ! $_POST['billing_last_name'] ){
+        wc_add_notice( __( 'És obligatori introduïr els COGNOMS' ), 'error' );
+    }
 
-// add_action( 'woocommerce_admin_order_data_after_billing_address', 'elmercatcultural_checkout_field_display_admin_order_meta', 10, 1 );
-
-// function elmercatcultural_checkout_field_display_admin_order_meta($order){
-//     echo '<p><strong>'.__('DNI').':</strong> ' . get_post_meta( $order->get_id(), '_shipping_phone', true ) . '</p>';
-// }
-
-
-/***
- Add custom billing fields priority
- **/
-
-//  add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_billing_fields_priority' );
-
-//  function elmercatcultural_billing_fields_priority( $fields ) {
-//     $fields[ 'billing' ][ 'billing_first_name' ][ 'priority' ] = 10;
-//     $fields[ 'billing' ][ 'billing_last_name' ][ 'priority' ] = 10;
-//     //$fields[ 'billing' ][ 'billing_DNI' ][ 'priority' ] = 100;
-//     $fields[ 'billing' ][ 'billing_email' ][ 'priority' ] = 99;
-//     $fields[ 'billing' ][ 'billing_phone' ][ 'priority' ] = 100;
-//     $fields[ 'billing' ][ 'billing_company' ][ 'priority' ] = 101;
-//     $fields[ 'billing' ][ 'billing_postcode' ][ 'priority' ] = 102;
-//      return $fields;
-//  }
+    if ( ! $_POST['billing_email'] ){
+        wc_add_notice( __( 'És obligatori introduïr els CORREU ELECTRÒNIC vàlid' ), 'error' );
+    }
+    if ( ! $_POST['billing_neighbour'] ){
+        wc_add_notice( __( 'És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?' ), 'error' );
+    }
+}
 
 /* EVENT POST TYPE LIFE CYCLE */
 

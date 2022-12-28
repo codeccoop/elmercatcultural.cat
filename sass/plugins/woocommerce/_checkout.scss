@@ -39,6 +39,10 @@
           display: none;
 
         }
+        #billing_DNI.wrong,
+        #billing_birthday.wrong{
+          color: red;
+        }
         @include m-media(md) {
           margin-top: 2rem;
           justify-content: space-between;
