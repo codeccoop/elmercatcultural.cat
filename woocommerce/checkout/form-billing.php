@@ -26,7 +26,9 @@ defined( 'ABSPATH' ) || exit;
 		<?php
 		$fields = $checkout->get_checkout_fields( 'billing' );
 		?>
-		
+		<div class="required-fields__message">
+			<p> Els camps marcats amb un <span class="required-simbol">*</span> són obligatoris </p>
+		</div>
 		<div class="elmercat-form-field-customer-details">
 			<?php woocommerce_form_field( 'billing_first_name', $fields['billing_first_name'], $checkout->get_value( 'billing_first_name' ));?>
 			<?php woocommerce_form_field( 'billing_last_name', $fields['billing_last_name'], $checkout->get_value( 'billing_last_name' ));?>
@@ -35,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
 		<div class="elmercat-form-field-contact-details">
 			<?php woocommerce_form_field( 'billing_email', $fields['billing_email'], $checkout->get_value( 'billing_email' ));?>
 			<?php woocommerce_form_field( 'billing_phone', $fields['billing_phone'], $checkout->get_value( 'billing_phone' ));?>
-			<?php woocommerce_form_field( 'billing_company', $fields['billing_company'], $checkout->get_value( 'billing_company' ));?>
+			<?php woocommerce_form_field( 'billing_birthday', $fields['billing_birthday'], $checkout->get_value( 'billing_company' ));?>
 		</div>
 		<div class="elmercat-form-field-adress-details">
 			<?php woocommerce_form_field( 'billing_postcode', $fields['billing_postcode'], $checkout->get_value( 'billing_postcode' ));
@@ -49,6 +51,7 @@ defined( 'ABSPATH' ) || exit;
 			 woocommerce_form_field( 'billing_country', $fields['billing_country'], $checkout->get_value( 'billing_country' ));
 			 ?>
 		</div>
+		
 	</div>
 
 	<?php do_action( 'woocommerce_after_checkout_billing_form', $checkout ); ?>

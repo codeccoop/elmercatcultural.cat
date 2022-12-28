@@ -365,9 +365,16 @@ function elmercatcultural_override_checkout_fields($fields)
         'required'  => true,
         'class'     => array('form-row-wide'),
         'clear'     => true,
-        'priority' => 9
-    );
-    //add placeholder to native fields
+        'priority' => 9    
+     );
+     $fields['billing']['billing_birthday'] = array(
+        'placeholder'   => _x('DATA NAIXEMENT (dd/mm/aaaa)', 'placeholder', 'woocommerce'),
+        'required'  => true,
+        'class'     => array('form-row-wide'),
+        'clear'     => true,
+        'maxlength' => 10
+     );
+     //add placeholder to native fields
 
     $fields['billing']['billing_first_name'] = array(
         'placeholder'   => _x('NOM', 'placeholder', 'woocommerce'),
@@ -383,18 +390,15 @@ function elmercatcultural_override_checkout_fields($fields)
     );
     $fields['billing']['billing_phone'] = array(
         'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
-        'required'  => true
-    );
-    $fields['billing']['billing_company'] = array(
-        'placeholder'   => _x('EMPRESA (OPCIONAL)', 'placeholder', 'woocommerce')
-    );
-    $fields['billing']['billing_postcode'] = array(
+        'required'  => false
+     );
+     $fields['billing']['billing_postcode'] = array(
         'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
         'class'     => array('form-row-wide'),
-        'required'  => true
-    );
-
-    return $fields;
+        'required'  => false
+     );
+     
+     return $fields;
 }
 //Create radio button
 add_action('radio_input_veina', 'new_radio_field');
