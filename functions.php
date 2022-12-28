@@ -460,7 +460,7 @@ add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
 function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
 {
     if (($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop') && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
-        $slug = wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null);
+        $slug = sanitize_title(wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null));
         $product = elmercatcultural_find_product_by_slug($slug);
 
         $custom_keys = array(
