@@ -101,7 +101,7 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__title medium">Troba-ns a</p>
+                <p class="footer__title medium">Troba'ns a</p>
                 <ul class="footer__social">
                     <li><a href="<?= get_theme_mod('instagram'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/instagram.png'; ?>" /></a></li>
                     <li><a href="<?= get_theme_mod('twitter'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/twitter.png'; ?>" /></a></li>
