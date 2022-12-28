@@ -55,7 +55,7 @@
         }
 
         #billing_DNI.wrong,
-        #billing_birthday.wrong {
+        #billing_birthday.wrong{
           color: red;
         }
 
@@ -73,7 +73,11 @@
       #billing_neighbour_field {
         margin-left: 0;
         margin-bottom: 5rem;
-        @include m-columns-width(4);
+        width: 60vw;
+        @include m-media(md){
+          @include m-columns-width(4);
+        }
+        
 
         .woocommerce-input-wrapper {
           input {
@@ -108,7 +112,7 @@
         border-bottom: 2px solid $color__theme-primary;
         outline: none;
         @include m-media(md) {
-          @include m-columns-width(4);
+          @include m-columns-width(4.2);
         }
       }
 
@@ -153,9 +157,10 @@
         th,
         td {
           text-align: left;
-
-          @include m-media(md) {
-            border-right: 2px solid $color__theme-primary;
+          &:not(:last-child){
+            @include m-media(md) {
+              border-right: 2px solid $color__theme-primary;
+            }
           }
         }
 
@@ -164,9 +169,13 @@
           padding: 1rem 1.1rem;
           font-weight: 400;
           border-right: 2px solid $color__theme-primary;
+  
 
           @include m-media(md) {
             padding: 0.5rem 3.6rem;
+            &:last-child{
+              border-right: none;
+            }
           }
         }
         td {

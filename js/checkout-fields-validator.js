@@ -13,9 +13,9 @@ buttonNo.addEventListener('click', function() {
 //VALIDATE DNI/NIF 
 var inputID= document.getElementById('billing_DNI');
 
-
+var submitButton = document.getElementById('place_order');
+submitButton.setAttribute('disabled', true);
 inputID.addEventListener('input', (ev)=>{
-    var submitButton = document.getElementById('place_order');
     var DNI = ValidateSpanishID(ev.target.value);
     if(DNI.valid === false){
         inputID.classList.add('wrong');
@@ -33,7 +33,6 @@ inputID.addEventListener('input', (ev)=>{
 var dateFormat = /^\d{2}\/[0-1]{1}[1-9]{1}\/\d{4}$/;
 var inputBirthday = document.getElementById('billing_birthday');
 inputBirthday.addEventListener('input', (ev)=> {
-    var submitButton = document.getElementById('place_order');
     if (!ev.target.value.match(dateFormat)) {
         inputBirthday.classList.add('wrong');
         submitButton.setAttribute('disabled', true);
