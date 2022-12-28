@@ -366,16 +366,16 @@ function elmercatcultural_override_checkout_fields($fields)
         'required'  => true,
         'class'     => array('form-row-wide'),
         'clear'     => true,
-        'priority' => 9    
-     );
-     $fields['billing']['billing_birthday'] = array(
+        'priority' => 9
+    );
+    $fields['billing']['billing_birthday'] = array(
         'placeholder'   => _x('DATA NAIXEMENT (dd/mm/aaaa)', 'placeholder', 'woocommerce'),
         'required'  => true,
         'class'     => array('form-row-wide'),
         'clear'     => true,
         'maxlength' => 10
-     );
-     //add placeholder to native fields
+    );
+    //add placeholder to native fields
 
     $fields['billing']['billing_first_name'] = array(
         'placeholder'   => _x('NOM', 'placeholder', 'woocommerce'),
@@ -392,14 +392,14 @@ function elmercatcultural_override_checkout_fields($fields)
     $fields['billing']['billing_phone'] = array(
         'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
         'required'  => false
-     );
-     $fields['billing']['billing_postcode'] = array(
+    );
+    $fields['billing']['billing_postcode'] = array(
         'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
         'class'     => array('form-row-wide'),
         'required'  => false
-     );
-     
-     return $fields;
+    );
+
+    return $fields;
 }
 //Create radio button
 add_action('radio_input_veina', 'new_radio_field');
@@ -465,15 +465,15 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
         $custom_keys = array(
             'data_esdeveniment' => 0,
             'hora_esdeveniment' => 1,
-            'preu_esdeveniment' => 2,
-            'stock' => 3,
-            'data_inici' => 4,
-            'data_fi' => 5,
-            'fitxa_artistica' => 6,
-            'descipcio_esdeveniment' => 7,
-            'carroussel' => 8,
-            'video' => 9,
-            'checkbox' => 10
+            'fitxa_artistica' => 2,
+            'descipcio_esdeveniment' => 3,
+            'carroussel' => 4,
+            'video' => 5,
+            'preu_esdeveniment' => 6,
+            'checkbox' => 7,
+            'stock' => 8,
+            'data_inici' => 9,
+            'data_fi' => 10,
         );
 
         $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);

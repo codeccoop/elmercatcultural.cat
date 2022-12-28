@@ -1,48 +1,64 @@
-.woocommerce{
-
-  .woocommerce-billing-fields__field-wrapper{
-    .required-fields__message{
-      p{
+.woocommerce {
+  .woocommerce-billing-fields__field-wrapper {
+    .required-fields__message {
+      p {
         font-style: italic;
-        .required-simbol{
+        .required-simbol {
           color: red;
         }
       }
     }
     .elmercat-form-field-contact-details,
     .elmercat-form-field-customer-details,
-    .elmercat-form-field-adress-details{
-      
+    .elmercat-form-field-adress-details {
       display: flex;
       padding: 0;
       flex-direction: column;
       align-items: center;
+
+      @include m-media(md) {
+        margin-top: 2rem;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
       &:first-child {
         margin-top: 2rem;
       }
-        p:not(#billing_phone_field):not(#billing_postcode_field):before{
-          content: '* ';
+
+      .form-row {
+        position: relative;
+
+        &:not(#billing_phone_field):not(#billing_postcode_field):before {
+          content: "* ";
           position: relative;
           display: inline-block;
-          right: 2px;
           top: 0;
           color: red;
+          position: absolute;
+          left: -0.5em;
+          top: 50%;
+          transform: translateY(-50%);
         }
-        p:not(.veina-radio-input):after{
-          content: '>';
+
+        &:not(.veina-radio-input):after {
+          content: ">";
           position: relative;
           display: inline-block;
           right: 10px;
           top: 0;
         }
-        p abbr.required{
-          display: none;
 
+        abbr.required {
+          display: none;
         }
+
         #billing_DNI.wrong,
-        #billing_birthday.wrong{
+        #billing_birthday.wrong {
           color: red;
         }
+
         @include m-media(md) {
           margin-top: 2rem;
           justify-content: space-between;
@@ -50,130 +66,139 @@
           flex-direction: row;
           align-items: flex-start;
         }
+      }
     }
-    
-    .elmercat-form-field-adress-details{
-      justify-content: flex-start;
-      #billing_neighbour_field{
-        margin-left: 2rem;
+
+    .elmercat-form-field-adress-details {
+      #billing_neighbour_field {
+        margin-left: 0;
         margin-bottom: 5rem;
-        @include m-media(md) {
-          margin-left: 5rem;
-        }
-          
-        .woocommerce-input-wrapper{
-          input{
+        @include m-columns-width(4);
+
+        .woocommerce-input-wrapper {
+          input {
             visibility: hidden;
           }
-          label{
+
+          label {
             text-transform: uppercase;
             font-weight: 600;
             font-family: $font__secondary;
-            &.clicked{
+            &.clicked {
               color: $color__theme-primary;
               text-decoration: underline 3px;
             }
           }
         }
       }
-      
     }
-    .field-remove{
+
+    .field-remove {
       display: none;
     }
+
+    .form-row-placeholder {
+      @include m-columns-width(4);
+    }
+
     .form-row {
-      width: fit-content;
-      
-      .woocommerce-input-wrapper input{
+      .woocommerce-input-wrapper input {
         border: none;
         border-radius: 0;
         border-bottom: 2px solid $color__theme-primary;
         outline: none;
-        @include m-media(md){
+        @include m-media(md) {
           @include m-columns-width(4);
         }
-        
-        
       }
+
       &.woocommerce-validated,
       &.woocommerce-invalid {
         input {
           box-shadow: none;
         }
-        
       }
-      
     }
-    #billing_neighbour_field{
-      .woocommerce-input-wrapper{
-        input{
+
+    #billing_neighbour_field {
+      .woocommerce-input-wrapper {
+        input {
           width: fit-content;
         }
-        
       }
     }
   }
 
-  #order_review_heading{
+  #order_review_heading {
     text-transform: uppercase;
     border-bottom: 2px solid $color__theme-primary;
     padding-bottom: 2rem;
   }
-  #order_review{
 
+  #order_review {
     table {
       margin: 3rem 0;
       border-collapse: collapse;
       display: flex;
-      @include m-media(md){
+      @include m-media(md) {
         display: table;
       }
 
-      tr{
+      tr {
         display: flex;
         flex-direction: column;
-        @include m-media(md){
+        @include m-media(md) {
           display: table-row;
         }
-        th, td {
+        th,
+        td {
           text-align: left;
-        
-          @include m-media(md){
+
+          @include m-media(md) {
             border-right: 2px solid $color__theme-primary;
           }
         }
 
-        th{
+        th {
           text-transform: uppercase;
           padding: 1rem 1.1rem;
           font-weight: 400;
           border-right: 2px solid $color__theme-primary;
-          
-          @include m-media(md){
-            
+
+          @include m-media(md) {
             padding: 0.5rem 3.6rem;
           }
         }
         td {
           padding: 1rem 1.1rem;
-          @include m-media(md){
+          @include m-media(md) {
             padding: 3.6rem 3.6rem;
           }
         }
       }
       tbody {
-        td{
+        td {
           text-transform: uppercase;
           font-weight: 600;
         }
       }
     }
-    #payment{
-      ul.wc_payment_methods{
+
+    #payment {
+      ul.wc_payment_methods {
         display: none;
       }
-      .woocommerce-privacy-policy-text{
+
+      .woocommerce-privacy-policy-text {
         font-size: 12px;
+      }
+
+      .place-order {
+        text-align: center;
+
+        .wp-element-button {
+          margin-top: 4rem;
+        }
       }
     }
   }
