@@ -391,7 +391,7 @@ function elmercatcultural_override_checkout_fields($fields)
     );
     $fields['billing']['billing_phone'] = array(
         'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
-        'required'  => false
+        'required'  => true
     );
     $fields['billing']['billing_postcode'] = array(
         'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
@@ -451,6 +451,14 @@ function elmercatcultural_checkout_field_process()
     }
     if (!$_POST['billing_neighbour']) {
         wc_add_notice(__('És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?'), 'error');
+    }
+}
+
+add_action('woocommerce_checkout_update_order_meta', 'elmercatcultural_update_order_meta');
+function elmercatcultural_update_order_meta($order_id)
+{
+    if (!empty($_POST['billing_birthday'])) {
+        update_post_meta($order_id, 'DATA NAIXEMENT', sanitize_text_field($_POST['customised_field_name']));
     }
 }
 
@@ -538,4 +546,20 @@ function elmercatcultural_find_product_by_slug($slug)
     }
     $post = $posts[0];
     return wc_get_product($post);
+}
+
+add_action('acf/save_post', 'elmercatcultural_slug_sync');
+function elmercatcultural_slug_sync($post_id)
+{
+    $post_type = get_post_type($post_id);
+    if ($post_type == 'workshop' || $post_type == 'event') {
+        $post = get_post($post_id);
+        $title = $post->post_title;
+        $clean_title = sanitize_title($title);
+        $slug = $post->post_name;
+        if ($slug != $clean_title) {
+            $clean_post = array('ID' => $post_id, 'post_name' => $clean_title);
+            wp_update_post($clean_post);
+        }
+    }
 }

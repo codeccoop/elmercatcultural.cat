@@ -15,14 +15,14 @@ input[type="submit"] {
   text-transform: uppercase;
 
   &:hover,
-  &:focus,
-  &:active {
+  &:focus {
+    // &:active {
     border-bottom: 0.15em solid;
   }
 
   &:active,
   &:focus,
-  &.active,
+  // &.active,
   &.focus {
     color: $white;
   }

@@ -37,7 +37,14 @@ defined('ABSPATH') || exit;
         </div>
         <div class="elmercat-form-field-contact-details">
             <?php woocommerce_form_field('billing_email', $fields['billing_email'], $checkout->get_value('billing_email')); ?>
-            <?php woocommerce_form_field('billing_phone', $fields['billing_phone'], $checkout->get_value('billing_phone')); ?>
+            <div class="phone-input-wrapper">
+                <?php woocommerce_form_field('billing_phone', $fields['billing_phone'], $checkout->get_value('billing_phone')); ?>
+                <div class="more-info">
+                    <div class="popup-wrapper">
+                        <p>Des d’elMercat Cultural, no es venen les vostres dades privades en ningun format. Les dades que us demanem son per a poder-nos posar en contacte, per valorar les activitats i informar de canvis en cas de ser necessari. Et demanem confiança, nosaltres treballem en la responsabilitat.</p>
+                    </div>
+                </div>
+            </div>
             <?php woocommerce_form_field('billing_birthday', $fields['billing_birthday'], $checkout->get_value('billing_company')); ?>
         </div>
         <div class="elmercat-form-field-adress-details">
