@@ -41,7 +41,7 @@ defined('ABSPATH') || exit;
                 <?php woocommerce_form_field('billing_phone', $fields['billing_phone'], $checkout->get_value('billing_phone')); ?>
                 <div class="more-info">
                     <div class="popup-wrapper">
-                        <p>Des d’elMercat Cultural, no es venen les vostres dades privades en ningun format. Les dades que us demanem son per a poder-nos posar en contacte, per valorar les activitats i informar de canvis en cas de ser necessari. Et demanem confiança, nosaltres treballem en la responsabilitat.</p>
+                        <p>Des d'elMercat Cultural, no es venen les vostres dades privades en cap format. Les dades que us demanem són per a poder-nos posar en contacte, per valorar les activitats i informar de canvis en cas de ser necessari. Et demanem confiança, nosaltres treballem en la responsabilitat.</p>
                     </div>
                 </div>
             </div>

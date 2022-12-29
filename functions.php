@@ -440,14 +440,14 @@ function elmercatcultural_checkout_field_process()
 {
     // Check if set, if its not set add an error.
     if (!$_POST['billing_first_name']) {
-        wc_add_notice(__('És obligatori introduïr el NOM'), 'error');
+        wc_add_notice(__('És obligatori introduir el NOM'), 'error');
     }
     if (!$_POST['billing_last_name']) {
-        wc_add_notice(__('És obligatori introduïr els COGNOMS'), 'error');
+        wc_add_notice(__('És obligatori introduir els COGNOMS'), 'error');
     }
 
     if (!$_POST['billing_email']) {
-        wc_add_notice(__('És obligatori introduïr els CORREU ELECTRÒNIC vàlid'), 'error');
+        wc_add_notice(__('És obligatori introduir els CORREU ELECTRÒNIC vàlid'), 'error');
     }
     if (!$_POST['billing_neighbour']) {
         wc_add_notice(__('És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?'), 'error');
