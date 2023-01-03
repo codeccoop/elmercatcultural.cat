@@ -68,11 +68,11 @@ figcaption {
     font-size: $font__size-small;
     line-height: $font__line-height-small;
   }
-  &.event-title{
+  &.event-title {
     font-size: $font__size;
     line-height: $font__line-height-small;
   }
-  &.medium{
-    font-size: $font__size-page;
-  }
+  // &.medium{
+  //   font-size: $font__size-page;
+  // }
 }
