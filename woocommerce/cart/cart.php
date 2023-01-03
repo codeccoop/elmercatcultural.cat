@@ -174,19 +174,36 @@ do_action('woocommerce_before_cart'); ?>
         <div class="coupon">
             <h3 class="sans-serif">Descomptes</h3>
                 <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
-            <p>Estàs jubilada, a l'atur o ets menor de 35 anys? Gaudeix d'un descompte de 5€ en el preu de les teves inscripcions</p>
+            <p class="small">ETS MENOR DE 35 ANYS, JUBILAT O ESTÂS A L'ATUR?</p>
             <div class="checkbox-input-wrapper">
-                <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox" id="coupon_checkbox" />
-                <label for="aplicar_descompte">Aplica el descompte</label>
+                <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
+                <div class="checkbox-input__labels">
+                    <label class="checkbox-input__label-btn small" data-value="true">Sí</label>
+                    <label class="checkbox-input__label-btn small" data-value="false">No</label>
+                </div>
             </div>
         </div>
         <script>
         document.addEventListener("DOMContentLoaded", function () {
             const checkbox = document.getElementById("coupon_checkbox");
+            const radioBtns = document.querySelectorAll(".checkbox-input__label-btn");
             const label = checkbox.nextSibling;
             const couponCode = document.getElementById("coupon_code");
             const submitBtn = document.getElementsByName("apply_coupon")[0];
             const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");
+            radioBtns.forEach(btn => {
+                const value = btn.dataset.value === 'true';
+                btn.addEventListener('click', () => {
+                    if (value !== checkbox.checked) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                    radioBtns.forEach(btn => btn.classList.remove('clicked'));
+                    btn.classList.add('clicked');
+                });
+
+                if (checkbox.checked === value) btn.classList.add('clicked');
+            });
             checkbox.addEventListener("change", function () {
                 if (checkbox.checked) {
                     couponCode.value = "G9KX7RCT";
