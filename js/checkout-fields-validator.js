@@ -19,10 +19,12 @@ validateID( inputID.value );
 validateDate( inputBirthday.value );
 
 function validateID( value ) {
-    const isNull = value == null || value == "";
+	const isNull = value == null || value == '';
 	const isValid = ValidateSpanishID( value ).valid;
 	if ( ! isValid ) {
-		if ( ! isNull ) inputID.classList.add( 'wrong' );
+		if ( ! isNull ) {
+			inputID.classList.add( 'wrong' );
+		}
 		submitButton.setAttribute( 'disabled', true );
 	} else {
 		inputID.classList.remove( 'wrong' );
@@ -31,10 +33,12 @@ function validateID( value ) {
 }
 
 function validateDate( value ) {
-    const isNull = value == null || value == "";
+	const isNull = value == null || value == '';
 	const dateFormat = /^\d{2}\/[0-1]{1}[1-9]{1}\/\d{4}$/;
 	if ( ! dateFormat.test( value ) ) {
-		if ( ! isNull ) inputBirthday.classList.add( 'wrong' );
+		if ( ! isNull ) {
+			inputBirthday.classList.add( 'wrong' );
+		}
 		submitButton.setAttribute( 'disabled', true );
 	} else {
 		inputBirthday.classList.remove( 'wrong' );
