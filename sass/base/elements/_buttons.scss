@@ -16,13 +16,10 @@ input[type="submit"] {
 
   &:hover,
   &:focus {
-    // &:active {
     border-bottom: 0.15em solid;
   }
 
-  &:active,
   &:focus,
-  // &.active,
   &.focus {
     color: $white;
   }

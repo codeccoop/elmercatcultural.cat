@@ -127,6 +127,7 @@
             text-transform: uppercase;
             font-weight: 600;
             font-family: $font__secondary;
+
             &.clicked {
               color: $color__theme-primary;
               text-decoration: underline 3px;
