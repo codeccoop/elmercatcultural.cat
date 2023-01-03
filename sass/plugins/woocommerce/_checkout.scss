@@ -16,7 +16,7 @@
       flex-direction: column;
       align-items: center;
 
-      @include m-media(md) {
+      @include m-media(sm) {
         margin-top: 2rem;
         justify-content: space-between;
         flex-direction: row;
@@ -29,6 +29,11 @@
 
       .form-row {
         position: relative;
+        width: 100%;
+
+        @include m-media(sm) {
+          width: unset;
+        }
 
         &:not(#billing_postcode_field):before {
           content: "* ";
@@ -66,10 +71,19 @@
           flex-direction: row;
           align-items: flex-start;
         }
+
+        input {
+          width: calc(100% - 0.75em);
+        }
       }
 
       .phone-input-wrapper {
         position: relative;
+        width: 100%;
+
+        @include m-media(sm) {
+          width: unset;
+        }
 
         .more-info {
           position: absolute;
@@ -113,7 +127,8 @@
       #billing_neighbour_field {
         margin-left: 0;
         margin-bottom: 5rem;
-        width: 60vw;
+        width: 100%;
+
         @include m-media(md) {
           @include m-columns-width(4);
         }
@@ -184,21 +199,12 @@
       margin: 3rem 0;
       padding-bottom: 3rem;
       border-collapse: collapse;
-      display: flex;
-      border-bottom: 2px solid $color__theme-primary;
 
       @include m-media(md) {
-        display: table;
         border-bottom: none;
-        padding-bottom: 0px;
       }
 
       tr {
-        display: flex;
-        flex-direction: column;
-        @include m-media(md) {
-          display: table-row;
-        }
         th,
         td {
           text-align: left;
@@ -211,34 +217,73 @@
 
         th {
           text-transform: uppercase;
-          padding: 1rem 1.1rem;
           font-weight: 400;
+          padding-bottom: 1.2rem;
+
+          @include m-media(md) {
+            padding-bottom: 1.6rem;
+          }
 
           @include m-media(md) {
             border-right: 2px solid $color__theme-primary;
-            padding: 0.5rem 3.6rem;
+            padding-top: 0.5rem;
+
+            &:first-child {
+              @include m-columns-width(8.5);
+              padding-right: columns_width(0.5);
+            }
+
+            &:nth-child(2) {
+              @include m-columns-width(4);
+              padding: 0 columns_width(0.5);
+            }
 
             &:last-child {
+              @include m-columns-width(1.5);
+              padding-left: columns_width(0.5);
               border-right: none;
             }
           }
         }
-        td {
-          padding: 1rem 1.1rem;
-          @include m-media(md) {
-            padding: 3.6rem 3.6rem;
-          }
-        }
       }
+
       tbody {
         td {
           text-transform: uppercase;
           font-weight: 600;
+          vertical-align: baseline;
+          padding-top: 1.2rem;
+          padding-bottom: 1.2rem;
+
+          @include m-media(md) {
+            padding-top: 1.6rem;
+            padding-bottom: 1.6rem;
+          }
+
+          &:first-child {
+            padding-right: columns_width(0.5);
+          }
+
+          &:nth-child(2) {
+            padding: 0 columns_width(0.5);
+          }
+
+          &:last-child {
+            padding-left: columns_width(0.5);
+            border-right: none;
+          }
         }
       }
     }
 
     #payment {
+      border-top: 2px solid $color__theme-primary;
+      padding-top: 2rem;
+
+      @include m-media(sm) {
+        border-top: 0px;
+      }
+
       ul.wc_payment_methods {
         display: none;
       }
