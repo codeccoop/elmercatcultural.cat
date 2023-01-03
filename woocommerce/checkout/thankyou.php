@@ -20,8 +20,6 @@ defined('ABSPATH') || exit;
 ?>
 
 <div class="woocommerce-order">
-    <h3>BENVOLGUDES, GRÀCIES PER REALITZAR LA PRE-INCRIPCIÓ A ELMERCAT!</h3>
-
     <?php
     if ($order) :
 
@@ -30,7 +28,7 @@ defined('ABSPATH') || exit;
 
         <?php if ($order->has_status('failed')) : ?>
 
-            <p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed"><?php esc_html_e('Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce'); ?></p>
+            <h3 class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed"><?php esc_html_e('Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce'); ?></h3>
 
             <p class="woocommerce-notice woocommerce-notice--error woocommerce-thankyou-order-failed-actions">
                 <a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="button pay"><?php esc_html_e('Pay', 'woocommerce'); ?></a>
@@ -41,9 +39,10 @@ defined('ABSPATH') || exit;
 
         <?php else : ?>
 
-            <p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
-                <?php echo apply_filters('woocommerce_thankyou_order_received_text', esc_html__('Thank you. Your order has been received.', 'woocommerce'), $order); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
-                ?></p>
+            <h3>
+                <?php echo apply_filters('woocommerce_thankyou_order_received_text', esc_html__('Thank you. Your order has been received.', 'woocommerce'), $order); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  
+                ?>
+            </h3>
 
             <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
                 <li class="woocommerce-order-overview__order order">
@@ -78,8 +77,7 @@ defined('ABSPATH') || exit;
             </ul>
         <?php endif; ?>
     <?php endif; ?>
-    <h3>IMPORTANT</h3>
-    <p><strong>Per realitzar el pagament i la inscripció definitiva, cal venir físicament al espai abans del dilluns 9 de gener a les 19:00h per formalitzar el procés.</strong></p>
-    <p><strong>En cas de que no sigui així malauradament haurem d’anul·lar la teva plaça, i cedir-la a la persona que estigui en llista d’espera.</strong></p>
-    <p><strong>Moltes gràcies per tot!</strong></p>
+    <p><span class="title is-3 small">IMPORTANT:</span> Per realitzar el pagament i la inscripció definitiva, cal venir físicament al espai abans del dilluns 9 de gener a les 19:00h per formalitzar el procés.</p>
+    <p>En cas de que no sigui així malauradament haurem d’anul·lar la teva plaça, i cedir-la a la persona que estigui en llista d’espera.</p>
+    <p>Moltes gràcies per tot!</p>
 </div>

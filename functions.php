@@ -280,6 +280,12 @@ function elmercatcultural_remove_coupon_html($html, $coupon = null, $discount = 
     return preg_replace('/\<a href/', '<a aria-hidden="true" href', $html);
 }
 
+add_filter('woocommerce_thankyou_order_received_text', 'elmercatcultural_thankyou_text');
+function elmercatcultural_thankyou_text($text, $order = null)
+{
+    return 'Benvolgudes, gràcies per realitzar la preinscripció al mercat';
+}
+
 add_action('after_setup_theme', 'elmercatcultural_add_woocommerce_support');
 
 /***
