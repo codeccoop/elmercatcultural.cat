@@ -495,6 +495,21 @@ function elmercatcultural_update_order_meta($order_id)
     }
 }
 
+/*test */
+
+add_action('woocommerce_review_order_after_cart_contents', 'elmercatcultural_test');
+
+function elmercatcultural_test(){
+    if (WC()->cart->get_coupons()) {
+		echo '<tr class="cart-item"><td class="product-name">' . esc_html( 'Total Cistella amb descompte', 'woocommerce') . '</td>';
+        echo '<td class="product-name">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
+	} else { 
+	    echo '<tr class="cart-item"><td class="product-name">' . esc_html( 'Total Cistella', 'woocommerce' ) . '</td>';
+        echo '<td class="product-name">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
+	}
+}
+
+
 /* EVENT POST TYPE LIFE CYCLE */
 
 add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
