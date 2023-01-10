@@ -51,6 +51,19 @@ defined('ABSPATH') || exit;
             <?php woocommerce_form_field('billing_postcode', $fields['billing_postcode'], $checkout->get_value('billing_postcode'));
             do_action("radio_input_veina", $checkout); ?>
             <p class="form-row-placeholder" aria-hidden="true" style="visibility: hidden;"></p>
+            <script>
+                const buttonSi = document.getElementById('billing_neighbour_1');
+                const buttonNo = document.getElementById('billing_neighbour_2');
+
+                buttonSi.addEventListener('click', function() {
+                    buttonSi.labels[1].classList.add('clicked');
+                    buttonNo.labels[0].classList.remove('clicked');
+                });
+                buttonNo.addEventListener('click', function() {
+                    buttonNo.labels[0].classList.add('clicked');
+                    buttonSi.labels[1].classList.remove('clicked');
+                });
+            </script>
         </div>
         <div class="elmercat-form-field-adress-details">
             <?php woocommerce_form_field('billing_address_1', $fields['billing_address_1'], $checkout->get_value('billing_address_1'));

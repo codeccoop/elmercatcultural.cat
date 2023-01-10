@@ -198,17 +198,15 @@ function scripts()
                 'ajax_url' => admin_url('admin-ajax.php'),
             )
         );
-    } else if (is_checkout()) {
-        wp_enqueue_script('elmercatcultural-validateID', get_template_directory_uri() . '/js/validateID.js', array(), ELMERCATCULTURAL_VERSION, true);
-        wp_enqueue_script('elmercatcultural-checkout', get_template_directory_uri() . '/js/checkout-fields-validator.js', array(), ELMERCATCULTURAL_VERSION, true);
     }
-
-    /* if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    } */
 }
 add_action('wp_enqueue_scripts', 'scripts');
 add_action('admin_enqueue_scripts', 'scripts');
+
+/**
+ * DNI Validator
+ */
+require get_template_directory() . '/inc/validate-id.php';
 
 /**
  * Implement the Custom Header feature.
@@ -288,6 +286,12 @@ function elmercatcultural_thankyou_text($text, $order = null)
 
 add_action('after_setup_theme', 'elmercatcultural_add_woocommerce_support');
 
+add_filter('woocommerce_order_button_text', 'elmercatcultural_order_button_text');
+function elmercatcultural_order_button_text($text)
+{
+    return $text;
+}
+
 /***
  Remove billing fields
  **/
@@ -320,28 +324,27 @@ add_filter('woocommerce_checkout_fields', 'elmercatcultural_remove_checkout_fiel
 
 function unrequire_checkout_fields($fields)
 {
-    $fields['billing']['billing_city']['required']      = false;
-    $fields['billing']['billing_city']['class']      = array('field-remove');
-    $fields['billing']['billing_country']['required']   = false;
-    $fields['billing']['billing_country']['class']      = array('field-remove');
-    $fields['billing']['billing_state']['required']     = false;
-    $fields['billing']['billing_state']['class']      = array('field-remove');
+    $fields['billing']['billing_city']['required'] = false;
+    $fields['billing']['billing_city']['class'] = array('field-remove');
+    $fields['billing']['billing_country']['required'] = false;
+    $fields['billing']['billing_country']['class'] = array('field-remove');
+    $fields['billing']['billing_state']['required'] = false;
+    $fields['billing']['billing_state']['class'] = array('field-remove');
     $fields['billing']['billing_address_1']['required'] = false;
-    $fields['billing']['billing_address_1']['class']      = array('field-remove');
+    $fields['billing']['billing_address_1']['class'] = array('field-remove');
     $fields['billing']['billing_address_2']['required'] = false;
-    $fields['billing']['billing_address_2']['class']      = array('field-remove');
+    $fields['billing']['billing_address_2']['class'] = array('field-remove');
 
-
-    $fields['shipping']['shipping_city']['required']      = false;
-    $fields['shipping']['shipping_city']['class']      = array('field-remove');
-    $fields['shipping']['shipping_country']['required']   = false;
-    $fields['shipping']['shipping_country']['class']      = array('field-remove');
-    $fields['shipping']['shipping_state']['required']     = false;
-    $fields['shipping']['shipping_state']['class']      = array('field-remove');
+    $fields['shipping']['shipping_city']['required'] = false;
+    $fields['shipping']['shipping_city']['class'] = array('field-remove');
+    $fields['shipping']['shipping_country']['required'] = false;
+    $fields['shipping']['shipping_country']['class'] = array('field-remove');
+    $fields['shipping']['shipping_state']['required'] = false;
+    $fields['shipping']['shipping_state']['class'] = array('field-remove');
     $fields['shipping']['shipping_address_1']['required'] = false;
-    $fields['shipping']['shipping_address_1']['class']      = array('field-remove');
+    $fields['shipping']['shipping_address_1']['class'] = array('field-remove');
     $fields['shipping']['shipping_address_2']['required'] = false;
-    $fields['shipping']['shipping_address_2']['class']      = array('field-remove');
+    $fields['shipping']['shipping_address_2']['class'] = array('field-remove');
 
     return $fields;
 }
@@ -408,9 +411,9 @@ function elmercatcultural_override_checkout_fields($fields)
     return $fields;
 }
 //Create radio button
-add_action('radio_input_veina', 'new_radio_field');
+add_action('radio_input_veina', 'elmercatcultural_new_radio_field');
 
-function new_radio_field($checkout)
+function elmercatcultural_new_radio_field($checkout)
 {
     woocommerce_form_field('billing_neighbour', array(
         'type' => 'radio',
@@ -458,7 +461,31 @@ function elmercatcultural_checkout_field_process()
     if (!$_POST['billing_neighbour']) {
         wc_add_notice(__('És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?'), 'error');
     }
+    if (!$_POST['billing_DNI']) {
+        wc_add_notice(__('És obligatori introduir el DNI'), 'error');
+    } else {
+        $validation = elmercatcultural_validate_id($_POST['billing_DNI']);
+        if (!$validation['valid']) {
+            wc_add_notice(__('El valor del camp DNI és invàlid'), 'error');
+        }
+    }
+    if (!$_POST['billing_birthday']) {
+        wc_add_notice(__('És obligatori introduir la DATA DE NAIXEMENT'), 'error');
+    } else {
+        $dateFormat = '/^\d{2}\/[0-1]{1}[1-9]{1}\/\d{4}$/';
+        if (!preg_match($dateFormat, $_POST['billing_birthday'])) {
+            wc_add_notice(__('El valor del camp DATA DE NAIXEMENT és invàlid'), 'error');
+        }
+    }
 }
+
+/* add_action('woocommerce_after_checkout_validation', 'elmercatcultural_validate_billing_form', 10, 2); */
+/* function elmercatcultural_validate_billing_form($fields, $errors) */
+/* { */
+/*     if (preg_match($dateFormat, $fields['billing_birthday'])) { */
+/*         $errors->add('validation', 'El valor DATA DE NAIXEMENT no és valid'); */
+/*     } */
+/* } */
 
 add_action('woocommerce_checkout_update_order_meta', 'elmercatcultural_update_order_meta');
 function elmercatcultural_update_order_meta($order_id)

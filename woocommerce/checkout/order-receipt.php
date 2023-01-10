@@ -21,7 +21,6 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<h2>BENVOLGUDES, GRÀCIES PER REALITZAR LA PRE-INCRIPCIÓ A ELMERCAT!</h2>
 <ul class="order_details">
     <li class="order">
         <?php esc_html_e('Order number:', 'woocommerce'); ?>
