@@ -77,7 +77,7 @@ defined('ABSPATH') || exit;
             </ul>
         <?php endif; ?>
     <?php endif; ?>
-    <p><span class="title is-3 small">IMPORTANT:</span> Per realitzar el pagament i la inscripció definitiva, cal venir físicament al espai abans del dilluns 9 de gener a les 19:00h per formalitzar el procés.</p>
+    <!-- <p><span class="title is-3 small">IMPORTANT:</span> Per realitzar el pagament i la inscripció definitiva, cal venir físicament al espai abans del dilluns 9 de gener a les 19:00h per formalitzar el procés.</p>
     <p>En cas de que no sigui així malauradament haurem d’anul·lar la teva plaça, i cedir-la a la persona que estigui en llista d’espera.</p>
-    <p>Moltes gràcies per tot!</p>
+    <p>Moltes gràcies per tot!</p> -->
 </div>

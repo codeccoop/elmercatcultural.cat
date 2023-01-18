@@ -528,12 +528,14 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             'video' => 5,
             'preu_esdeveniment' => 6,
             'checkbox' => 7,
-            'stock' => 8,
+            'available_stock' => 8,
             'data_inici' => 9,
             'data_fi' => 10,
+            'checkbox_discount' => 11
         );
 
         $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
+        
         $ACF_keys = array_keys($postarr['acf']);
         $has_bound_product = $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
         if ($product == null && $has_bound_product == true) {
@@ -548,7 +550,9 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_desc = $postarr['acf'][$ACF_keys[$custom_keys['descipcio_esdeveniment']]];
             $product->set_description($product_desc);
             $product->set_manage_stock(true);
-            $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['stock']]];
+            $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['available_stock']]];
+            
+            
             if ($product->get_stock_quantity() === null) {
                 $product->set_stock_quantity($product_stock);
             }
@@ -562,13 +566,23 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_date_to = str_replace('/', '-', $product_date_to);
             $product_date_to = date("c", strtotime($product_date_to));
             $product->set_date_on_sale_to($product_date_to);
-
+            $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
+            $product-> update_meta_data( 'checkbox_discount', $product_disc );
             $product->save();
         }
     }
 
     return $data;
 }
+/* EXCLUDE PRODUCTS FROM COUPON DISCOUNT*/
+add_filter( 'woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4 );
+    function elmercatcultural_exclude_product_coupons( $valid, $product, $coupon, $values ) {
+
+            if ( $product->get_meta('checkbox_discount') === '0' ) {
+            $valid = false;
+            }
+            return $valid;
+        }
 
 add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
 function elmercatcultural_on_delete_event($ID)
