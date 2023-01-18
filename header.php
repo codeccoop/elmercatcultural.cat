@@ -43,7 +43,7 @@
                     <?php
                     $cart = WC()->cart->get_cart();
                     $cart_items = sizeof($cart);
-                    if ($cart_items > 0 && !is_cart()) : ?>
+                    if ($cart_items > 0 && !(is_cart() || is_checkout())) : ?>
                         <div class="cart-item-container">
                             <div class="cart-item" data-items="<?= $cart_items; ?>">
                                 <a href="<?= wc_get_cart_url(); ?>"></a>

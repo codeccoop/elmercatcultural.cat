@@ -140,12 +140,14 @@ do_action('woocommerce_before_cart'); ?>
 
             <?php do_action('woocommerce_cart_contents'); ?>
 
-            <!-- <tr>
-                <td colspan="6" class="actions">
+            <tr>
+                <td colspan="6" class="actions" aria-hidden="true">
 
                     <?php if (wc_coupons_enabled()) { ?>
                         <div class="coupon">
-                            <label for="coupon_code"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label> <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" /> <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
+                            <label for="coupon_code"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
+                            <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" />
+                            <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
                             <?php do_action('woocommerce_cart_coupon'); ?>
                         </div>
                     <?php } ?>
@@ -156,7 +158,7 @@ do_action('woocommerce_before_cart'); ?>
 
                     <?php wp_nonce_field('woocommerce-cart', 'woocommerce-cart-nonce'); ?>
                 </td>
-            </tr> -->
+            </tr>
 
             <?php do_action('woocommerce_after_cart_contents'); ?>
         </tbody>
@@ -170,13 +172,51 @@ do_action('woocommerce_before_cart'); ?>
     <?php
     if (wc_coupons_enabled()) : ?>
         <div class="coupon">
-            <h3 class="sans-serif">Codi promocional</h3>
-            <div class="text-input-wrapper">
-                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Insereix el codi" /> 
-                <i tabindex="0" role="button"></i>
+            <h3 class="sans-serif">Descomptes</h3>
+                <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
+            <p class="small">ETS MENOR DE 35 ANYS, JUBILAT O ESTÂS A L'ATUR?</p>
+            <div class="checkbox-input-wrapper">
+                <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
+                <div class="checkbox-input__labels">
+                    <label class="checkbox-input__label-btn small" data-value="true">Sí</label>
+                    <label class="checkbox-input__label-btn small" data-value="false">No</label>
+                </div>
             </div>
-            <?php do_action('woocommerce_cart_coupon'); ?>
         </div>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkbox = document.getElementById("coupon_checkbox");
+            const radioBtns = document.querySelectorAll(".checkbox-input__label-btn");
+            const label = checkbox.nextSibling;
+            const couponCode = document.getElementById("coupon_code");
+            const submitBtn = document.getElementsByName("apply_coupon")[0];
+            const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");
+            radioBtns.forEach(btn => {
+                const value = btn.dataset.value === 'true';
+                btn.addEventListener('click', () => {
+                    if (value !== checkbox.checked) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                    radioBtns.forEach(btn => btn.classList.remove('clicked'));
+                    btn.classList.add('clicked');
+                });
+
+                if (checkbox.checked === value) btn.classList.add('clicked');
+            });
+            checkbox.addEventListener("change", function () {
+                if (checkbox.checked) {
+                    couponCode.value = "G9KX7RCT";
+                    submitBtn.click();
+                } else if (activeCoupons.length) {
+                    Promise.all(Array.from(activeCoupons).map(link => {
+                        const href = link.href;
+                        return fetch(href);
+                    })).then(_ => window.location.reload());
+                }
+            });
+        });
+        </script>
     <? endif;
 
     /**

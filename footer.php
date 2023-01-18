@@ -19,26 +19,26 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__title medium">
+                <p class="footer__title small">
                     Contacte
                 </p>
-                <p class="footer__text medium">
+                <p class="footer__text small">
                     <?= preg_replace('/\n/', '<br>', get_theme_mod('contact')) ?>
                 </p>
             </div>
             <div class="footer__row">
-                <p class="footer__title medium">
+                <p class="footer__title small">
                     Horari d'obertura
                 </p>
-                <p class="footer__text medium">
+                <p class="footer__text small">
                     <?= preg_replace('/\n/', '<br>', get_theme_mod('open_hours')); ?>
                 </p>
             </div>
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__title medium">Com arribar</p>
-                <p class="footer__text medium">
+                <p class="footer__title small">Com arribar</p>
+                <p class="footer__text small">
                     <?= preg_replace('/\n/', '<br>', get_theme_mod('howtoarrive')); ?>
                 </p>
             </div>
@@ -54,7 +54,7 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__title medium">Dona't d'alta al nostre butlletí</p>
+                <p class="footer__title small">Dona't d'alta al nostre butlletí</p>
                 <div class="footer__subscription">
                     <form id="mcSubscriptionForm" action=https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                         <div class="footer__subscription-field">
@@ -101,7 +101,7 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__title medium">Troba-ns a</p>
+                <p class="footer__title small">Troba'ns a</p>
                 <ul class="footer__social">
                     <li><a href="<?= get_theme_mod('instagram'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/instagram.png'; ?>" /></a></li>
                     <li><a href="<?= get_theme_mod('twitter'); ?>" target="_blank"><img src="<?= get_bloginfo('template_url') . '/assets/images/twitter.png'; ?>" /></a></li>
@@ -112,9 +112,14 @@
         </div>
         <div class="footer__column">
             <div class="footer__row">
-                <p class="footer__text small"><a>Avís legal</a></p>
-                <p class="footer__text small"><a>Política de privacitat</a></p>
+                <p class="footer__text small"><a href="/avis-legal">Avís legal</a></p>
+                <p class="footer__text small"><a href="/politica-de-privacitat">Política de privacitat</a></p>
+                <p class="footer__text small"><a href="/politica-de-cookies">Política de cookies</a></p>
                 <p class="footer__text small">© El Mercat Cultural</a></p>
+            </div>
+            <div class="footer__row">
+                <p class="footer__text small">Amb el suport de:</p>
+                <img src="<?= get_bloginfo('template_url') . '/assets/images/bcn-banner.png'; ?>" />
             </div>
             <div class="footer__row">
                 <p class="footer__text small">El mercat forma part de:</p>

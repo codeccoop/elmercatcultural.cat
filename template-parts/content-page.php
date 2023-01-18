@@ -10,20 +10,25 @@
 
 ?>
 
-<article id="page-<?php the_ID(); ?>" <?php post_class(is_cart() ? 'type-wc-cart' : ''); ?>>
+<article id="page-<?php the_ID(); ?>" <?php post_class(is_cart() || is_checkout() ? 'type-wc-cart' : ''); ?>>
     <header class="page-header">
         <?php $tags = wp_get_post_tags(get_the_ID()); ?>
         <div class="page-breadcrumbs">
             <?php if (sizeof($tags) > 0) : ?>
-                <p class="page-breadcrumb small">EL MERCAT</p>
+                <p class="page-breadcrumb small"><?= $tags[0]->name; ?></p>
             <?php else : ?>
                 <p class="page-breadcrumb small">EL MERCAT</p>
             <?php endif; ?>
-            <?php if (is_cart()) : ?>
+            <?php if (is_cart() || is_checkout()) : ?>
                 <?php
                 $breadcrumb_url = wp_get_referer();
                 if ($breadcrumb_url) : ?>
                     <a href="<?= $breadcrumb_url ?>">
+                        <p class="post-breadcrumb underline small">
+                            < &nbspTORNAR</p>
+                    </a>
+                <?php else : ?>
+                    <a href="/">
                         <p class="post-breadcrumb underline small">
                             < &nbspTORNAR</p>
                     </a>

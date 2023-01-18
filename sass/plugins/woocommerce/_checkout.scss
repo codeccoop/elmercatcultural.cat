@@ -1,44 +1,69 @@
-.woocommerce{
-
-  .woocommerce-billing-fields__field-wrapper{
-    .required-fields__message{
-      p{
+.woocommerce {
+  .woocommerce-billing-fields__field-wrapper {
+    .required-fields__message {
+      p {
         font-style: italic;
-        .required-simbol{
+        .required-simbol {
           color: red;
         }
       }
     }
     .elmercat-form-field-contact-details,
     .elmercat-form-field-customer-details,
-    .elmercat-form-field-adress-details{
-      
+    .elmercat-form-field-adress-details {
       display: flex;
       padding: 0;
       flex-direction: column;
       align-items: center;
+
+      @include m-media(sm) {
+        margin-top: 2rem;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
       &:first-child {
         margin-top: 2rem;
       }
-        p:not(#billing_phone_field):not(#billing_postcode_field):before{
-          content: '* ';
+
+      .form-row {
+        position: relative;
+        width: 100%;
+
+        @include m-media(sm) {
+          width: unset;
+        }
+
+        &:not(#billing_postcode_field):before {
+          content: "* ";
           position: relative;
           display: inline-block;
-          right: 2px;
           top: 0;
           color: red;
+          position: absolute;
+          left: -0.5em;
+          top: 50%;
+          transform: translateY(-50%);
         }
-        p:not(.veina-radio-input):after{
-          content: '>';
+
+        &:not(.veina-radio-input):after {
+          content: ">";
           position: relative;
           display: inline-block;
           right: 10px;
           top: 0;
         }
-        p abbr.required{
-          display: none;
 
+        abbr.required {
+          display: none;
         }
+
+        #billing_DNI.wrong,
+        #billing_birthday.wrong {
+          color: red;
+        }
+
         @include m-media(md) {
           margin-top: 2rem;
           justify-content: space-between;
@@ -46,131 +71,234 @@
           flex-direction: row;
           align-items: flex-start;
         }
-    }
-    
-    .elmercat-form-field-adress-details{
-      justify-content: flex-start;
-      #billing_neighbour_field{
-        margin-left: 2rem;
-        margin-bottom: 5rem;
-        @include m-media(md) {
-          margin-left: 5rem;
+
+        input {
+          width: calc(100% - 0.75em);
         }
-          
-        .woocommerce-input-wrapper{
-          input{
+      }
+
+      .phone-input-wrapper {
+        position: relative;
+        width: 100%;
+
+        @include m-media(sm) {
+          width: unset;
+        }
+
+        .more-info {
+          position: absolute;
+          left: 0px;
+          top: calc(100% - 1em);
+          width: 1em;
+          height: 1em;
+          background-image: url(/wp-content/themes/elmercatcultural.cat/assets/images/interrogant-icon.png);
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          cursor: pointer;
+
+          &:hover {
+            .popup-wrapper p {
+              display: block;
+            }
+          }
+
+          .popup-wrapper {
+            position: relative;
+
+            p {
+              display: none;
+              padding: 1em 2em;
+              background-color: white;
+              position: absolute;
+              z-index: 10;
+              top: 0px;
+              left: 0px;
+              box-shadow: 2px 2px 5px #0003;
+              font-size: 0.75em;
+              width: 300px;
+            }
+          }
+        }
+      }
+    }
+
+    .elmercat-form-field-adress-details {
+      #billing_neighbour_field {
+        margin-left: 0;
+        margin-bottom: 5rem;
+        width: 100%;
+
+        @include m-media(md) {
+          @include m-columns-width(4);
+        }
+
+        .woocommerce-input-wrapper {
+          input {
             visibility: hidden;
           }
-          label{
+
+          label {
             text-transform: uppercase;
             font-weight: 600;
             font-family: $font__secondary;
-            &.clicked{
+
+            &.clicked {
               color: $color__theme-primary;
               text-decoration: underline 3px;
             }
           }
         }
       }
-      
     }
-    .field-remove{
+
+    .field-remove {
       display: none;
     }
+
+    .form-row-placeholder {
+      @include m-columns-width(4);
+    }
+
     .form-row {
-      width: fit-content;
-      
-      .woocommerce-input-wrapper input{
+      .woocommerce-input-wrapper input {
         border: none;
         border-radius: 0;
         border-bottom: 2px solid $color__theme-primary;
         outline: none;
-        @include m-media(md){
-          @include m-columns-width(4);
+        @include m-media(md) {
+          @include m-columns-width(4.2);
         }
-        
-        
       }
+
       &.woocommerce-validated,
       &.woocommerce-invalid {
         
         input {
           box-shadow: none;
         }
-        
       }
-      
     }
-    #billing_neighbour_field{
-      .woocommerce-input-wrapper{
-        input{
+
+    #billing_neighbour_field {
+      .woocommerce-input-wrapper {
+        input {
           width: fit-content;
         }
-        
       }
     }
   }
 
-  #order_review_heading{
+  #order_review_heading {
     text-transform: uppercase;
     border-bottom: 2px solid $color__theme-primary;
     padding-bottom: 2rem;
   }
-  #order_review{
 
+  #order_review {
     table {
       margin: 3rem 0;
+      padding-bottom: 3rem;
       border-collapse: collapse;
-      display: flex;
-      @include m-media(md){
-        display: table;
+
+      @include m-media(md) {
+        border-bottom: none;
       }
 
-      tr{
-        display: flex;
-        flex-direction: column;
-        @include m-media(md){
-          display: table-row;
-        }
-        th, td {
-          text-align: left;
-        
-          @include m-media(md){
-            border-right: 2px solid $color__theme-primary;
-          }
-        }
-
-        th{
-          text-transform: uppercase;
-          padding: 1rem 1.1rem;
-          font-weight: 400;
-          border-right: 2px solid $color__theme-primary;
-          
-          @include m-media(md){
-            
-            padding: 0.5rem 3.6rem;
-          }
-        }
+      tr {
+        th,
         td {
-          padding: 1rem 1.1rem;
-          @include m-media(md){
-            padding: 3.6rem 3.6rem;
+          text-align: left;
+          &:not(:last-child) {
+            @include m-media(md) {
+              border-right: 2px solid $color__theme-primary;
+            }
+          }
+        }
+
+        th {
+          text-transform: uppercase;
+          font-weight: 400;
+          padding-bottom: 1.2rem;
+
+          @include m-media(md) {
+            padding-bottom: 1.6rem;
+          }
+
+          @include m-media(md) {
+            border-right: 2px solid $color__theme-primary;
+            padding-top: 0.5rem;
+
+            &:first-child {
+              @include m-columns-width(8.5);
+              padding-right: columns_width(0.5);
+            }
+
+            &:nth-child(2) {
+              @include m-columns-width(4);
+              padding: 0 columns_width(0.5);
+            }
+
+            &:last-child {
+              @include m-columns-width(1.5);
+              padding-left: columns_width(0.5);
+              border-right: none;
+            }
           }
         }
       }
+
       tbody {
-        td{
+        td {
           text-transform: uppercase;
           font-weight: 600;
+          vertical-align: baseline;
+          padding-top: 1.2rem;
+          padding-bottom: 1.2rem;
+
+          @include m-media(md) {
+            padding-top: 1.6rem;
+            padding-bottom: 1.6rem;
+          }
+
+          &:first-child {
+            padding-right: columns_width(0.5);
+          }
+
+          &:nth-child(2) {
+            padding: 0 columns_width(0.5);
+          }
+
+          &:last-child {
+            padding-left: columns_width(0.5);
+            border-right: none;
+          }
         }
       }
     }
-    #payment{
-      ul.wc_payment_methods{
+
+    #payment {
+      border-top: 2px solid $color__theme-primary;
+      padding-top: 2rem;
+
+      @include m-media(sm) {
+        border-top: 0px;
+      }
+
+      ul.wc_payment_methods {
         display: none;
       }
-      .woocommerce-privacy-policy-text{
+
+      .woocommerce-privacy-policy-text {
         font-size: 12px;
+      }
+
+      .place-order {
+        text-align: center;
+
+        .wp-element-button {
+          margin-top: 4rem;
+        }
       }
     }
   }

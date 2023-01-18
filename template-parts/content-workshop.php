@@ -35,7 +35,10 @@ defined('ABSPATH') || exit;
         $post_slug = $post->post_name;
         $product_slug = $post_slug . '-product';
         $product_obj = get_page_by_path($product_slug, OBJECT, 'product');
+        $has_inscription = false;
+        $external_inscription = null;
         if ($product_obj) {
+            $has_inscription = get_field('checkbox', $post_id);
             $product_id = $product_obj->ID;
             $product = wc_get_product($product_id);
 
@@ -50,21 +53,23 @@ defined('ABSPATH') || exit;
                 $start_date = $current_date;
             }
             $stock = $product->get_stock_quantity();
+            $external_inscription = get_field('external_inscription', $post_id);
         } ?>
         <div class="post-content__inscription">
             <?php
-            if ($product_obj) {
+            if ($has_inscription) {
                 if ($stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
                     <form class="cart" action="https://elmercatcultural.cat/workshop/<?php echo $post_slug; ?>" method="post" enctype="multipart/form-data">
                         <button type="submit" name="add-to-cart" value="<?php echo $product_id; ?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
                     </form>
                 <?php } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
-                    <p class="small"> Inscripció tancada </p>
+                    <p class="small">Inscripció tancada</p>
                 <?php }
-            } else { ?>
-                <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small"> Presencial </p>
+            } else if ($external_inscription) { ?>
+                <div class="cart">
+                    <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
+                </div>
             <?php } ?>
             <p class="event-bold event-title">DATES</p>
             <?php if (get_field('date', $post_id)) { ?>

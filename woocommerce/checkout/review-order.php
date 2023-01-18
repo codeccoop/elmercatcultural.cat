@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 		<tr>
 			<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
 			<th class="product-price"><?php esc_html_e('Price', 'woocommerce'); ?></th>
-			<th class="product-total"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
+			<th class="product-total"><?php esc_html_e( 'Total', 'woocommerce'); ?></th> 
 		</tr>
 	</thead>
 	<tbody>
@@ -53,12 +53,10 @@ defined( 'ABSPATH' ) || exit;
 				<?php
 			}
 		}
-
 		do_action( 'woocommerce_review_order_after_cart_contents' );
 		?>
 	</tbody>
 	<tfoot>
-
 		
 	</tfoot>
 </table>
