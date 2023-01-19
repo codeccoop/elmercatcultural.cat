@@ -206,7 +206,7 @@ do_action('woocommerce_before_cart'); ?>
             });
             checkbox.addEventListener("change", function () {
                 if (checkbox.checked) {
-                    couponCode.value = "G9KX7RCT";
+                    couponCode.value = "master-coupon";
                     submitBtn.click();
                 } else if (activeCoupons.length) {
                     Promise.all(Array.from(activeCoupons).map(link => {

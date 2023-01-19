@@ -568,6 +568,7 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product->set_date_on_sale_to($product_date_to);
             $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
             $product-> update_meta_data( 'checkbox_discount', $product_disc );
+            
             $product->save();
         }
     }
@@ -583,7 +584,49 @@ add_filter( 'woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude
             }
             return $valid;
         }
+/* FORCE TO APPLY ALL COUPONS*/
 
+function available_coupon_codes() {
+    global $wpdb;
+    
+    // Get an array of all existing coupon codes
+    $coupon_codes = $wpdb->get_col("SELECT post_name FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
+    
+    // Display available coupon codes
+    return $coupon_codes; // always use return in a shortcode
+}
+
+
+add_action( 'woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1 );
+
+function auto_apply_coupon_for_regular_customers( $coupon_code ) {
+
+    $coupon_codes = available_coupon_codes();
+
+    foreach ($coupon_codes as $code) {
+        if(!WC()->cart->has_discount( $code )){
+            WC()->cart->apply_coupon( $code );
+        }   
+    }
+}
+
+add_action( 'woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1 );
+function auto_remove_coupon_for_regular_customers($coupon_code){
+    WC()->cart->remove_coupons();
+
+}
+
+//REMOVE COUPON CART MESSAGE WHEN APPLIED
+add_filter('woocommerce_coupon_message','remove_msg_filter',10, 2);
+function remove_msg_filter($msg, $msg_code){
+    if($msg_code === WC_Coupon::WC_COUPON_SUCCESS){
+        return null;
+    }else{
+        return $msg;
+    }
+   
+}    
+    
 add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
 function elmercatcultural_on_delete_event($ID)
 {

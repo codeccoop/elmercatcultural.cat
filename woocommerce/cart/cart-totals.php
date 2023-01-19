@@ -31,30 +31,18 @@ defined('ABSPATH') || exit;
             <th><?php esc_html_e('Subtotal', 'woocommerce'); ?></th>
             <td data-title="<?php esc_attr_e('Subtotal', 'woocommerce'); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
         </tr>
-        <?php
-         $items = WC()->cart->get_cart();
-        //  throw new Exception(print_r($items));
-        // foreach( $items as $item => $values ) {
-            
-        //     // // Load product object
-        //     $product = $values['data'];
-        //     $product_note = $product->get_purchase_note();
-        
-        // }
-        // if ($product_note) {
-            
-        // }
-        // ?>
-        
-        
-        <?php foreach (WC()->cart->get_coupons() as $code => $coupon) : ?>
+        <?php foreach (WC()->cart->get_coupons() as $code => $coupon) : 
+            if($code === 'master-coupon' ){
+                continue;
+            }
+            ?>
             <tr class="cart-discount coupon-<?php echo esc_attr(sanitize_title($code)); ?>">
                 <!-- <th><?php wc_cart_totals_coupon_label($coupon); ?></th> -->
                 <th>Descompte</th>
                 <td data-title="<?php echo esc_attr(wc_cart_totals_coupon_label($coupon, false)); ?>"><?php wc_cart_totals_coupon_html($coupon); ?></td>
             </tr>
         <?php endforeach; ?>
-
+            
         <?php foreach (WC()->cart->get_fees() as $fee) : ?>
             <tr class="fee">
                 <th><?php echo esc_html($fee->name); ?></th>
