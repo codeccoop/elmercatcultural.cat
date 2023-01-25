@@ -149,6 +149,7 @@ do_action('woocommerce_before_cart'); ?>
                             <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" />
                             <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
                             <?php do_action('woocommerce_cart_coupon'); ?>
+                            <script>console.log("Hello darknes my old friend");</script>
                         </div>
                     <?php } ?>
 
@@ -173,7 +174,7 @@ do_action('woocommerce_before_cart'); ?>
     if (wc_coupons_enabled()) : ?>
         <div class="coupon">
             <h3 class="sans-serif">Descomptes</h3>
-                <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
+            <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
             <p class="small">ETS MENOR DE 35 ANYS, JUBILAT O ESTÂS A L'ATUR?</p>
             <div class="checkbox-input-wrapper">
                 <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
@@ -185,11 +186,37 @@ do_action('woocommerce_before_cart'); ?>
         </div>
         <script>
         document.addEventListener("DOMContentLoaded", function () {
+            let onLoop = false;
+            function applyCoupons() {
+                document.getElementById("coupon_code").value = "master-coupon";
+                document.getElementsByName("apply_coupon")[0].click();
+                onLoop = true;
+            }
+            function removeCoupons(reload) {
+                fetch('https://elmercatcultural.cat/cistella?remove_coupon=master-coupon')
+                    .then(_ => {
+                        window.location.reload();
+                    });
+            }
+            jQuery(document.body).on("wc_cart_emptied", removeCoupons);
+            jQuery(document.body).on("updated_cart_totals", () => {
+                radioBtns.forEach(btn => {
+                    
+                    const value = btn.dataset.value === 'true';
+                    btn.classList.remove('clicked');
+                    if(checkbox.checked === value){
+                        btn.classList.add('clicked');
+                    }
+                });
+
+                if(checkbox.checked) {
+                    if (!onLoop) applyCoupons();
+                    else onLoop = false;
+                } 
+            });
             const checkbox = document.getElementById("coupon_checkbox");
             const radioBtns = document.querySelectorAll(".checkbox-input__label-btn");
             const label = checkbox.nextSibling;
-            const couponCode = document.getElementById("coupon_code");
-            const submitBtn = document.getElementsByName("apply_coupon")[0];
             const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");
             radioBtns.forEach(btn => {
                 const value = btn.dataset.value === 'true';
@@ -201,19 +228,13 @@ do_action('woocommerce_before_cart'); ?>
                     radioBtns.forEach(btn => btn.classList.remove('clicked'));
                     btn.classList.add('clicked');
                 });
-
+               
+            
                 if (checkbox.checked === value) btn.classList.add('clicked');
             });
             checkbox.addEventListener("change", function () {
-                if (checkbox.checked) {
-                    couponCode.value = "master-coupon";
-                    submitBtn.click();
-                } else if (activeCoupons.length) {
-                    Promise.all(Array.from(activeCoupons).map(link => {
-                        const href = link.href;
-                        return fetch(href);
-                    })).then(_ => window.location.reload());
-                }
+                if (checkbox.checked) applyCoupons();
+                else if (activeCoupons.length) removeCoupons(true);
             });
         });
         </script>

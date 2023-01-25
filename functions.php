@@ -530,8 +530,8 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             'checkbox' => 7,
             'available_stock' => 8,
             'data_inici' => 9,
-            'data_fi' => 10,
-            'checkbox_discount' => 11
+            'data_fi' => 10
+            // 'checkbox_discount' => 11
         );
 
         $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
@@ -566,8 +566,8 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_date_to = str_replace('/', '-', $product_date_to);
             $product_date_to = date("c", strtotime($product_date_to));
             $product->set_date_on_sale_to($product_date_to);
-            $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
-            $product-> update_meta_data( 'checkbox_discount', $product_disc );
+            // $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
+            // $product-> update_meta_data( 'checkbox_discount', $product_disc );
             
             $product->save();
         }
@@ -596,19 +596,54 @@ function available_coupon_codes() {
     return $coupon_codes; // always use return in a shortcode
 }
 
+/** COUPONS LOGIC */
+function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids) {
+    $doesInclude = false;
+    foreach ($coupon_product_ids as $coupon_product_id) {
+        foreach($cart_product_ids as $cart_product_id){
+            $doesInclude = $doesInclude || $coupon_product_id == $cart_product_id;
+        }   
+    }
+    return $doesInclude;
+}
+function auto_apply_coupon_for_regular_customers( $coupon_code ) {
+
+    if($coupon_code != 'master-coupon'){
+        return;
+    }
+    $coupon_codes = available_coupon_codes();
+    $cart_product_ids = [];
+    foreach(WC()->cart->get_cart() as $item => $cart_product){
+        $cart_product_ids[] = $cart_product['product_id'];
+
+        
+    }
+    $has_available_coupons = false;
+    foreach ($coupon_codes as $code) {
+        $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
+        $coupon_id = $coupon->ID;
+        $coupon_product_ids = get_post_meta( $coupon_id, 'product_ids' );
+        // throw new Exception (print_r($coupon_products_ids));
+        
+        if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
+            WC()->cart->apply_coupon( $code );
+            $has_available_coupons = true;
+        }   
+    }
+    // throw new Exception($has_available_coupons ? "has coupons" : "hasn't");
+    // if($has_available_coupons == false){
+    //     wc_add_notice(__('No hi ha descomptes per aquests productes'), 'error');
+        
+    // }
+    
+}
 
 add_action( 'woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1 );
 
-function auto_apply_coupon_for_regular_customers( $coupon_code ) {
 
-    $coupon_codes = available_coupon_codes();
 
-    foreach ($coupon_codes as $code) {
-        if(!WC()->cart->has_discount( $code )){
-            WC()->cart->apply_coupon( $code );
-        }   
-    }
-}
+
+
 
 add_action( 'woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1 );
 function auto_remove_coupon_for_regular_customers($coupon_code){
