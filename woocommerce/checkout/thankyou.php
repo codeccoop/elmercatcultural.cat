@@ -71,7 +71,7 @@ defined('ABSPATH') || exit;
                     <li class="woocommerce-order-overview__payment-method method">
                         <?php esc_html_e('Payment method:', 'woocommerce'); ?>
                         <!-- <strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong> -->
-                        <strong>Pagament presencial</strong>
+                        <strong>Pagament amb targeta</strong>
                     </li>
                 <?php endif; ?>
             </ul>

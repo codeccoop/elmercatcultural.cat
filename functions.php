@@ -263,35 +263,217 @@ require get_template_directory() . '/post_types/workshop.php';
 require get_template_directory() . '/ajax/async-grid.php';
 
 
-/*WOOCOMMERCE*/
+/* 
+***************************************************************************************************
+----------------------------------------------------------------------------------------------------
+                                                WOOCOMMERCE 
+---------------------------------------------------------------------------------------------------
+***************************************************************************************************
+*/
 
-/*This file enables you to add custom code to your site*/
+/* 
+++++++++++++++++
+CREATE PRODUCTS AUTOMATICALLY 
+++++++++++++++++
+*/
 
-function elmercatcultural_add_woocommerce_support()
+/* EVENT POST TYPE LIFE CYCLE */
+
+add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
+function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
 {
-    add_theme_support('woocommerce');
+    if (($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop') && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
+        $slug = sanitize_title(wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null));
+        $product = elmercatcultural_find_product_by_slug($slug);
+
+        $custom_keys = array(
+            'data_esdeveniment' => 0,
+            'hora_esdeveniment' => 1,
+            'fitxa_artistica' => 2,
+            'descipcio_esdeveniment' => 3,
+            'carroussel' => 4,
+            'video' => 5,
+            'preu_esdeveniment' => 6,
+            'checkbox' => 7,
+            'available_stock' => 8,
+            'data_inici' => 9,
+            'data_fi' => 10
+            // 'checkbox_discount' => 11
+        );
+
+        $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
+        
+        $ACF_keys = array_keys($postarr['acf']);
+        $has_bound_product = $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
+        if ($product == null && $has_bound_product == true) {
+            $product = new WC_Product_Simple();
+            $product->set_slug($slug . '-product');
+            $product->set_name($postarr['post_title']);
+            $product->save();
+        };
+        if ($has_bound_product == true) {
+            $product_price = $postarr['acf'][$ACF_keys[$custom_keys['preu_esdeveniment']]];
+            $product->set_regular_price($product_price); // in current shop currency
+            $product_desc = $postarr['acf'][$ACF_keys[$custom_keys['descipcio_esdeveniment']]];
+            $product->set_description($product_desc);
+            $product->set_manage_stock(true);
+            $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['available_stock']]];
+            
+            
+            if ($product->get_stock_quantity() === null) {
+                $product->set_stock_quantity($product_stock);
+            }
+            $product->set_sold_individually(true);
+            $product->set_image_id($post_thumbnail_id);
+            $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
+            $product_date_from = str_replace('/', '-', $product_date_from);
+            $product_date_from = date("c", strtotime($product_date_from));
+            $product->set_date_on_sale_from($product_date_from);
+            $product_date_to = $postarr['acf'][$ACF_keys[$custom_keys['data_fi']]];
+            $product_date_to = str_replace('/', '-', $product_date_to);
+            $product_date_to = date("c", strtotime($product_date_to));
+            $product->set_date_on_sale_to($product_date_to);
+            // $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
+            // $product-> update_meta_data( 'checkbox_discount', $product_disc );
+            
+            $product->save();
+        }
+    }
+
+    return $data;
 }
 
-add_filter('woocommerce_cart_totals_coupon_html', 'elmercatcultural_remove_coupon_html');
-function elmercatcultural_remove_coupon_html($html, $coupon = null, $discount = null)
+function elmercatcultural_find_product_by_slug($slug)
 {
-    return preg_replace('/\<a href/', '<a aria-hidden="true" href', $html);
+    $posts = get_posts(array(
+        'name' => $slug . '-product',
+        'post_type' => 'product'
+    ));
+    if (count($posts) == 0) {
+        return null;
+    }
+    $post = $posts[0];
+    return wc_get_product($post);
 }
 
-add_filter('woocommerce_thankyou_order_received_text', 'elmercatcultural_thankyou_text');
-function elmercatcultural_thankyou_text($text, $order = null)
+add_action('acf/save_post', 'elmercatcultural_slug_sync');
+function elmercatcultural_slug_sync($post_id)
 {
-    return 'Benvolgudes, gràcies per realitzar la preinscripció al mercat';
+    $post_type = get_post_type($post_id);
+    if ($post_type == 'workshop' || $post_type == 'event') {
+        $post = get_post($post_id);
+        $title = $post->post_title;
+        $clean_title = sanitize_title($title);
+        $slug = $post->post_name;
+        if ($slug != $clean_title) {
+            $clean_post = array('ID' => $post_id, 'post_name' => $clean_title);
+            wp_update_post($clean_post);
+        }
+    }
 }
 
-add_action('after_setup_theme', 'elmercatcultural_add_woocommerce_support');
+/* 
+++++++++++++++++
+CART SECTION 
+++++++++++++++++
+*/
 
-add_filter('woocommerce_order_button_text', 'elmercatcultural_order_button_text');
-function elmercatcultural_order_button_text($text)
-{
-    return $text;
+
+/* EXCLUDE PRODUCTS FROM COUPON DISCOUNT*/
+add_filter( 'woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4 );
+    function elmercatcultural_exclude_product_coupons( $valid, $product, $coupon, $values ) {
+
+            if ( $product->get_meta('checkbox_discount') === '0' ) {
+            $valid = false;
+            }
+            return $valid;
+        }
+/* FORCE TO APPLY ALL COUPONS*/
+
+function available_coupon_codes() {
+    global $wpdb;
+    
+    // Get an array of all existing coupon codes
+    $coupon_codes = $wpdb->get_col("SELECT post_name FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
+    
+    // Display available coupon codes
+    return $coupon_codes; // always use return in a shortcode
 }
 
+/** COUPONS LOGIC */
+function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids) {
+    $doesInclude = false;
+    foreach ($coupon_product_ids as $coupon_product_id) {
+        foreach($cart_product_ids as $cart_product_id){
+            $doesInclude = $doesInclude || $coupon_product_id == $cart_product_id;
+        }   
+    }
+    return $doesInclude;
+}
+function auto_apply_coupon_for_regular_customers( $coupon_code ) {
+
+    if($coupon_code != 'master-coupon'){
+        return;
+    }
+    $coupon_codes = available_coupon_codes();
+    $cart_product_ids = [];
+    foreach(WC()->cart->get_cart() as $item => $cart_product){
+        $cart_product_ids[] = $cart_product['product_id'];
+
+        
+    }
+    $has_available_coupons = false;
+    foreach ($coupon_codes as $code) {
+        $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
+        $coupon_id = $coupon->ID;
+        $coupon_product_ids = get_post_meta( $coupon_id, 'product_ids' );
+        // throw new Exception (print_r($coupon_products_ids));
+        
+        if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
+            WC()->cart->apply_coupon( $code );
+            $has_available_coupons = true;
+        }   
+    }
+}
+
+add_action( 'woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1 );
+
+
+add_action( 'woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1 );
+function auto_remove_coupon_for_regular_customers($coupon_code){
+    WC()->cart->remove_coupons();
+
+}
+
+//REMOVE COUPON CART MESSAGE WHEN APPLIED
+add_filter('woocommerce_coupon_message','remove_msg_filter',10, 2);
+function remove_msg_filter($msg, $msg_code){
+    if($msg_code === WC_Coupon::WC_COUPON_SUCCESS){
+        return null;
+    }else{
+        return $msg;
+    }
+   
+}    
+//REMOVE CART MESSAGE WHEN PRODUCT REMOVED
+add_filter('woocommerce_cart_item_removed_notice_type', '__return_null');
+    
+add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
+function elmercatcultural_on_delete_event($ID)
+{
+    if (get_post_type($ID) === 'event' || get_post_type($ID) === 'workshop') {
+        $slug = get_post_field('post_name', $ID);
+        $product = elmercatcultural_find_product_by_slug($slug);
+        if ($product == null) return;
+        $product->delete();
+    }
+}
+
+/* 
+++++++++++++++++
+CHECKOUT SECTION
+++++++++++++++++
+*/
 /***
  Remove billing fields
  **/
@@ -350,15 +532,6 @@ function unrequire_checkout_fields($fields)
 }
 
 add_filter('woocommerce_checkout_fields', 'unrequire_checkout_fields');
-
-
-
-
-
-
-// remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
-// add_filter( 'woocommerce_ship_to_different_address_checked', '__return_false' );
-//remove_action( 'woocommerce_after_checkout_billing_form', 'woocommerce_checkout_shipping' );
 
 /***
  Add custom billing fields
@@ -478,15 +651,6 @@ function elmercatcultural_checkout_field_process()
         }
     }
 }
-
-/* add_action('woocommerce_after_checkout_validation', 'elmercatcultural_validate_billing_form', 10, 2); */
-/* function elmercatcultural_validate_billing_form($fields, $errors) */
-/* { */
-/*     if (preg_match($dateFormat, $fields['billing_birthday'])) { */
-/*         $errors->add('validation', 'El valor DATA DE NAIXEMENT no és valid'); */
-/*     } */
-/* } */
-
 add_action('woocommerce_checkout_update_order_meta', 'elmercatcultural_update_order_meta');
 function elmercatcultural_update_order_meta($order_id)
 {
@@ -509,197 +673,35 @@ function elmercatcultural_test(){
 	}
 }
 
+/* 
+++++++++++++++++
+THANK YOU SECTION 
+++++++++++++++++
+*/
 
-/* EVENT POST TYPE LIFE CYCLE */
+/*This file enables you to add custom code to your site*/
 
-add_filter('wp_insert_post_data', 'elmercatcultural_on_event_insert', 99, 2);
-function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_postarr = null, $update = false)
+function elmercatcultural_add_woocommerce_support()
 {
-    if (($postarr['post_type'] === 'event' || $postarr['post_type'] === 'workshop') && $postarr['ID'] != 0 && $data['post_status'] != 'trash') {
-        $slug = sanitize_title(wp_unique_post_slug($postarr['post_title'], $postarr['ID'], $postarr['post_status'], $postarr['post_type'], null));
-        $product = elmercatcultural_find_product_by_slug($slug);
-
-        $custom_keys = array(
-            'data_esdeveniment' => 0,
-            'hora_esdeveniment' => 1,
-            'fitxa_artistica' => 2,
-            'descipcio_esdeveniment' => 3,
-            'carroussel' => 4,
-            'video' => 5,
-            'preu_esdeveniment' => 6,
-            'checkbox' => 7,
-            'available_stock' => 8,
-            'data_inici' => 9,
-            'data_fi' => 10
-            // 'checkbox_discount' => 11
-        );
-
-        $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
-        
-        $ACF_keys = array_keys($postarr['acf']);
-        $has_bound_product = $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
-        if ($product == null && $has_bound_product == true) {
-            $product = new WC_Product_Simple();
-            $product->set_slug($slug . '-product');
-            $product->set_name($postarr['post_title']);
-            $product->save();
-        };
-        if ($has_bound_product == true) {
-            $product_price = $postarr['acf'][$ACF_keys[$custom_keys['preu_esdeveniment']]];
-            $product->set_regular_price($product_price); // in current shop currency
-            $product_desc = $postarr['acf'][$ACF_keys[$custom_keys['descipcio_esdeveniment']]];
-            $product->set_description($product_desc);
-            $product->set_manage_stock(true);
-            $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['available_stock']]];
-            
-            
-            if ($product->get_stock_quantity() === null) {
-                $product->set_stock_quantity($product_stock);
-            }
-            $product->set_sold_individually(true);
-            $product->set_image_id($post_thumbnail_id);
-            $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
-            $product_date_from = str_replace('/', '-', $product_date_from);
-            $product_date_from = date("c", strtotime($product_date_from));
-            $product->set_date_on_sale_from($product_date_from);
-            $product_date_to = $postarr['acf'][$ACF_keys[$custom_keys['data_fi']]];
-            $product_date_to = str_replace('/', '-', $product_date_to);
-            $product_date_to = date("c", strtotime($product_date_to));
-            $product->set_date_on_sale_to($product_date_to);
-            // $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
-            // $product-> update_meta_data( 'checkbox_discount', $product_disc );
-            
-            $product->save();
-        }
-    }
-
-    return $data;
-}
-/* EXCLUDE PRODUCTS FROM COUPON DISCOUNT*/
-add_filter( 'woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4 );
-    function elmercatcultural_exclude_product_coupons( $valid, $product, $coupon, $values ) {
-
-            if ( $product->get_meta('checkbox_discount') === '0' ) {
-            $valid = false;
-            }
-            return $valid;
-        }
-/* FORCE TO APPLY ALL COUPONS*/
-
-function available_coupon_codes() {
-    global $wpdb;
-    
-    // Get an array of all existing coupon codes
-    $coupon_codes = $wpdb->get_col("SELECT post_name FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
-    
-    // Display available coupon codes
-    return $coupon_codes; // always use return in a shortcode
+    add_theme_support('woocommerce');
 }
 
-/** COUPONS LOGIC */
-function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids) {
-    $doesInclude = false;
-    foreach ($coupon_product_ids as $coupon_product_id) {
-        foreach($cart_product_ids as $cart_product_id){
-            $doesInclude = $doesInclude || $coupon_product_id == $cart_product_id;
-        }   
-    }
-    return $doesInclude;
-}
-function auto_apply_coupon_for_regular_customers( $coupon_code ) {
-
-    if($coupon_code != 'master-coupon'){
-        return;
-    }
-    $coupon_codes = available_coupon_codes();
-    $cart_product_ids = [];
-    foreach(WC()->cart->get_cart() as $item => $cart_product){
-        $cart_product_ids[] = $cart_product['product_id'];
-
-        
-    }
-    $has_available_coupons = false;
-    foreach ($coupon_codes as $code) {
-        $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
-        $coupon_id = $coupon->ID;
-        $coupon_product_ids = get_post_meta( $coupon_id, 'product_ids' );
-        // throw new Exception (print_r($coupon_products_ids));
-        
-        if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
-            WC()->cart->apply_coupon( $code );
-            $has_available_coupons = true;
-        }   
-    }
-    // throw new Exception($has_available_coupons ? "has coupons" : "hasn't");
-    // if($has_available_coupons == false){
-    //     wc_add_notice(__('No hi ha descomptes per aquests productes'), 'error');
-        
-    // }
-    
-}
-
-add_action( 'woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1 );
-
-
-
-
-
-
-add_action( 'woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1 );
-function auto_remove_coupon_for_regular_customers($coupon_code){
-    WC()->cart->remove_coupons();
-
-}
-
-//REMOVE COUPON CART MESSAGE WHEN APPLIED
-add_filter('woocommerce_coupon_message','remove_msg_filter',10, 2);
-function remove_msg_filter($msg, $msg_code){
-    if($msg_code === WC_Coupon::WC_COUPON_SUCCESS){
-        return null;
-    }else{
-        return $msg;
-    }
-   
-}    
-    
-add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
-function elmercatcultural_on_delete_event($ID)
+add_filter('woocommerce_cart_totals_coupon_html', 'elmercatcultural_remove_coupon_html');
+function elmercatcultural_remove_coupon_html($html, $coupon = null, $discount = null)
 {
-    if (get_post_type($ID) === 'event' || get_post_type($ID) === 'workshop') {
-        $slug = get_post_field('post_name', $ID);
-        $product = elmercatcultural_find_product_by_slug($slug);
-        if ($product == null) return;
-        $product->delete();
-    }
+    return preg_replace('/\<a href/', '<a aria-hidden="true" href', $html);
 }
 
-
-
-function elmercatcultural_find_product_by_slug($slug)
+add_filter('woocommerce_thankyou_order_received_text', 'elmercatcultural_thankyou_text');
+function elmercatcultural_thankyou_text($text, $order = null)
 {
-    $posts = get_posts(array(
-        'name' => $slug . '-product',
-        'post_type' => 'product'
-    ));
-    if (count($posts) == 0) {
-        return null;
-    }
-    $post = $posts[0];
-    return wc_get_product($post);
+    return 'Benvolgudes, gràcies per realitzar la inscripció a elMercat';
 }
 
-add_action('acf/save_post', 'elmercatcultural_slug_sync');
-function elmercatcultural_slug_sync($post_id)
+add_action('after_setup_theme', 'elmercatcultural_add_woocommerce_support');
+
+add_filter('woocommerce_order_button_text', 'elmercatcultural_order_button_text');
+function elmercatcultural_order_button_text($text)
 {
-    $post_type = get_post_type($post_id);
-    if ($post_type == 'workshop' || $post_type == 'event') {
-        $post = get_post($post_id);
-        $title = $post->post_title;
-        $clean_title = sanitize_title($title);
-        $slug = $post->post_name;
-        if ($slug != $clean_title) {
-            $clean_post = array('ID' => $post_id, 'post_name' => $clean_title);
-            wp_update_post($clean_post);
-        }
-    }
+    return $text;
 }
