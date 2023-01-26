@@ -409,6 +409,7 @@ function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_prod
         }   
     }
     return $doesInclude;
+    
 }
 function auto_apply_coupon_for_regular_customers( $coupon_code ) {
 
@@ -426,12 +427,15 @@ function auto_apply_coupon_for_regular_customers( $coupon_code ) {
     foreach ($coupon_codes as $code) {
         $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
         $coupon_id = $coupon->ID;
-        $coupon_product_ids = get_post_meta( $coupon_id, 'product_ids' );
+        // print_r($coupon_id);
+        $coupon_product_ids = explode( ',' , get_post_meta( $coupon_id, 'product_ids', true ));
         // throw new Exception (print_r($coupon_products_ids));
         
         if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
+            
             WC()->cart->apply_coupon( $code );
             $has_available_coupons = true;
+            
         }   
     }
 }
