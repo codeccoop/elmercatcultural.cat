@@ -394,7 +394,7 @@ function available_coupon_codes() {
     global $wpdb;
     
     // Get an array of all existing coupon codes
-    $coupon_codes = $wpdb->get_col("SELECT post_name FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
+    $coupon_codes = $wpdb->get_col("SELECT post_title FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
     
     // Display available coupon codes
     return $coupon_codes; // always use return in a shortcode
@@ -402,6 +402,7 @@ function available_coupon_codes() {
 
 /** COUPONS LOGIC */
 function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids) {
+
     $doesInclude = false;
     foreach ($coupon_product_ids as $coupon_product_id) {
         foreach($cart_product_ids as $cart_product_id){
@@ -427,9 +428,7 @@ function auto_apply_coupon_for_regular_customers( $coupon_code ) {
     foreach ($coupon_codes as $code) {
         $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
         $coupon_id = $coupon->ID;
-        // print_r($coupon_id);
         $coupon_product_ids = explode( ',' , get_post_meta( $coupon_id, 'product_ids', true ));
-        // throw new Exception (print_r($coupon_products_ids));
         
         if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
             
