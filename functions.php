@@ -297,7 +297,8 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             'checkbox' => 7,
             'available_stock' => 8,
             'data_inici' => 9,
-            'data_fi' => 10
+            'data_fi' => 10,
+            'genere' => 11
             // 'checkbox_discount' => 11
         );
 
@@ -333,8 +334,10 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_date_to = str_replace('/', '-', $product_date_to);
             $product_date_to = date("c", strtotime($product_date_to));
             $product->set_date_on_sale_to($product_date_to);
-            // $product_disc = $postarr['acf'][$ACF_keys[$custom_keys['checkbox_discount']]];
-            // $product-> update_meta_data( 'checkbox_discount', $product_disc );
+            $product_gender = $postarr['acf'][$ACF_keys[$custom_keys['genere']]];
+            
+            $product->update_meta_data( 'genere', $product_gender);
+            // throw new Exception(print_r($product_gender));
             
             $product->save();
         }
@@ -560,6 +563,7 @@ function elmercatcultural_override_checkout_fields($fields)
         'clear'     => true,
         'maxlength' => 10
     );
+
     //add placeholder to native fields
 
     $fields['billing']['billing_first_name'] = array(
@@ -599,6 +603,107 @@ function elmercatcultural_new_radio_field($checkout)
         'required' => true,
     ), $checkout->get_value('billing_neighbour'));
 }
+
+
+/** add gender custom field and display conditonally depending on post meta*/
+
+function elmercatcultural_filter_checkout_fields($fields){
+    $fields['extra_fields'] = array(
+            'billing_gender_mixta' => array(
+                'type' => 'select',
+                'class' => array('form-row-wide'),
+                'options' => array('a' => __( 'Home Cis' ), 'b' => __( 'Home Trans' ), 'c' => __( 'Dona Cis' ), 'd' => __( 'Dona Trans' ), 'e' => __( 'Persona No Binaria' ), 'f' => __( 'Altres/Prefereixo no respondre' )),
+                'label'  => __("GÈNERE"),
+                'required' => true
+                ),
+            'billing_gender_no_mixta' => array(
+                'type' => 'select',
+                'class' => array('form-row-wide'),
+                'options' => array('a' => ( 'Home Trans' ), 'b' => __( 'Dona Cis' ), 'c' => __( 'Dona Trans' ), 'd' => __( 'Persona No Binaria' ), 'e' => __( 'Altres/Prefereixo no respondre' )),
+                'label'  => __("GÈNERE"),
+                'required' => true,
+                )
+            );
+
+    return $fields;
+}
+add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_filter_checkout_fields' );
+
+
+
+function elmercatcultural_extra_checkout_fields(){ 
+
+    foreach( WC()->cart->get_cart() as $cart_item ){
+        // Get the WC_Product object (instance)
+        $product = $cart_item['data'];
+       $meta = get_post_meta($product->get_id());
+       
+    }
+
+    // because of this foreach, everything added to the array in the previous function will display automagically
+    if(!isset($meta['genere'])){
+        return;
+    }
+    if($meta['genere'][0]=='Activitat per a homes cis'){?>
+
+    <div class="extra-fields">
+        <h3><?php _e( 'Additional Fields' ); ?></h3>
+        <?php  woocommerce_form_field('billing_gender_mixta', array(
+                'type' => 'select',
+                'class' => array('form-row-wide'),
+                'options' => array( 'Home Cis' => 'Home Cis', 'Home Trans' => 'Home Trans','Dona Cis' => 'Dona Cis','Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre' ),
+                'label'  => __("GÈNERE"),
+                'required' => true,
+            ));
+        }
+    
+    elseif($meta['genere'][0]=='Activitat no mixta'){?>
+        <div class="extra-fields">
+        <h3><?php _e( 'Additional Fields' ); ?></h3>
+        <?php  woocommerce_form_field('billing_gender_no_mixta', array(
+                'type' => 'select',
+                'class' => array('form-row-wide'),
+                'options' => array('Home Trans' => 'Home Trans','Dona Cis' => 'Dona Cis','Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
+                'label'  => __("GÈNERE"),
+                'required' => true,
+        ));
+
+    } ?>
+    
+    </div>
+
+<?php }
+add_action( 'woocommerce_checkout_after_customer_details' ,'elmercatcultural_extra_checkout_fields' );
+
+/** Save the extra data */
+
+function elmercatcultural_save_extra_checkout_fields( $order, $data ){
+    echo print_r($data);
+
+    // don't forget appropriate sanitization if you are using a different field type
+    if( isset( $data['billing_gender_mixta'] ) ) {
+        $order->update_meta_data( 'billing_gender_mixta', sanitize_text_field( $data['billing_gender_mixta'] ) );
+    }
+    if( isset( $data['billing_gender_no_mixta']) ) {
+        $order->update_meta_data( 'billing_gender_no_mixta', $data['billing_gender_no_mixta'] );
+    } 
+}
+add_action( 'woocommerce_checkout_create_order', 'elmercatcultural_save_extra_checkout_fields', 10, 2 );
+
+
+
+/** Display extra data in admin */
+
+function elmercatcultural_display_order_data_in_admin( $order ){  ?>
+    <div class="order_data_column">
+        <h4><?php _e( 'Extra Details', 'woocommerce' ); ?></h4>
+        <?php 
+            echo '<p><strong>' . __( 'billing_gender_mixta' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta') . '</p>';
+            echo '<p><strong>' . __( 'billing_gender_no_mixta' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta' ) . '</p>'; ?>
+    </div>
+<?php }
+add_action( 'woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin' );
+
 
 /**
  * DISPLAY CUSTOM MESSAGES WHEN FIELDS ARE EMPTY
