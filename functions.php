@@ -647,7 +647,7 @@ function elmercatcultural_extra_checkout_fields(){
     if($meta['genere'][0]=='Activitat per a homes cis'){?>
 
     <div class="extra-fields">
-        <h3><?php _e( 'Additional Fields' ); ?></h3>
+        <h3><?php _e( "Per inscriure's a aquesta activitat, és necessari omplir el camp següent:" ); ?></h3>
         <?php  woocommerce_form_field('billing_gender_mixta', array(
                 'type' => 'select',
                 'class' => array('form-row-wide'),
@@ -659,7 +659,7 @@ function elmercatcultural_extra_checkout_fields(){
     
     elseif($meta['genere'][0]=='Activitat no mixta'){?>
         <div class="extra-fields">
-        <h3><?php _e( 'Additional Fields' ); ?></h3>
+        <h3><?php _e( "Per inscriure's a aquesta activitat, és necessari omplir el camp següent:" ); ?></h3>
         <?php  woocommerce_form_field('billing_gender_no_mixta', array(
                 'type' => 'select',
                 'class' => array('form-row-wide'),
@@ -696,10 +696,15 @@ add_action( 'woocommerce_checkout_create_order', 'elmercatcultural_save_extra_ch
 
 function elmercatcultural_display_order_data_in_admin( $order ){  ?>
     <div class="order_data_column">
-        <h4><?php _e( 'Extra Details', 'woocommerce' ); ?></h4>
+        <h4><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
         <?php 
-            echo '<p><strong>' . __( 'billing_gender_mixta' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta') . '</p>';
-            echo '<p><strong>' . __( 'billing_gender_no_mixta' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta' ) . '</p>'; ?>
+         if( $order->get_meta( 'billing_gender_mixta')){
+            echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta') . '</p>';
+         }
+         if( $order->get_meta( 'billing_gender_no_mixta' )){
+            echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_no_mixta' ) . '</p>'; ?>
+        <?php } ?> 
+           
     </div>
 <?php }
 add_action( 'woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin' );

@@ -152,6 +152,7 @@
       }
     }
 
+
     .field-remove {
       display: none;
     }
@@ -189,6 +190,29 @@
     }
   }
 
+
+  .extra-fields {
+    h3{
+      margin-top: 0;
+      margin-bottom: 2rem;
+
+    }
+    p{
+      margin-top: 0;
+      margin-bottom: 4rem;
+      select {
+        width: 40%;
+        margin-left: 2rem;
+        height: 32px;
+        border: 1px solid $color__theme-primary;
+        border-radius: 0.25em;
+        padding: 0.25em 0.5em;
+        cursor: pointer;
+        background-color: white;
+      }
+   
+    }
+  }
   #order_review_heading {
     text-transform: uppercase;
     border-bottom: 2px solid $color__theme-primary;
