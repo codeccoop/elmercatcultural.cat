@@ -676,14 +676,19 @@ add_action( 'woocommerce_checkout_after_customer_details' ,'elmercatcultural_ext
 /** Save the extra data */
 
 function elmercatcultural_save_extra_checkout_fields( $order, $data ){
-    echo print_r($data);
 
     // don't forget appropriate sanitization if you are using a different field type
     if( isset( $data['billing_gender_mixta'] ) ) {
-        $order->update_meta_data( 'billing_gender_mixta', sanitize_text_field( $data['billing_gender_mixta'] ) );
+        $note=sanitize_text_field( $data['billing_gender_mixta'] );
+        $order->update_meta_data( 'billing_gender_mixta', $note );
+        $order->add_order_note( $note );
+        $order->save();
     }
     if( isset( $data['billing_gender_no_mixta']) ) {
-        $order->update_meta_data( 'billing_gender_no_mixta', $data['billing_gender_no_mixta'] );
+        $note=sanitize_text_field( $data['billing_gender_no_mixta'] );
+        $order->update_meta_data( 'billing_gender_no_mixta', $note );
+        $order->add_order_note( $note );
+        $order->save();
     } 
 }
 add_action( 'woocommerce_checkout_create_order', 'elmercatcultural_save_extra_checkout_fields', 10, 2 );
@@ -693,17 +698,20 @@ add_action( 'woocommerce_checkout_create_order', 'elmercatcultural_save_extra_ch
 /** Display extra data in admin */
 
 function elmercatcultural_display_order_data_in_admin( $order ){  ?>
-    <div class="order_data_column">
-        <h4><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
         <?php 
-         if( $order->get_meta( 'billing_gender_mixta')){
+         if( $order->get_meta( 'billing_gender_mixta')){ ?>
+         <h4 ><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
+         
+         <?php
             echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta') . '</p>';
-         }
-         if( $order->get_meta( 'billing_gender_no_mixta' )){
+         }?>
+         <?php
+         if( $order->get_meta( 'billing_gender_no_mixta' )){?>
+         <h4><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
+         <?php
             echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_no_mixta' ) . '</p>'; ?>
-        <?php } ?> 
-           
-    </div>
+        <?php } ?>   
+    
 <?php }
 add_action( 'woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin' );
 
