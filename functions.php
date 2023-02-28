@@ -658,7 +658,6 @@ function elmercatcultural_extra_checkout_fields(){
     
     elseif($meta['genere'][0]=='Activitat no mixta'){?>
         <div class="extra-fields">
-        <h3><?php _e( "Per inscriure's a aquesta activitat, és necessari omplir el camp següent:" ); ?></h3>
         <?php  woocommerce_form_field('billing_gender_no_mixta', array(
                 'type' => 'select',
                 'class' => array('form-row-wide'),
