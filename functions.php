@@ -303,7 +303,7 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
         );
 
         $post_thumbnail_id = get_post_thumbnail_id($postarr['ID']);
-        
+
         $ACF_keys = array_keys($postarr['acf']);
         $has_bound_product = $postarr['acf'][$ACF_keys[$custom_keys['checkbox']]];
         if ($product == null && $has_bound_product == true) {
@@ -319,8 +319,8 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product->set_description($product_desc);
             $product->set_manage_stock(true);
             $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['available_stock']]];
-            
-            
+
+
             if ($product->get_stock_quantity() === null) {
                 $product->set_stock_quantity($product_stock);
             }
@@ -335,10 +335,10 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_date_to = date("c", strtotime($product_date_to));
             $product->set_date_on_sale_to($product_date_to);
             $product_gender = $postarr['acf'][$ACF_keys[$custom_keys['genere']]];
-            
-            $product->update_meta_data( 'genere', $product_gender);
+
+            $product->update_meta_data('genere', $product_gender);
             // throw new Exception(print_r($product_gender));
-            
+
             $product->save();
         }
     }
@@ -383,87 +383,87 @@ CART SECTION
 
 
 /* EXCLUDE PRODUCTS FROM COUPON DISCOUNT*/
-add_filter( 'woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4 );
-    function elmercatcultural_exclude_product_coupons( $valid, $product, $coupon, $values ) {
+add_filter('woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4);
+function elmercatcultural_exclude_product_coupons($valid, $product, $coupon, $values)
+{
 
-            if ( $product->get_meta('checkbox_discount') === '0' ) {
-            $valid = false;
-            }
-            return $valid;
-        }
+    if ($product->get_meta('checkbox_discount') === '0') {
+        $valid = false;
+    }
+    return $valid;
+}
 /* FORCE TO APPLY ALL COUPONS*/
 
-function available_coupon_codes() {
+function available_coupon_codes()
+{
     global $wpdb;
-    
+
     // Get an array of all existing coupon codes
     $coupon_codes = $wpdb->get_col("SELECT post_title FROM $wpdb->posts WHERE post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_name ASC");
-    
+
     // Display available coupon codes
     return $coupon_codes; // always use return in a shortcode
 }
 
 /** COUPONS LOGIC */
-function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids) {
+function elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)
+{
 
     $doesInclude = false;
     foreach ($coupon_product_ids as $coupon_product_id) {
-        foreach($cart_product_ids as $cart_product_id){
+        foreach ($cart_product_ids as $cart_product_id) {
             $doesInclude = $doesInclude || $coupon_product_id == $cart_product_id;
-        }   
+        }
     }
     return $doesInclude;
-    
 }
-function auto_apply_coupon_for_regular_customers( $coupon_code ) {
+function auto_apply_coupon_for_regular_customers($coupon_code)
+{
 
-    if($coupon_code != 'master-coupon'){
+    if ($coupon_code != 'master-coupon') {
         return;
     }
     $coupon_codes = available_coupon_codes();
     $cart_product_ids = [];
-    foreach(WC()->cart->get_cart() as $item => $cart_product){
+    foreach (WC()->cart->get_cart() as $item => $cart_product) {
         $cart_product_ids[] = $cart_product['product_id'];
-
-        
     }
     $has_available_coupons = false;
     foreach ($coupon_codes as $code) {
         $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
         $coupon_id = $coupon->ID;
-        $coupon_product_ids = explode( ',' , get_post_meta( $coupon_id, 'product_ids', true ));
-        
-        if(!WC()->cart->has_discount( $code ) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)){
-            
-            WC()->cart->apply_coupon( $code );
+        $coupon_product_ids = explode(',', get_post_meta($coupon_id, 'product_ids', true));
+
+        if (!WC()->cart->has_discount($code) && elmercatcultural_coupon_include_product($coupon_product_ids, $cart_product_ids)) {
+
+            WC()->cart->apply_coupon($code);
             $has_available_coupons = true;
-            
-        }   
+        }
     }
 }
 
-add_action( 'woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1 );
+add_action('woocommerce_applied_coupon', 'auto_apply_coupon_for_regular_customers', 10, 1);
 
 
-add_action( 'woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1 );
-function auto_remove_coupon_for_regular_customers($coupon_code){
+add_action('woocommerce_removed_coupon', 'auto_remove_coupon_for_regular_customers', 10, 1);
+function auto_remove_coupon_for_regular_customers($coupon_code)
+{
     WC()->cart->remove_coupons();
-
 }
 
 //REMOVE COUPON CART MESSAGE WHEN APPLIED
-add_filter('woocommerce_coupon_message','remove_msg_filter',10, 2);
-function remove_msg_filter($msg, $msg_code){
-    if($msg_code === WC_Coupon::WC_COUPON_SUCCESS){
+add_filter('woocommerce_coupon_message', 'remove_msg_filter', 10, 2);
+function remove_msg_filter($msg, $msg_code)
+{
+    if ($msg_code === WC_Coupon::WC_COUPON_SUCCESS) {
         return null;
-    }else{
+    } else {
         return $msg;
     }
-   
-}    
+}
 //REMOVE CART MESSAGE WHEN PRODUCT REMOVED
 add_filter('woocommerce_cart_item_removed_notice_type', '__return_null');
-    
+
 add_action('wp_trash_post', 'elmercatcultural_on_delete_event', 10);
 function elmercatcultural_on_delete_event($ID)
 {
@@ -607,113 +607,105 @@ function elmercatcultural_new_radio_field($checkout)
 
 /** add gender custom field and display conditonally depending on post meta*/
 
-function elmercatcultural_filter_checkout_fields($fields){
+function elmercatcultural_filter_checkout_fields($fields)
+{
     $fields['extra_fields'] = array(
-            'billing_gender_mixta' => array(
-                'type' => 'select',
-                'class' => array('form-row-wide'),
-                'options' => array('a' => __( 'Home Cis' ), 'b' => __( 'Home Trans' ), 'c' => __( 'Dona Cis' ), 'd' => __( 'Dona Trans' ), 'e' => __( 'Persona No Binaria' ), 'f' => __( 'Altres/Prefereixo no respondre' )),
-                'label'  => __("GÈNERE"),
-                'required' => true
-                ),
-            'billing_gender_no_mixta' => array(
-                'type' => 'select',
-                'class' => array('form-row-wide'),
-                'options' => array('a' => ( 'Home Trans' ), 'b' => __( 'Dona Cis' ), 'c' => __( 'Dona Trans' ), 'd' => __( 'Persona No Binaria' ), 'e' => __( 'Altres/Prefereixo no respondre' )),
-                'label'  => __("GÈNERE"),
-                'required' => true,
-                )
-            );
+        'billing_gender_mixta' => array(
+            'type' => 'select',
+            'class' => array('form-row-wide'),
+            'options' => array('a' => __('Home Cis'), 'b' => __('Home Trans'), 'c' => __('Dona Cis'), 'd' => __('Dona Trans'), 'e' => __('Persona No Binaria'), 'f' => __('Altres/Prefereixo no respondre')),
+            'label'  => __("GÈNERE"),
+            'required' => true
+        ),
+        'billing_gender_no_mixta' => array(
+            'type' => 'select',
+            'class' => array('form-row-wide'),
+            'options' => array('a' => ('Home Trans'), 'b' => __('Dona Cis'), 'c' => __('Dona Trans'), 'd' => __('Persona No Binaria'), 'e' => __('Altres/Prefereixo no respondre')),
+            'label'  => __("GÈNERE"),
+            'required' => true,
+        )
+    );
 
     return $fields;
 }
-add_filter( 'woocommerce_checkout_fields', 'elmercatcultural_filter_checkout_fields' );
+add_filter('woocommerce_checkout_fields', 'elmercatcultural_filter_checkout_fields');
 
 
 
-function elmercatcultural_extra_checkout_fields(){ 
-
-    foreach( WC()->cart->get_cart() as $cart_item ){
+function elmercatcultural_extra_checkout_fields()
+{
+    foreach (WC()->cart->get_cart() as $cart_item) {
         // Get the WC_Product object (instance)
         $product = $cart_item['data'];
-       $meta = get_post_meta($product->get_id());
-       
+        $meta = get_post_meta($product->get_id());
     }
 
     // because of this foreach, everything added to the array in the previous function will display automagically
-    if(!isset($meta['genere'])){
+    if (!isset($meta['genere'])) {
         return;
     }
-    if($meta['genere'][0]=='Activitat per a homes cis'){?>
-
-    <div class="extra-fields">
-        <?php  woocommerce_form_field('billing_gender_mixta', array(
-                'type' => 'select',
-                'class' => array('form-row-wide'),
-                'options' => array( 'Home Cis' => 'Home Cis', 'Home Trans' => 'Home Trans','Dona Cis' => 'Dona Cis','Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre' ),
-                'label'  => __("GÈNERE"),
-                'required' => true,
-            ));
-        }
-    
-    elseif($meta['genere'][0]=='Activitat no mixta'){?>
+    if ($meta['genere'][0] == 'Activitat per a homes cis') : ?>
         <div class="extra-fields">
-        <?php  woocommerce_form_field('billing_gender_no_mixta', array(
+            <?php woocommerce_form_field('billing_gender_mixta', array(
                 'type' => 'select',
                 'class' => array('form-row-wide'),
-                'options' => array('Home Trans' => 'Home Trans','Dona Cis' => 'Dona Cis','Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
+                'options' => array('Home Cis' => 'Home Cis', 'Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
                 'label'  => __("GÈNERE"),
                 'required' => true,
-        ));
-
-    } ?>
-    
-    </div>
-
-<?php }
-add_action( 'woocommerce_checkout_after_customer_details' ,'elmercatcultural_extra_checkout_fields' );
+            )); ?>
+        </div>
+    <?php elseif ($meta['genere'][0] == 'Activitat no mixta') : ?>
+        <div class="extra-fields">
+            <?php woocommerce_form_field('billing_gender_no_mixta', array(
+                'type' => 'select',
+                'class' => array('form-row-wide'),
+                'options' => array('Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
+                'label'  => __("GÈNERE"),
+                'required' => true,
+            )); ?>
+        </div>
+    <?php endif;
+}
+add_action('woocommerce_checkout_after_customer_details', 'elmercatcultural_extra_checkout_fields');
 
 /** Save the extra data */
 
-function elmercatcultural_save_extra_checkout_fields( $order, $data ){
+function elmercatcultural_save_extra_checkout_fields($order, $data)
+{
 
     // don't forget appropriate sanitization if you are using a different field type
-    if( isset( $data['billing_gender_mixta'] ) ) {
-        $note=sanitize_text_field( $data['billing_gender_mixta'] );
-        $order->update_meta_data( 'billing_gender_mixta', $note );
-        $order->add_order_note( $note );
-        $order->save();
+    if (isset($data['billing_gender_mixta'])) {
+        $note = sanitize_text_field($data['billing_gender_mixta']);
+        $order->update_meta_data('billing_gender_mixta', $note);
+        // $order->add_order_note( $note );
+        // $order->save();
     }
-    if( isset( $data['billing_gender_no_mixta']) ) {
-        $note=sanitize_text_field( $data['billing_gender_no_mixta'] );
-        $order->update_meta_data( 'billing_gender_no_mixta', $note );
-        $order->add_order_note( $note );
-        $order->save();
-    } 
+    if (isset($data['billing_gender_no_mixta'])) {
+        $note = sanitize_text_field($data['billing_gender_no_mixta']);
+        $order->update_meta_data('billing_gender_no_mixta', $note);
+        // $order->add_order_note( $note );
+        // $order->save();
+    }
 }
-add_action( 'woocommerce_checkout_create_order', 'elmercatcultural_save_extra_checkout_fields', 10, 2 );
+add_action('woocommerce_checkout_create_order', 'elmercatcultural_save_extra_checkout_fields', 10, 2);
 
 
 
 /** Display extra data in admin */
 
-function elmercatcultural_display_order_data_in_admin( $order ){  ?>
-        <?php 
-         if( $order->get_meta( 'billing_gender_mixta')){ ?>
-         <h4 ><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
-         
-         <?php
-            echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_mixta') . '</p>';
-         }?>
-         <?php
-         if( $order->get_meta( 'billing_gender_no_mixta' )){?>
-         <h4><?php _e( 'Informació sobre el gènere de la persona inscrita', 'woocommerce' ); ?></h4>
-         <?php
-            echo '<p><strong>' . __( 'Gènere' ) . ':</strong>' . $order->get_meta( 'billing_gender_no_mixta' ) . '</p>'; ?>
-        <?php } ?>   
-    
-<?php }
-add_action( 'woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin' );
+function elmercatcultural_display_order_data_in_admin($order)
+{
+    if ($order->get_meta('billing_gender_mixta')) : ?>
+        <h4><?php _e('Informació sobre el gènere de la persona inscrita', 'woocommerce'); ?></h4>
+
+    <?php
+        echo '<p><strong>' . __('Gènere') . ':</strong>' . $order->get_meta('billing_gender_mixta') . '</p>';
+    elseif ($order->get_meta('billing_gender_no_mixta')) : ?>
+        <h4><?php _e('Informació sobre el gènere de la persona inscrita', 'woocommerce'); ?></h4>
+<?php echo '<p><strong>' . __('Gènere') . ':</strong>' . $order->get_meta('billing_gender_no_mixta') . '</p>';
+    endif;
+}
+add_action('woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin');
 
 
 /**
@@ -782,14 +774,15 @@ function elmercatcultural_update_order_meta($order_id)
 
 add_action('woocommerce_review_order_after_cart_contents', 'elmercatcultural_test');
 
-function elmercatcultural_test(){
+function elmercatcultural_test()
+{
     if (WC()->cart->get_coupons()) {
-		echo '<tr class="cart-item"><td class="product-name">' . esc_html( 'Total Cistella amb descompte', 'woocommerce') . '</td>';
-        echo '<td class="product-name">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
-	} else { 
-	    echo '<tr class="cart-item"><td class="product-name">' . esc_html( 'Total Cistella', 'woocommerce' ) . '</td>';
-        echo '<td class="product-name">' . apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
-	}
+        echo '<tr class="cart-item"><td class="product-name">' . esc_html('Total Cistella amb descompte', 'woocommerce') . '</td>';
+        echo '<td class="product-name">' . apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
+    } else {
+        echo '<tr class="cart-item"><td class="product-name">' . esc_html('Total Cistella', 'woocommerce') . '</td>';
+        echo '<td class="product-name">' . apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
+    }
 }
 
 /* 
