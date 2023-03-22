@@ -563,7 +563,6 @@ function elmercatcultural_override_checkout_fields($fields)
         'clear'     => true,
         'maxlength' => 10
     );
-
     //add placeholder to native fields
 
     $fields['billing']['billing_first_name'] = array(
@@ -707,6 +706,33 @@ function elmercatcultural_display_order_data_in_admin($order)
 }
 add_action('woocommerce_admin_order_data_after_order_details', 'elmercatcultural_display_order_data_in_admin');
 
+/**
+ * ADD CHECKBOX FIELD AND WARNING FOR PRIVACY POLICY
+ */
+add_action('woocommerce_review_order_before_submit', 'elmercatcultural_add_checkout_checkbox', 10);
+/**
+ * Add WooCommerce additional Checkbox checkout field
+ */
+function elmercatcultural_add_checkout_checkbox()
+{
+
+    woocommerce_form_field('privacy_checkbox', array( // CSS ID
+        'type'          => 'checkbox',
+        'class'         => array('form-row mycheckbox'), // CSS Class
+        'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
+        'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
+        'required'      => true, // Mandatory or Optional
+        'label'         => "Accepto la <a href='/politica-de-privacitat' target='_blank' rel='noopener'>Política de Privacitat</a>. Les dades personals s'utilitzaran per processar la comanda, millorar l'experiència d'usuari en aquest lloc web.", // Label and Link
+    ));
+    woocommerce_form_field('newsletter_checkbox', array( // CSS ID
+        'type'          => 'checkbox',
+        'class'         => array('form-row newsletter'), // CSS Class
+        'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox newsletter'),
+        'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox newsletter-checkbox'),
+        'required'      => false, // Mandatory or Optional
+        'label'         => "Vull rebre els correus de elMercat i subscriure'm a la newsletter", // Label and Link
+    ));
+}
 
 /**
  * DISPLAY CUSTOM MESSAGES WHEN FIELDS ARE EMPTY
@@ -731,37 +757,58 @@ add_action('woocommerce_checkout_process', 'elmercatcultural_checkout_field_proc
 
 function elmercatcultural_checkout_field_process()
 {
+    $isvalid = true;
     // Check if set, if its not set add an error.
     if (!$_POST['billing_first_name']) {
+        $isvalid = false;
         wc_add_notice(__('És obligatori introduir el NOM'), 'error');
     }
     if (!$_POST['billing_last_name']) {
+        $isvalid = false;
         wc_add_notice(__('És obligatori introduir els COGNOMS'), 'error');
     }
 
     if (!$_POST['billing_email']) {
-        wc_add_notice(__('És obligatori introduir els CORREU ELECTRÒNIC vàlid'), 'error');
+        $isvalid = false;
+        wc_add_notice(__('És obligatori introduir un CORREU ELECTRÒNIC vàlid'), 'error');
     }
     if (!$_POST['billing_neighbour']) {
+        $isvalid = false;
         wc_add_notice(__('És obligatori marcar una opció a la pregunta VEÏNA DELS BARRIS DE MUNTANYA?'), 'error');
     }
     if (!$_POST['billing_DNI']) {
+        $isvalid = false;
         wc_add_notice(__('És obligatori introduir el DNI'), 'error');
     } else {
         $validation = elmercatcultural_validate_id($_POST['billing_DNI']);
         if (!$validation['valid']) {
+            $isvalid = false;
             wc_add_notice(__('El valor del camp DNI és invàlid'), 'error');
         }
     }
     if (!$_POST['billing_birthday']) {
+        $isvalid = false;
         wc_add_notice(__('És obligatori introduir la DATA DE NAIXEMENT'), 'error');
     } else {
         $dateFormat = '/^\d{2}\/[0-1]{1}[1-9]{1}\/\d{4}$/';
         if (!preg_match($dateFormat, $_POST['billing_birthday'])) {
+            $isvalid = false;
             wc_add_notice(__('El valor del camp DATA DE NAIXEMENT és invàlid'), 'error');
         }
     }
+    if (!isset($_POST['privacy_checkbox'])) {
+        $isvalid = false;
+        wc_add_notice(__("Heu d'acceptar la política de privadesa"), 'error');
+    }
+    if ($isvalid && isset($_POST['newsletter_checkbox'])) {
+        try {
+            elmercatcultural_submit_email_to_newsletter();
+        } catch (Exception $e) {
+            wc_add_notice(__("No us heu pogut subscriure a la Newsletter: " . $e->getMessage()), 'notice');
+        }
+    }
 }
+
 add_action('woocommerce_checkout_update_order_meta', 'elmercatcultural_update_order_meta');
 function elmercatcultural_update_order_meta($order_id)
 {
@@ -769,6 +816,89 @@ function elmercatcultural_update_order_meta($order_id)
         update_post_meta($order_id, 'DATA NAIXEMENT', sanitize_text_field($_POST['customised_field_name']));
     }
 }
+
+function elmercatcultural_submit_email_to_newsletter()
+{
+    $WP_Http = new WP_Http();
+    $response = $WP_Http->request(
+        "https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&id=77f622e665&f_id=002990e0f0",
+        //"/wp-json/myplugin/v1/newsletter/post",
+        array(
+            'method' => 'POST',
+            'body' => 'EMAIL=' . $_POST['billing_email'],
+            'httpversion' => '1.0',
+            'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0',
+            'headers' => array(
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Origin' => 'https://elmercatcultural.cat',
+                'Host' => 'elmercatcultural.us11.list-manage.com',
+                'Referer' => 'https://elmercatcultural.cat/',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+
+                'Accept-Language' => 'en-US,en;q=0.5',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Connection' => 'keep-alive'
+            )
+        )
+    );
+    if ($response['response']['code'] != 200) {
+        throw new Exception("Subscription error " . $response['response']['code']);
+    }
+}
+
+/********************************************************************************************************* */
+//TEST HTTP REQUEST//
+
+// add_action('rest_api_init', function () {
+//     register_rest_route('myplugin/v1', '/newsletter/post', array(
+//         'methods' => 'GET',
+//         'callback' => 'my_awesome_func',
+//         'permission_callback' => '__return_true'
+//     ));
+// });
+// function my_awesome_func($request)
+// {
+//     $WP_Http = new WP_Http();
+//     $response = $WP_Http->request(
+//         "https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&id=77f622e665&f_id=002990e0f0",
+//         //"/wp-json/myplugin/v1/newsletter/post",
+//         array(
+//             'method' => 'POST',
+//             'body' => 'EMAIL=',
+//             'httpversion' => '1.0',
+//             'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0',
+//             'headers' => array(
+//                 'Content-Type' => 'application/x-www-form-urlencoded',
+//                 'Origin' => 'https://elmercatcultural.cat',
+//                 'Host' => 'elmercatcultural.us11.list-manage.com',
+//                 'Referer' => 'https://elmercatcultural.cat/',
+//                 'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+//                 'Accept-Language' => 'en-US,en;q=0.5',
+//                 'Accept-Encoding' => 'gzip, deflate, br',
+//                 'Cache-Control' => 'no-cache',
+//                 'Connection' => 'keep-alive'
+//             )
+//         )
+//     );
+//     //return print_r($response[request]);
+//     return print_r($response);
+//     //     $posts = get_posts(array(
+//     //         'author' => $request['id'],
+//     //     ));
+
+//     //     if (empty($posts)) {
+//     //         return null;
+//     //     }
+
+//     //     return $posts[0]->post_title;
+// }
+// add_action('http_api_debug', 'retrive_api_request', 10, 5);
+
+// function retrive_api_request($respose, $context, $class, $parsed_args, $url)
+// {
+//     echo print_r($parsed_args);
+// }
 
 /*test */
 
@@ -784,6 +914,37 @@ function elmercatcultural_test()
         echo '<td class="product-name">' . apply_filters('woocommerce_cart_item_subtotal', WC()->cart->get_cart_total()) . '</td></tr>';
     }
 }
+
+
+// add_action('woocommerce_order_status_changed', 'elmercatcultural_submit_email_to_newsletter');
+// function elmercatcultural_submit_email_to_newsletter()
+// {
+//     if (isset($_POST['newsletter_checkbox'])) {
+//         // throw new Exception('Això és un error');
+//         // $url = 'URL';
+//         // $data = array('EMAIL' => $_POST['billing_email']);
+//         // $options = array(
+//         //     'http' => array(
+//         //         'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+//         //         'method'  => 'POST',
+//         //         'content' => http_build_query($data),
+//         //     )
+//         // );
+
+//         // $context  = stream_context_create($options);
+//         // $result = file_get_contents($url, false, $context);
+//         // var_dump($result);
+//     }
+// }
+
+
+// add_action('woocommerce_after_checkout_validation', 'elmercatcultural_submit_email_to_newsletter', 9999, 2);
+// function elmercatcultural_submit_email_to_newsletter($fields, $errors)
+// {
+//     if (empty($errors->get_error_codes()) && isset($_POST['newsletter_checkbox'])) {
+//         wc_add_notice(__('Error'), 'error');
+//     }
+// }
 
 /* 
 ++++++++++++++++

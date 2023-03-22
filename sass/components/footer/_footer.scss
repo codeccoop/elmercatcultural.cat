@@ -1,3 +1,67 @@
+#newsletter{
+  margin: 0 2rem;
+  border-bottom: 2px solid;
+  @include m-media(md){
+    margin: 0 5rem;
+  }
+  .newsletter__section-border{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6.25rem 20.39657vw 6.25rem;
+    //width: calc(var(--vw, 1vw) * 100);
+  
+  .newsletter__section-content{
+    text-align: center;
+    width: 50vw;
+    .footer__subscription {
+      position: relative;
+    
+      .footer__subscription-field {
+        margin-bottom: 1em;
+      }
+    
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid;
+        border-radius: 0px;
+        padding: 0.35em 1em 0.35em 0;
+        font-size: $font__size-small;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        @include m-media(md) {
+          width: 50%;
+        }
+    
+        &.invalid {
+          border-color: red;
+        }
+      }
+    
+      i {
+        cursor: pointer;
+        position: absolute;
+        //right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0.65em;
+        height: 0.65em;
+        background-image: url("/wp-content/themes/elmercatcultural.cat/assets/images/chevron--icon.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+    }
+  }
+}
+}
+
+
+
+
 .site-footer {
   display: flex;
   flex-direction: column;
@@ -44,7 +108,7 @@
     }
   }
 
-  &:nth-last-child(-n + 3) {
+  &:nth-last-child(-n + 2) {
     padding: 0 15vw;
     text-align: center;
 
@@ -90,44 +154,6 @@
   }
 }
 
-.footer__subscription {
-  position: relative;
-
-  .footer__subscription-field {
-    margin-bottom: 1em;
-  }
-
-  input {
-    width: 100%;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid;
-    border-radius: 0px;
-    padding: 0.35em 1em 0.35em 0;
-    font-size: $font__size-small;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    &.invalid {
-      border-color: red;
-    }
-  }
-
-  i {
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 0.65em;
-    height: 0.65em;
-    background-image: url("/wp-content/themes/elmercatcultural.cat/assets/images/chevron--icon.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
-}
 
 .footer__social {
   display: flex;

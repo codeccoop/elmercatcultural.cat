@@ -5,7 +5,7 @@ input[type="reset"],
 input[type="submit"] {
   color: $color__font-primary;
   text-decoration: none;
-  border: none;
+  border: 2px solid;
   outline: none;
   background-color: transparent;
   font-family: "Krona One", sans-serif;
@@ -13,10 +13,14 @@ input[type="submit"] {
   padding: 0.1em;
   padding-bottom: 0.05em;
   text-transform: uppercase;
+  height: 3rem;
+  width: 13vw;
+  border-radius: 5px;
 
   &:hover,
   &:focus {
-    border-bottom: 0.15em solid;
+    box-shadow: 2px 2px 2px $color__theme-primary ;
+    transform: translateY(-2px);
   }
 
   &:focus,

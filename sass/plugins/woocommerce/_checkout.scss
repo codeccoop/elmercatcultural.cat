@@ -315,12 +315,11 @@
         display: none;
       }
 
-      .woocommerce-privacy-policy-text {
-        font-size: 12px;
-      }
-
       .place-order {
         text-align: center;
+        #privacy_checkbox_field .woocommerce-input-wrapper label a{
+          text-decoration: underline;
+        }
 
         .wp-element-button {
           margin-top: 4rem;
