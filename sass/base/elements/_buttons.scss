@@ -5,6 +5,36 @@ input[type="reset"],
 input[type="submit"] {
   color: $color__font-primary;
   text-decoration: none;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: "Krona One", sans-serif;
+  cursor: pointer;
+  padding: 0.1em;
+  padding-bottom: 0.05em;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    border-bottom: 0.15em solid;
+  }
+
+  &:focus,
+  &.focus {
+    color: $white;
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.7;
+    border-bottom: 0px;
+    color: $color__font-primary;
+  }
+}
+
+button.inscription{
+  color: $color__font-primary;
+  text-decoration: none;
   border: 2px solid;
   outline: none;
   background-color: transparent;

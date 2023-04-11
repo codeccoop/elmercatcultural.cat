@@ -62,7 +62,7 @@ defined('ABSPATH') || exit;
             if ($has_inscription) {
                 if ($stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
                     <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug; ?>" method="post" enctype="multipart/form-data">
-                        <button type="submit" name="add-to-cart" value="<?php echo $product_id; ?>" class="single_add_to_cart_button button alt wp-element-button">Inscriu-te</button>
+                        <button type="submit" name="add-to-cart" value="<?php echo $product_id; ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
                     </form>
                 <?php } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>

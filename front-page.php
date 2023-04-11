@@ -40,13 +40,13 @@ $page_ID = get_option('page_on_front');
                     ?>
                     <figure class="front-page__jumbotron-item">
                         <? if ($URL) : ?>
-                        <a href="<?= $URL; ?>">
-                            <img src="<?= $imageURL; ?>" />
+                            <a href="<?= $URL; ?>">
+                                <img src="<?= $imageURL; ?>" />
+                                <figcaption class="title is-3"><?= $text; ?></figcaption>
+                            </a>
+                        <? else : ?>
+                            <img src="<?= $imageURL; ?>" /></a>
                             <figcaption class="title is-3"><?= $text; ?></figcaption>
-                        </a>
-                        <? else: ?>
-                        <img src="<?= $imageURL; ?>" /></a>
-                        <figcaption class="title is-3"><?= $text; ?></figcaption>
                         <? endif; ?>
                     </figure>
             <?php endwhile;
@@ -56,9 +56,10 @@ $page_ID = get_option('page_on_front');
     <section id="barris" class="front-page__section">
         <div class="front-page__highlight-links">
             <?php
-            $programacio = get_page_by_title('programacio');
-            $tallers = get_page_by_title('tallers');
+            //$programacio = get_page_by_title('programacio');
+            //$tallers = get_page_by_title('tallers');
             $links = get_field('links', $page_ID);
+
             ?>
             <div class="front-page__highlight-link">
                 <a href="<?= $links['link-1']['url']; ?>">
