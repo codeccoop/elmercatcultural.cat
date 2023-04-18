@@ -302,7 +302,7 @@
         }
       }
     }
-
+    
     #payment {
       border-top: 2px solid $color__theme-primary;
       padding-top: 2rem;
@@ -310,20 +310,28 @@
       @include m-media(sm) {
         border-top: 0px;
       }
-
+      
       ul.wc_payment_methods {
         display: none;
       }
-
       .place-order {
         text-align: center;
-        #privacy_checkbox_field .woocommerce-input-wrapper label a{
-          text-decoration: underline;
-        }
+        #privacy_checkbox_field{
+          .woocommerce-input-wrapper label{
+            font-weight: 600;
+            a{
+              text-decoration: underline;
+            }
+          } 
 
+        } 
+        #newsletter_checkbox_field{
+          font-weight: 600;
+        }
         .wp-element-button {
           margin-top: 4rem;
         }
       }
     }
+
   }

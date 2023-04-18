@@ -718,7 +718,7 @@ function elmercatcultural_add_checkout_checkbox()
 
     woocommerce_form_field('privacy_checkbox', array( // CSS ID
         'type'          => 'checkbox',
-        'class'         => array('form-row mycheckbox'), // CSS Class
+        'class'         => array('emc_privacy_checkbox'), // CSS Class
         'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
         'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
         'required'      => true, // Mandatory or Optional
@@ -726,7 +726,7 @@ function elmercatcultural_add_checkout_checkbox()
     ));
     woocommerce_form_field('newsletter_checkbox', array( // CSS ID
         'type'          => 'checkbox',
-        'class'         => array('form-row newsletter'), // CSS Class
+        'class'         => array('emc_newsletter_checkbox'), // CSS Class
         'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox newsletter'),
         'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox newsletter-checkbox'),
         'required'      => false, // Mandatory or Optional
