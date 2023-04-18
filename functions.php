@@ -10,7 +10,7 @@
 
 if (!defined('ELMERCATCULTURAL_VERSION')) {
     // Replace the version number of the theme on each release.
-    define('ELMERCATCULTURAL_VERSION', '2.5.0');
+    define('ELMERCATCULTURAL_VERSION', '2.5.1');
 }
 
 /**

@@ -181,13 +181,26 @@
 
 .site-info {
   text-align: center;
-  padding: 0 $size__site-padding / 2 1rem;
+  border-top: 1px solid;
+  margin: 0 5rem;
+  padding: .5rem 0rem;
 
   @include m-media(zr, md) {
     padding-top: 2rem;
   }
+  @include m-media(md){
+    display: flex;
 
+  }
+  .legal_info{
+    @include m-media(md){
+      flex: 1;
+    }
+  }
   .small {
+    a{
+      text-decoration: underline;
+    }
     @include m-media(zr, md) {
       margin: 0;
     }
