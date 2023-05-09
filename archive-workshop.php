@@ -9,7 +9,7 @@ get_header();
 ?>
 <main id="workshop-archive" class="site-main archive">
     <header class="page-header">
-        <h2 class="page-title"><?= get_the_title() ?></h2>
+        <h1 class="page-title"><?= get_the_title() ?></h1>
         <p class="page-description">
             <?= get_the_content() ?>
         </p>

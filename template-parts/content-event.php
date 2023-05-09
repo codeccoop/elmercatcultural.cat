@@ -26,7 +26,7 @@ defined('ABSPATH') || exit;
             </a>
         </div>
 
-        <?php the_title('<h2 class="post-title is-2">', '</h2>'); ?>
+        <?php the_title('<h1 class="post-title is-2">', '</h1>'); ?>
     </header><!-- .entry-header -->
 
     <div class="post-content">
