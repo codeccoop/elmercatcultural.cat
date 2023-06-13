@@ -319,11 +319,7 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product->set_description($product_desc);
             $product->set_manage_stock(true);
             $product_stock = $postarr['acf'][$ACF_keys[$custom_keys['available_stock']]];
-
-
-            if ($product->get_stock_quantity() === null) {
-                $product->set_stock_quantity($product_stock);
-            }
+            $product->set_stock_quantity($product_stock);
             $product->set_sold_individually(true);
             $product->set_image_id($post_thumbnail_id);
             $product_date_from = $postarr['acf'][$ACF_keys[$custom_keys['data_inici']]];
@@ -335,15 +331,30 @@ function elmercatcultural_on_event_insert($data, $postarr)  // , $unsanitized_po
             $product_date_to = date("c", strtotime($product_date_to));
             $product->set_date_on_sale_to($product_date_to);
             $product_gender = $postarr['acf'][$ACF_keys[$custom_keys['genere']]];
-
             $product->update_meta_data('genere', $product_gender);
-            // throw new Exception(print_r($product_gender));
-
             $product->save();
         }
     }
 
     return $data;
+}
+
+add_filter('acf/load_value/name=available_stock', 'elmercatcultural_update_stock', 10, 3);
+function elmercatcultural_update_stock($value, $post_id, $field)
+{
+    $post = get_post($post_id);
+    $slug = $post->post_name;
+    $product = elmercatcultural_find_product_by_slug($slug);
+    if ($product === null) {
+        return;
+    }
+    $stock_quantity = $product->get_stock_quantity();
+    if ($stock_quantity === null) {
+        return;
+    } else {
+        $value = $stock_quantity;
+    }
+    return $value;
 }
 
 function elmercatcultural_find_product_by_slug($slug)
