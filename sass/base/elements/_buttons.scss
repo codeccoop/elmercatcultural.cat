@@ -31,6 +31,39 @@ input[type="submit"] {
     color: $color__font-primary;
   }
 }
+a.checkout-button.button,
+#place_order {
+  color: $color__font-primary;
+  text-decoration: none;
+  border: 2px solid;
+  outline: none;
+  background-color: transparent;
+  font-family: "Krona One", sans-serif;
+  cursor: pointer;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  height: 3rem;
+  width: fit-content;
+  border-radius: 5px;
+
+  &:hover,
+  &:focus {
+    box-shadow: 2px 2px 2px $color__theme-primary ;
+    transform: translateY(-2px);
+  }
+
+  &:focus,
+  &.focus {
+    color: $white;
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.7;
+    border-bottom: 0px;
+    color: $color__font-primary;
+  }
+}
 
 button.inscription{
   color: $color__font-primary;
@@ -40,11 +73,11 @@ button.inscription{
   background-color: transparent;
   font-family: "Krona One", sans-serif;
   cursor: pointer;
-  padding: 0.1em;
+  padding: 0.1em 1rem;
   padding-bottom: 0.05em;
   text-transform: uppercase;
   height: 3rem;
-  width: 13vw;
+  width: fit-content;
   border-radius: 5px;
 
   &:hover,
