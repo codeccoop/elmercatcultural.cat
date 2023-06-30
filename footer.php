@@ -67,7 +67,7 @@
 <footer id="colophon" class="site-footer" style="background-color: white;">
     <div class="footer__content">
         <div class="footer__column">
-            <img class="footer__logo" src="<?= get_bloginfo('template_url') . '/assets/images/logo--medium.png'; ?>">
+            <div class="footer__logo"></div>
         </div>
         <div class="footer__column">
             <div class="footer__row">

@@ -146,11 +146,15 @@
 }
 
 .footer__logo {
-  @include m-center-block;
-  width: 20vw;
-
-  @include m-media(md) {
-    width: initial;
+  background: url("/wp-content/themes/elmercatcultural.cat/assets/images/LogotipComplet.png") no-repeat center;
+  width: 340px;
+  height: 120px;
+  background-size: contain;
+    @include m-media(md) {
+    background: url("/wp-content/themes/elmercatcultural.cat/assets/images/Logotip_nomescaseta.png") no-repeat center;
+    background-size: cover;
+    width: 195px;
+  height: 313px;
   }
 }
 
