@@ -311,7 +311,7 @@
         border-top: 0px;
       }
       
-      ul.wc_payment_methods {
+      ul.wc_payment_methods.not-admin {
         display: none;
       }
       .place-order {

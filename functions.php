@@ -858,6 +858,24 @@ function elmercatcultural_submit_email_to_newsletter()
     }
 }
 
+//SHOW CASH ON DELIVERY PAYMENT METHOD WHEN ADMIN ONLY//
+// define the woocommerce_available_payment_gateways callback 
+function filter_woocommerce_available_payment_gateways($available_gateways)
+{
+    $delete = false;
+    foreach ($available_gateways as $key => $gateway) {
+        if ($gateway->title === "Pagament contra reemborsament" && !current_user_can('manage_options')) {
+            unset($available_gateways[$key]);
+            break;
+        }
+    }
+    return $available_gateways;
+};
+
+// add the filter 
+add_filter('woocommerce_available_payment_gateways', 'filter_woocommerce_available_payment_gateways', 10, 1);
+
+
 /********************************************************************************************************* */
 //TEST HTTP REQUEST//
 

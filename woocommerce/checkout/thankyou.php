@@ -69,9 +69,12 @@ defined('ABSPATH') || exit;
                 </li>
                 <?php if ($order->get_payment_method_title()) : ?>
                     <li class="woocommerce-order-overview__payment-method method">
-                        <?php esc_html_e('Payment method:', 'woocommerce'); ?>
+                        <?php esc_html_e('Payment method:', 'woocommerce');
+                        $selected_payment_method_id = WC()->session->get('chosen_payment_method');
+                        $selected_payment_method = WC()->payment_gateways()->payment_gateways()[$selected_payment_method_id];
+                        ?>
                         <!-- <strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong> -->
-                        <strong>Pagament amb targeta</strong>
+                        <strong><?php echo $selected_payment_method->title  ?></strong>
                     </li>
                 <?php endif; ?>
             </ul>
