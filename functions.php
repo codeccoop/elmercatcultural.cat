@@ -862,9 +862,8 @@ function elmercatcultural_submit_email_to_newsletter()
 // define the woocommerce_available_payment_gateways callback 
 function filter_woocommerce_available_payment_gateways($available_gateways)
 {
-    $delete = false;
     foreach ($available_gateways as $key => $gateway) {
-        if ($gateway->title === "Pagament contra reemborsament" && !current_user_can('manage_options')) {
+        if ($gateway->title === "Pagament en efectiu i presencial" && !current_user_can('manage_options')) {
             unset($available_gateways[$key]);
             break;
         }
