@@ -18,6 +18,29 @@ if (!function_exists('emc_get_grid_items')) {
             'meta_key' => 'date',
             'orderby' => 'meta_value',
             'order' => 'DESC',
+            'meta_query' => [
+                'relation' => 'AND',
+                [
+                    'key' => 'date_sale_from',
+                    'compare' => '<=',
+                    'value' => date('Y-m-d'),
+                    'type' => 'DATE',
+                ], [
+                    'key' => 'date_sale_to',
+                    'compare' => '>=',
+                    'value' => date('Y-m-d'),
+                    'type' => 'DATE',
+                ],
+
+
+
+            ],
+            'meta_query' => ['relation' => 'OR', [
+                'key' => 'date',
+                'compare' => '>=',
+                'value' => date('Y-m-d'),
+                'type' => 'DATE',
+            ]]
         );
 
         if ($term != 'all') {
