@@ -21,14 +21,15 @@
             <?php endif; ?>
             <?php if (is_cart() || is_checkout()) : ?>
                 <?php
+                $site_url = get_site_url();
                 $breadcrumb_url = wp_get_referer();
-                if ($breadcrumb_url) : ?>
-                    <a href="<?= $breadcrumb_url ?>">
+                if ($breadcrumb_url !== $site_url) : ?>
+                    <a onclick="history.back()">
                         <p class="post-breadcrumb underline small">
                             < &nbspTORNAR</p>
                     </a>
                 <?php else : ?>
-                    <a href="/">
+                    <a href="<?= $site_url ?>">
                         <p class="post-breadcrumb underline small">
                             < &nbspTORNAR</p>
                     </a>
