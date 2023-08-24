@@ -262,6 +262,11 @@ require get_template_directory() . '/ajax/async-grid.php';
 /* Store */
 require get_template_directory() . '/inc/store/index.php';
 
+/* ACF */
+require get_template_directory() . '/acf/event.php';
+require get_template_directory() . '/acf/destacats.php';
+require get_template_directory() . '/acf/portada.php';
+
 function emc_is_admin()
 {
     $user = wp_get_current_user();
