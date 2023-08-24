@@ -20,6 +20,7 @@ if (!defined('ELMERCATCULTURAL_VERSION')) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
+add_action('after_setup_theme', 'setup');
 function setup()
 {
     /*
@@ -105,19 +106,24 @@ function setup()
     add_theme_support('editor-styles');
     add_editor_style('style.css');
 }
-add_action('after_setup_theme', 'setup');
 
+add_action('init', 'emc_initialize_theme');
 function emc_initialize_theme()
 {
     register_taxonomy_for_object_type('post_tag', 'page');
 }
-add_action('init', 'emc_initialize_theme');
 
+add_action('admin_init', 'emc_admin_init');
+function emc_admin_init()
+{
+    remove_menu_page('edit.php?post_type=product');
+}
+
+add_action('pre_get_posts', 'emc_tags_support_query');
 function emc_tags_support_query($wp_query)
 {
     if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
 }
-add_action('pre_get_posts', 'emc_tags_support_query');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -126,17 +132,18 @@ add_action('pre_get_posts', 'emc_tags_support_query');
  *
  * @global int $content_width
  */
+add_action('after_setup_theme', 'content_width', 0);
 function content_width()
 {
     $GLOBALS['content_width'] = apply_filters('content_width', 640);
 }
-add_action('after_setup_theme', 'content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
+add_action('widgets_init', 'widgets_init');
 function widgets_init()
 {
     register_sidebar(
@@ -151,11 +158,12 @@ function widgets_init()
         )
     );
 }
-add_action('widgets_init', 'widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
+add_action('wp_enqueue_scripts', 'scripts');
+add_action('admin_enqueue_scripts', 'scripts');
 function scripts()
 {
     wp_register_style('mapbox-gl-css', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css', false);
@@ -191,8 +199,6 @@ function scripts()
         );
     }
 }
-add_action('wp_enqueue_scripts', 'scripts');
-add_action('admin_enqueue_scripts', 'scripts');
 
 /**
  * DNI Validator
