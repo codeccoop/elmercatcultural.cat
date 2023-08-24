@@ -19,7 +19,7 @@
             <?php else : ?>
                 <p class="page-breadcrumb small">EL MERCAT</p>
             <?php endif; ?>
-            <?php if (is_cart() || is_checkout()) : ?>
+            <?php if (is_cart() || is_checkout() && empty(is_wc_endpoint_url('order-received'))) : ?>
                 <?php
                 $site_url = get_site_url();
                 $breadcrumb_url = wp_get_referer();
