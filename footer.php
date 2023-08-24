@@ -180,13 +180,16 @@
         </div>
     </div>
     <div class="site-info">
-        <div class="legal_info small">
-            <p class="footer__text small"><a href="/avis-legal">Avís legal</a> | <a href="/politica-de-privacitat">Política de privacitat</a> | <span class="footer__text small">© El Mercat Cultural</a></span></p>
-
+        <div class="legal_info">
+            <p class="footer__text small">
+                <span><a href="/avis-legal"><u>Avís legal</u></a></span>
+                <span><a href="/politica-de-privacitat"><u>Política de privacitat</u></a></span>
+                <span>© El Mercat Cultural</span>
+            </p>
         </div>
         <p class="small">
-            Web creada i dissenyada per <a href="https://www.codeccoop.org" target="_blank">Còdec</a>
-            (programació) i <a href="http://mariacollsague.com/projects/" target="_blank">Maria Coll</a> (disseny)
+            Web creada i dissenyada per <u><a href="https://www.codeccoop.org" target="_blank">Còdec</a></u>
+            (programació) i <u><a href="http://mariacollsague.com/projects/" target="_blank">Maria Coll</a></u> (disseny)
         </p>
     </div>
 </footer>

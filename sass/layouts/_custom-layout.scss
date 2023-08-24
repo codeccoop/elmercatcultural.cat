@@ -31,12 +31,13 @@
 
   .page-header,
   .post-header {
-    padding-top: 8rem;
+    padding-top: 6rem;
     padding-bottom: 3rem;
     margin-bottom: 2.5rem;
 
     @include m-media(md) {
-      padding-right: columns-width(4);
+      padding-top: 8rem;
+      padding-right: columns-width(3);
     }
 
     .post-title,
@@ -51,7 +52,7 @@
       justify-content: space-between;
 
       @include m-media(md) {
-        margin-right: calc(#{columns-width(2)} * -2);
+        margin-right: calc(#{columns-width(1.5)} * -2);
       }
     }
 
