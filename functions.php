@@ -255,3 +255,10 @@ require get_template_directory() . '/ajax/async-grid.php';
 
 /* Store */
 require get_template_directory() . '/inc/store/index.php';
+
+function emc_is_admin()
+{
+    $user = wp_get_current_user();
+    $roles = (array) $user->roles;
+    return in_array('administrator', $roles);
+}

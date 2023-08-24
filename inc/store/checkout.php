@@ -54,37 +54,38 @@ function unrequire_checkout_fields($fields)
 add_filter('woocommerce_checkout_fields', 'elmercatcultural_override_checkout_fields');
 function elmercatcultural_override_checkout_fields($fields)
 {
+	$is_admin = emc_is_admin();
 	$fields['billing']['billing_DNI'] = array(
 		'placeholder'   => _x('DNI', 'placeholder', 'woocommerce'),
-		'required'  => true,
+		'required'  => !$is_admin,
 		'class'     => array('form-row-wide'),
-		'clear'     => true,
+		'clear'     => !$is_admin,
 		'priority' => 9
 	);
 	$fields['billing']['billing_birthday'] = array(
 		'placeholder'   => _x('DATA NAIXEMENT (dd/mm/aaaa)', 'placeholder', 'woocommerce'),
-		'required'  => true,
+		'required'  => $is_admin,
 		'class'     => array('form-row-wide'),
-		'clear'     => true,
+		'clear'     => !$is_admin,
 		'maxlength' => 10
 	);
 	//add placeholder to native fields
 
 	$fields['billing']['billing_first_name'] = array(
 		'placeholder'   => _x('NOM', 'placeholder', 'woocommerce'),
-		'required'  => true
+		'required'  => !$is_admin
 	);
 	$fields['billing']['billing_last_name'] = array(
 		'placeholder'   => _x('COGNOMS', 'placeholder', 'woocommerce'),
-		'required'  => true
+		'required'  => !$is_admin
 	);
 	$fields['billing']['billing_email'] = array(
 		'placeholder'   => _x('CORREU ELECTRÒNIC', 'placeholder', 'woocommerce'),
-		'required'  => true
+		'required'  => !$is_admin
 	);
 	$fields['billing']['billing_phone'] = array(
 		'placeholder'   => _x('TELÈFON', 'placeholder', 'woocommerce'),
-		'required'  => true
+		'required'  => !$is_admin
 	);
 	$fields['billing']['billing_postcode'] = array(
 		'placeholder'   => _x('CODI POSTAL', 'placeholder', 'woocommerce'),
@@ -99,12 +100,13 @@ function elmercatcultural_override_checkout_fields($fields)
 add_action('radio_input_veina', 'elmercatcultural_new_radio_field');
 function elmercatcultural_new_radio_field($checkout)
 {
+	$is_admin = emc_is_admin();
 	woocommerce_form_field('billing_neighbour', array(
 		'type' => 'radio',
 		'class' => array('veina-radio-input', 'form-row-wide', 'update_totals_on_change'),
 		'options' => array('1' => 'Si', '2' => 'No',),
 		'label'  => __("VEÏNA DELS BARRIS DE MUNTANYA?"),
-		'required' => true,
+		'required' => !$is_admin,
 	), $checkout->get_value('billing_neighbour'));
 }
 
@@ -113,20 +115,21 @@ function elmercatcultural_new_radio_field($checkout)
 add_filter('woocommerce_checkout_fields', 'elmercatcultural_filter_checkout_fields');
 function elmercatcultural_filter_checkout_fields($fields)
 {
+	$is_admin = emc_is_admin();
 	$fields['extra_fields'] = array(
 		'billing_gender_mixta' => array(
 			'type' => 'select',
 			'class' => array('form-row-wide'),
 			'options' => array('a' => __('Home Cis'), 'b' => __('Home Trans'), 'c' => __('Dona Cis'), 'd' => __('Dona Trans'), 'e' => __('Persona No Binaria'), 'f' => __('Altres/Prefereixo no respondre')),
 			'label'  => __("GÈNERE"),
-			'required' => true
+			'required' => !$is_admin,
 		),
 		'billing_gender_no_mixta' => array(
 			'type' => 'select',
 			'class' => array('form-row-wide'),
 			'options' => array('a' => ('Home Trans'), 'b' => __('Dona Cis'), 'c' => __('Dona Trans'), 'd' => __('Persona No Binaria'), 'e' => __('Altres/Prefereixo no respondre')),
 			'label'  => __("GÈNERE"),
-			'required' => true,
+			'required' => !$is_admin,
 		)
 	);
 
@@ -146,6 +149,8 @@ function elmercatcultural_extra_checkout_fields()
 	if (!isset($meta['genere'])) {
 		return;
 	}
+
+	$is_admin = emc_is_admin();
 	if ($meta['genere'][0] == 'Activitat per a homes cis') : ?>
 		<div class="extra-fields">
 			<?php woocommerce_form_field('billing_gender_mixta', array(
@@ -153,7 +158,7 @@ function elmercatcultural_extra_checkout_fields()
 				'class' => array('form-row-wide'),
 				'options' => array('Home Cis' => 'Home Cis', 'Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
 				'label'  => __("GÈNERE"),
-				'required' => true,
+				'required' => !$is_admin,
 			)); ?>
 		</div>
 	<?php elseif ($meta['genere'][0] == 'Activitat no mixta') : ?>
@@ -163,7 +168,7 @@ function elmercatcultural_extra_checkout_fields()
 				'class' => array('form-row-wide'),
 				'options' => array('Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
 				'label'  => __("GÈNERE"),
-				'required' => true,
+				'required' => !$is_admin,
 			)); ?>
 		</div>
 	<?php endif;
@@ -207,13 +212,13 @@ function elmercatcultural_display_order_data_in_admin($order)
 add_action('woocommerce_review_order_before_submit', 'elmercatcultural_add_checkout_checkbox', 10);
 function elmercatcultural_add_checkout_checkbox()
 {
-
+	$is_admin = emc_is_admin();
 	woocommerce_form_field('privacy_checkbox', array( // CSS ID
 		'type'          => 'checkbox',
 		'class'         => array('emc_privacy_checkbox'), // CSS Class
 		'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
 		'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
-		'required'      => true, // Mandatory or Optional
+		'required'      => !$is_admin, // Mandatory or Optional
 		'label'         => "Accepto la <a href='/politica-de-privacitat' target='_blank' rel='noopener'>Política de Privacitat</a>. Les dades personals s'utilitzaran per processar la comanda, millorar l'experiència d'usuari en aquest lloc web.", // Label and Link
 	));
 	woocommerce_form_field('newsletter_checkbox', array( // CSS ID
@@ -246,6 +251,11 @@ function quadlayers($fields, $errors)
 add_action('woocommerce_checkout_process', 'elmercatcultural_checkout_field_process');
 function elmercatcultural_checkout_field_process()
 {
+	$is_admin = emc_is_admin();
+	if ($is_admin) {
+		return;
+	}
+
 	$isvalid = true;
 
 	if (!$_POST['billing_first_name']) {
