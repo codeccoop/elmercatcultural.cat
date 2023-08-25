@@ -9,10 +9,10 @@
 
   &#highlights {
     padding: 0px;
-    height: vh(100) - $size__site-header;
+    height: calc(#{vh(100)} - #{$size__site-header});
 
     @include m-media(zr, md, portrait) {
-      height: vh(55) - $size__site-header;
+      height: calc(#{vh(55)} - #{$size__site-header});
     }
 
     .admin-bar & {
@@ -77,8 +77,10 @@
     margin: 0;
     position: relative;
     padding-top: calc(#{vh(100)} - #{$size__site-header});
+
     .title {
       font-size: 1.8rem;
+
       @include m-media(md) {
         font-size: $font__size-title;
       }
@@ -97,10 +99,11 @@
       width: 100%;
       object-fit: cover;
       z-index: 10;
-      height: vh(100) - $size__site-header;
+      height: calc(#{vh(100)} - #{$size__site-header});
 
       @include m-media(zr, md, portrait) {
         height: vh(55) - $size__site-header;
+        height: calc(#{vh(55)} - #{$size__site-header});
       }
 
       .admin-bar & {
