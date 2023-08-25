@@ -1,66 +1,79 @@
-#newsletter{
+#newsletter {
   margin: 0 2rem;
-  @include m-media(md){
+
+  .woocommerce-checkout &,
+  .woocommerce-cart & {
+    display: none;
+  }
+
+  @include m-media(md) {
     border-bottom: 2px solid;
     margin: 0 5rem;
   }
-  .newsletter__section-border{
+
+  .newsletter__section-border {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6.25rem 20.39657vw 6.25rem;
-    //width: calc(var(--vw, 1vw) * 100);
-  
-  .newsletter__section-content{
-    text-align: center;
-    width: 50vw;
-    .footer__subscription {
-      position: relative;
-    
-      .footer__subscription-field {
-        margin-bottom: 1em;
-      }
-    
-      input {
-        width: 100%;
-        border: none;
-        outline: none;
-        border-bottom: 1px solid;
-        border-radius: 0px;
-        padding: 0.35em 1em 0.35em 0;
-        font-size: $font__size-small;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        @include m-media(md) {
-          width: 50%;
+    padding: 4.25rem 0;
+
+    @include m-media(md) {
+      padding: 6.25rem 0;
+    }
+
+    .page-template-default:not(.home) &,
+    .single-workshop &,
+    .single-event & {
+      padding-top: 0px;
+    }
+
+    .newsletter__section-content {
+      text-align: center;
+      max-width: 50vw;
+      .footer__subscription {
+        position: relative;
+
+        .footer__subscription-field {
+          margin-bottom: 1em;
         }
-    
-        &.invalid {
-          border-color: red;
+
+        input {
+          width: 100%;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid;
+          border-radius: 0px;
+          padding: 0.35em 1em 0.35em 0;
+          font-size: $font__size-small;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          @include m-media(md) {
+            width: 50%;
+          }
+
+          &.invalid {
+            border-color: red;
+          }
         }
-      }
-    
-      i {
-        cursor: pointer;
-        position: absolute;
-        //right: 0px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0.65em;
-        height: 0.65em;
-        background-image: url("/wp-content/themes/elmercatcultural.cat/assets/images/chevron--icon.png");
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
+
+        i {
+          cursor: pointer;
+          position: absolute;
+          //right: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0.65em;
+          height: 0.65em;
+          background-image: url("/wp-content/themes/elmercatcultural.cat/assets/images/chevron--icon.png");
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+        }
       }
     }
   }
 }
-}
-
-
-
 
 .site-footer {
   display: flex;
@@ -73,7 +86,6 @@
   flex-direction: column;
   padding: $size__site-padding / 2;
   margin: 0 auto;
-  max-width: 600px;
   width: 100%;
 
   .page-template-default:not(.home) &,
@@ -89,7 +101,6 @@
   }
 
   @include m-media(md) {
-    max-width: unset;
     flex-direction: row;
   }
 }
@@ -99,14 +110,6 @@
   display: flex;
   flex-direction: column;
   padding: 0 1rem;
-
-  &:first-child {
-    padding-top: 2rem;
-
-    @include m-media(md) {
-      padding-top: 0px;
-    }
-  }
 
   &:nth-last-child(-n + 2) {
     padding: 0 15vw;
@@ -146,18 +149,24 @@
 }
 
 .footer__logo {
-  background: url("/wp-content/themes/elmercatcultural.cat/assets/images/LogotipComplet.png") no-repeat center;
-  width: 340px;
-  height: 120px;
+  background: url(/wp-content/themes/elmercatcultural.cat/assets/images/LogotipComplet.png)
+    no-repeat center;
   background-size: contain;
-    @include m-media(md) {
-    background: url("/wp-content/themes/elmercatcultural.cat/assets/images/Logotip_nomescaseta.png") no-repeat center;
+  margin: 5vw 0;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: 120px;
+
+  @include m-media(md) {
+    background: url("/wp-content/themes/elmercatcultural.cat/assets/images/Logotip_nomescaseta.png")
+      no-repeat center;
     background-size: cover;
+    margin: unset;
     width: 195px;
-  height: 313px;
+    height: 313px;
+    flex-grow: 1;
   }
 }
-
 
 .footer__social {
   display: flex;
@@ -184,29 +193,37 @@
 }
 
 .site-info {
-  text-align: center;
   border-top: 1px solid;
-  margin: 0 5rem;
-  padding: .5rem 0rem;
+  margin: 0 4.1665vw;
+  padding: 0.5rem 1rem 1rem;
+  opacity: 0.6;
 
   @include m-media(zr, md) {
-    padding-top: 2rem;
+    text-align: center;
+    padding-top: 1rem;
   }
-  @include m-media(md){
-    display: flex;
 
+  @include m-media(md) {
+    display: flex;
   }
-  .legal_info{
-    @include m-media(md){
+
+  .legal_info {
+    .footer__text > span {
+      display: block;
+
+      @include m-media(md) {
+        display: inline;
+        margin: 0 0.25em;
+        border-right: 0.5px;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    @include m-media(md) {
       flex: 1;
-    }
-  }
-  .small {
-    a{
-      text-decoration: underline;
-    }
-    @include m-media(zr, md) {
-      margin: 0;
     }
   }
 }

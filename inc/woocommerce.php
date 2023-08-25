@@ -17,6 +17,7 @@
  *
  * @return void
  */
+add_action('after_setup_theme', 'woocommerce_setup');
 function woocommerce_setup()
 {
     add_theme_support(
@@ -37,13 +38,13 @@ function woocommerce_setup()
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
 }
-add_action('after_setup_theme', 'woocommerce_setup');
 
 /**
  * WooCommerce specific scripts & stylesheets.
  *
  * @return void
  */
+add_action('wp_enqueue_scripts', 'woocommerce_scripts');
 function woocommerce_scripts()
 {
     wp_enqueue_style('elmercatcultural.cat-woocommerce-style', get_template_directory_uri() . '/woocommerce.css', array(), ELMERCATCULTURAL_VERSION);
@@ -62,7 +63,6 @@ function woocommerce_scripts()
 
     wp_add_inline_style('elmercatcultural.cat-woocommerce-style', $inline_font);
 }
-add_action('wp_enqueue_scripts', 'woocommerce_scripts');
 
 /**
  * Disable the default WooCommerce stylesheet.
@@ -80,13 +80,13 @@ add_filter('woocommerce_enqueue_styles', '__return_empty_array');
  * @param  array $classes CSS classes applied to the body tag.
  * @return array $classes modified to include 'woocommerce-active' class.
  */
+add_filter('body_class', 'woocommerce_active_body_class');
 function woocommerce_active_body_class($classes)
 {
     $classes[] = 'woocommerce-active';
 
     return $classes;
 }
-add_filter('body_class', 'woocommerce_active_body_class');
 
 /**
  * Related Products Args.
@@ -94,6 +94,7 @@ add_filter('body_class', 'woocommerce_active_body_class');
  * @param array $args related products args.
  * @return array $args related products args.
  */
+add_filter('woocommerce_output_related_products_args', 'woocommerce_related_products_args');
 function woocommerce_related_products_args($args)
 {
     $defaults = array(
@@ -105,7 +106,6 @@ function woocommerce_related_products_args($args)
 
     return $args;
 }
-add_filter('woocommerce_output_related_products_args', 'woocommerce_related_products_args');
 
 /**
  * Remove default WooCommerce wrapper.

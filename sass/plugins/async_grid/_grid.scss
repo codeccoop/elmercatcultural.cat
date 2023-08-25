@@ -14,7 +14,7 @@
 }
 
 .grid-item {
-  width: calc(#{columns_width(14, 'all')} - 2px - #{$gutter_width / 2});
+  width: calc(#{columns_width(14, "all")} - 2px - #{$gutter_width / 2});
   position: relative;
   margin: 0;
 
@@ -43,7 +43,7 @@
   }
 
   @include m-media(sm, md) {
-    width: calc(#{columns_width(7, 'side')} - 2px - #{$gutter_width / 2});
+    width: calc(#{columns_width(7, "side")} - 2px - #{$gutter_width / 2});
 
     &:nth-child(n + 3) {
       img {
@@ -90,7 +90,7 @@
   }
 
   @include m-media(md) {
-    width: calc(#{columns_width(4.5, 'side')} - 2px - #{$gutter_width / 2});
+    width: calc(#{columns_width(4.5, "side")} - 2px - #{$gutter_width / 2});
 
     &:nth-child(3n - 2) {
       img {
@@ -125,7 +125,7 @@
       border-right: none;
     }
 
-    [data-rows='2'] & {
+    [data-rows="2"] & {
       &:nth-child(-n + 3) {
         figcaption {
           border-bottom: 2px solid white;
@@ -140,10 +140,8 @@
       }
     }
 
-    [data-rows='3'] & {
+    [data-rows="3"] & {
       &:nth-child(-n + 6) {
-        // margin-bottom: vw(2.5);
-
         figcaption {
           border-bottom: 2px solid white;
           padding-bottom: vw(2.5);
@@ -172,17 +170,17 @@
 
   img {
     object-fit: cover;
-    height: columns_width(10, 'side');
+    height: columns_width(10, "side");
     @include m-columns_width(14);
 
     @include m-media(sm, md) {
-      height: columns_width(5, 'side');
+      height: columns_width(5, "side");
       margin: auto;
-      @include m-columns_width(6, 'side');
+      @include m-columns_width(6, "side");
     }
 
     @include m-media(md) {
-      height: columns_width(3.5, 'side');
+      height: columns_width(3.5, "side");
       @include m-columns_width(4);
     }
   }
@@ -196,7 +194,7 @@
 
     @include m-media(sm, md) {
       margin: auto;
-      @include m-columns_width(6, 'side');
+      @include m-columns_width(6, "side");
     }
 
     @include m-media(md) {
@@ -204,7 +202,7 @@
     }
 
     &:after {
-      content: ' ';
+      content: " ";
       position: absolute;
       top: 2.7em;
       right: 5px;
@@ -220,9 +218,6 @@
       font-weight: bold;
       display: block;
       width: calc(100% - 1.5em);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       margin-bottom: -0.5em;
     }
   }
@@ -282,7 +277,7 @@
     transform: translateX(-200%);
 
     > i:before {
-      content: '<<';
+      content: "<<";
     }
   }
 
@@ -290,7 +285,7 @@
     transform: translateX(-100%);
 
     > i:before {
-      content: '<';
+      content: "<";
     }
   }
 
@@ -298,7 +293,7 @@
     transform: translateX(100%);
 
     > i:before {
-      content: '>';
+      content: ">";
     }
   }
 
@@ -306,7 +301,7 @@
     transform: translateX(200%);
 
     > i:before {
-      content: '>>';
+      content: ">>";
     }
   }
 
