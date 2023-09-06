@@ -178,7 +178,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 
 	function onFilterFails( err ) {
 		// console.log( err );
-		content.innerHTML = "<h1>No s'han trobat esdeveniments</h1>";
+		content.innerHTML = "<h3>No s'han trobat esdeveniments</h3>";
 		onFilterSuccess();
 	}
 
