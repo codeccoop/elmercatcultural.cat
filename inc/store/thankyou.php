@@ -31,9 +31,7 @@ add_action('woocommerce_before_thankyou', 'cod_order_payment_processing_order_st
 
 function cod_order_payment_processing_order_status($order_id)
 {
-	if (!$order_id) {
-		return;
-	}
+	if (!$order_id) return;
 
 	// Get an instance of the WC_Order object
 	//throw new Exception(print_r($order_id));

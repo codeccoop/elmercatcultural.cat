@@ -273,3 +273,34 @@ function emc_is_admin()
     $roles = (array) $user->roles;
     return in_array('administrator', $roles);
 }
+
+function emc_submit_email_to_newsletter()
+{
+    $WP_Http = new WP_Http();
+    $response = $WP_Http->request(
+        "https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&id=77f622e665&f_id=002990e0f0",
+        //"/wp-json/myplugin/v1/newsletter/post",
+        array(
+            'method' => 'POST',
+            'body' => 'EMAIL=' . $_POST['billing_email'],
+            'httpversion' => '1.0',
+            'user-agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0',
+            'headers' => array(
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Origin' => 'https://elmercatcultural.cat',
+                'Host' => 'elmercatcultural.us11.list-manage.com',
+                'Referer' => 'https://elmercatcultural.cat/',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+
+                'Accept-Language' => 'en-US,en;q=0.5',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Cache-Control' => 'no-cache',
+                'Connection' => 'keep-alive'
+            )
+        )
+    );
+
+    if ($response['response']['code'] != 200) {
+        throw new Exception("Subscription error " . $response['response']['code']);
+    }
+}

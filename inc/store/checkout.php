@@ -146,9 +146,7 @@ function elmercatcultural_extra_checkout_fields()
 	}
 
 	// because of this foreach, everything added to the array in the previous function will display automagically
-	if (!isset($meta['genere'])) {
-		return;
-	}
+	if (!isset($meta['genere'])) return;
 
 	$is_admin = emc_is_admin();
 	if ($meta['genere'][0] == 'Activitat per a homes cis') : ?>
@@ -199,7 +197,6 @@ function elmercatcultural_display_order_data_in_admin($order)
 {
 	if ($order->get_meta('billing_gender_mixta')) : ?>
 		<h4><?php _e('Informació sobre el gènere de la persona inscrita', 'woocommerce'); ?></h4>
-
 	<?php
 		echo '<p><strong>' . __('Gènere') . ':</strong>' . $order->get_meta('billing_gender_mixta') . '</p>';
 	elseif ($order->get_meta('billing_gender_no_mixta')) : ?>
@@ -252,9 +249,7 @@ add_action('woocommerce_checkout_process', 'elmercatcultural_checkout_field_proc
 function elmercatcultural_checkout_field_process()
 {
 	$is_admin = emc_is_admin();
-	if ($is_admin) {
-		return;
-	}
+	if ($is_admin) return;
 
 	$isvalid = true;
 
@@ -307,17 +302,9 @@ function elmercatcultural_checkout_field_process()
 
 	if ($isvalid && isset($_POST['newsletter_checkbox'])) {
 		try {
-			elmercatcultural_submit_email_to_newsletter();
+			emc_submit_email_to_newsletter();
 		} catch (Exception $e) {
-			wc_add_notice(__("No us heu pogut subscriure a la Newsletter: " . $e->getMessage()), 'notice');
+			wc_add_notice(__("No us heu pogut subscriure a la Newsletter: " . $e->getMessage()), 'error');
 		}
-	}
-}
-
-add_action('woocommerce_checkout_update_order_meta', 'elmercatcultural_update_order_meta');
-function elmercatcultural_update_order_meta($order_id)
-{
-	if (!empty($_POST['billing_birthday'])) {
-		update_post_meta($order_id, 'DATA NAIXEMENT', sanitize_text_field($_POST['customised_field_name']));
 	}
 }
