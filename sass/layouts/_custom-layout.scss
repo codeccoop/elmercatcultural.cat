@@ -16,6 +16,13 @@
   left: 0px;
   top: 0px;
   z-index: 100;
+  .site-branding{
+    img {
+      max-width: 30px;
+      padding-top: 5px;
+    }
+
+  }
 
   .admin-bar & {
     top: var(--wp-admin--admin-bar--height);
