@@ -32,15 +32,11 @@ defined('ABSPATH') || exit;
     <div class="post-content">
         <?php $post_id = get_the_ID();
         global $post;
-        $post_slug = $post->post_name;
-        $product_slug = $post_slug . '-product';
-        $product_obj = get_page_by_path($product_slug, OBJECT, 'product');
+        $product = emc_get_bound_product($post_id);
         $has_inscription = false;
         $external_inscription = null;
-        if ($product_obj) {
+        if ($product) {
             $has_inscription = get_field('checkbox', $post_id);
-            $product_id = $product_obj->ID;
-            $product = wc_get_product($product_id);
 
             $current_date = strtotime(date("c"));
             $end_date = strtotime($product->get_date_on_sale_to());
@@ -61,8 +57,8 @@ defined('ABSPATH') || exit;
             <?php
             if ($has_inscription) {
                 if ($stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
-                    <form class="cart" action="https://elmercatcultural.cat/event/<?php echo $post_slug; ?>" method="post" enctype="multipart/form-data">
-                        <button type="submit" name="add-to-cart" value="<?php echo $product_id; ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
+                    <form class="cart" action="https://elmercatcultural.cat/event/<?= $product->get_slug(); ?>" method="post" enctype="multipart/form-data">
+                        <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
                     </form>
                 <?php } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
@@ -99,6 +95,11 @@ defined('ABSPATH') || exit;
             <div class="description-text">
                 <?php the_field('description_event', $post_id); ?>
             </div>
+            <?php if (get_field('video', $post_id)) { ?>
+                <div class="video-container">
+                    <?php the_field('video', $post_id); ?>
+                </div>
+            <?php } ?>
             <?php
             $has_images = false;
             if (get_field('carroussel_event', $post_id)) {
@@ -144,11 +145,6 @@ defined('ABSPATH') || exit;
 
             <?php }
             } ?>
-            <?php if (get_field('video', $post_id)) { ?>
-                <div class="video-container">
-                    <?php the_field('video', $post_id); ?>
-                </div>
-            <?php } ?>
         </div>
 
     </div><!-- .entry-content -->

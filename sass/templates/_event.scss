@@ -1,7 +1,6 @@
 .site-main.post .type-event,
 .site-main.post .type-workshop {
   font-size: $font__size;
-  margin-bottom: 6.5rem;
   position: relative;
 
   .woocommerce-notices-wrapper {
@@ -90,8 +89,9 @@
       .video-container {
         width: 100%;
         margin-top: 3rem;
+
         @include m-media(md) {
-          margin-top: 8rem;
+          margin-top: 2rem;
         }
 
         iframe {
@@ -113,17 +113,22 @@
         }
       }
 
-      .thumbnail-container img {
-        margin: 0 0.5rem;
-        object-fit: cover;
-        height: 30vh;
+      .thumbnail-container {
+        display: flex;
+        justify-content: center;
 
-        @include m-media(md) {
-          height: 40vh;
-        }
+        img {
+          margin: 2rem auto 0;
+          object-fit: cover;
+          max-height: 30vh;
 
-        @include m-media(lg) {
-          height: 50vh;
+          @include m-media(md) {
+            max-height: 40vh;
+          }
+
+          @include m-media(lg) {
+            max-height: 50vh;
+          }
         }
       }
     }
@@ -136,10 +141,11 @@
     @include m-media(md) {
       @include m-columns-width(9, all);
       margin-left: auto;
-      margin-top: 7rem;
+      margin-top: 2rem;
       margin-bottom: 1.5rem;
     }
   }
+
   .carroussel-content {
     button {
       display: none;
@@ -198,10 +204,6 @@
     &.show {
       visibility: visible;
     }
-  }
-
-  .slider {
-    //width: 50vw;
   }
 
   .slick-slide {

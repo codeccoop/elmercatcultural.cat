@@ -118,17 +118,13 @@
           }
 
           .product-name {
-            margin-bottom: 1em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: calc(100% - 1.5em);
             text-align: left;
+            margin-bottom: 1em;
+            padding: 0 2rem 0 0;
 
             @include m-media(md) {
               margin: 0;
-              width: unset;
-              padding-left: 1rem;
+              padding: 0 0 0 2rem;
             }
           }
 
