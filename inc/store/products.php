@@ -2,18 +2,19 @@
 
 $EVENT_FIELDS_KEYMAP = [
 	'date' => 0,
-	'hour' => 1,
-	'artists' => 2,
-	'description_event' => 3,
-	'carroussel_event' => 4,
-	'video' => 5,
-	'price' => 6,
-	'checkbox' => 7,
-	'available_stock' => 8,
-	'date_sale_from' => 9,
-	'date_sale_to' => 10,
+	'date_initial' => 1,
+	'hour' => 2,
+	'artists' => 3,
+	'description_event' => 4,
+	'carroussel_event' => 5,
+	'video' => 6,
+	'price' => 7,
+	'checkbox' => 8,
+	'available_stock' => 9,
+	'date_sale_from' => 10,
+	'date_sale_to' => 11,
 	// 'external_inscription' => 11,
-	'genere' => 11
+	'genere' => 12
 ];
 
 function emc_get_bound_product($post_id)

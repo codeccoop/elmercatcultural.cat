@@ -308,3 +308,35 @@ function elmercatcultural_checkout_field_process()
 		}
 	}
 }
+
+
+//Change "Your order" woocommerce literal for custom
+
+add_filter('gettext', 'change_yourorder_strings', 10, 3);
+add_filter('ngettext', 'change_yourorder_strings', 10, 3);
+function change_yourorder_strings($translate_text, $original_text, $domain)
+{
+	if ($domain != "woocommerce") {
+		return $translate_text;
+	} else if (stripos($original_text, 'Your order') !== false) {
+		$translate_text = str_ireplace(
+			array('Your order'),
+			array('La teva inscripció'),
+			$original_text
+		);
+	}
+
+	return $translate_text;
+}
+
+
+
+//Change "Place order" button text
+
+
+add_filter('woocommerce_order_button_text', 'elmercat_custom_button_text');
+
+function elmercat_custom_button_text($button_text)
+{
+	return 'Confirma la inscripció'; // new text is here 
+}

@@ -21,6 +21,9 @@ get_header();
             <a data-term="espectacles-i-concerts" class="small underline event-archive__filter archive__filter async-filter">Espectacles i concerts</a>
             <a data-term="xerrades-cineforums" class="small underline event-archive__filter archive__filter async-filter">Xerrades i Cinefòrums</a>
             <a data-term="cicles" class="small underline event-archive__filter archive__filter async-filter">Cícles</a>
+            <div class="historic-container">
+                <a data-term="historic" class="small underline event-archive__filter archive__filter async-filter">Activitats passades</a>
+            </div>
         </nav>
         <div class="event-archive__grid archive__grid async-grid">
         </div>

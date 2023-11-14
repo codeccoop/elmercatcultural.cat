@@ -26,7 +26,9 @@ do_action('woocommerce_before_cart'); ?>
     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
         <thead>
             <tr>
-                <th class="product-cover"<h3 class="sans-serif"><?php esc_html_e('Product', 'woocommerce'); ?></h3></th>
+                <th class="product-cover">
+                    <h3 class="sans-serif"><?php esc_html_e('Product', 'woocommerce'); ?></h3>
+                </th>
                 <th class="product-price"><?php esc_html_e('Price', 'woocommerce'); ?></th>
                 <th class="product-quantity"><?php esc_html_e('Quantity', 'woocommerce'); ?></th>
                 <th class="product-remove small"><span class="screen-reader-text"></th>
@@ -149,7 +151,9 @@ do_action('woocommerce_before_cart'); ?>
                             <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" />
                             <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
                             <?php do_action('woocommerce_cart_coupon'); ?>
-                            <script>console.log("Hello darknes my old friend");</script>
+                            <script>
+                                console.log("Hello darknes my old friend");
+                            </script>
                         </div>
                     <?php } ?>
 
@@ -185,58 +189,60 @@ do_action('woocommerce_before_cart'); ?>
             </div>
         </div>
         <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let onLoop = false;
-            function applyCoupons() {
-                document.getElementById("coupon_code").value = "master-coupon";
-                document.getElementsByName("apply_coupon")[0].click();
-                onLoop = true;
-            }
-            function removeCoupons(reload) {
-                fetch('https://elmercatcultural.cat/cistella?remove_coupon=master-coupon')
-                    .then(_ => {
-                        window.location.reload();
-                    });
-            }
-            jQuery(document.body).on("wc_cart_emptied", removeCoupons);
-            jQuery(document.body).on("updated_cart_totals", () => {
-                radioBtns.forEach(btn => {
-                    
-                    const value = btn.dataset.value === 'true';
-                    btn.classList.remove('clicked');
-                    if(checkbox.checked === value){
-                        btn.classList.add('clicked');
-                    }
-                });
+            document.addEventListener("DOMContentLoaded", function() {
+                let onLoop = false;
 
-                if(checkbox.checked) {
-                    if (!onLoop) applyCoupons();
-                    else onLoop = false;
-                } 
-            });
-            const checkbox = document.getElementById("coupon_checkbox");
-            const radioBtns = document.querySelectorAll(".checkbox-input__label-btn");
-            const label = checkbox.nextSibling;
-            const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");
-            radioBtns.forEach(btn => {
-                const value = btn.dataset.value === 'true';
-                btn.addEventListener('click', () => {
-                    if (value !== checkbox.checked) {
-                        checkbox.checked = !checkbox.checked;
-                        checkbox.dispatchEvent(new Event('change'));
+                function applyCoupons() {
+                    document.getElementById("coupon_code").value = "master-coupon";
+                    document.getElementsByName("apply_coupon")[0].click();
+                    onLoop = true;
+                }
+
+                function removeCoupons(reload) {
+                    fetch('https://elmercatcultural.cat/cistella?remove_coupon=master-coupon')
+                        .then(_ => {
+                            window.location.reload();
+                        });
+                }
+                jQuery(document.body).on("wc_cart_emptied", removeCoupons);
+                jQuery(document.body).on("updated_cart_totals", () => {
+                    radioBtns.forEach(btn => {
+
+                        const value = btn.dataset.value === 'true';
+                        btn.classList.remove('clicked');
+                        if (checkbox.checked === value) {
+                            btn.classList.add('clicked');
+                        }
+                    });
+
+                    if (checkbox.checked) {
+                        if (!onLoop) applyCoupons();
+                        else onLoop = false;
                     }
-                    radioBtns.forEach(btn => btn.classList.remove('clicked'));
-                    btn.classList.add('clicked');
                 });
-               
-            
-                if (checkbox.checked === value) btn.classList.add('clicked');
+                const checkbox = document.getElementById("coupon_checkbox");
+                const radioBtns = document.querySelectorAll(".checkbox-input__label-btn");
+                const label = checkbox.nextSibling;
+                const activeCoupons = document.getElementsByClassName("woocommerce-remove-coupon");
+                radioBtns.forEach(btn => {
+                    const value = btn.dataset.value === 'true';
+                    btn.addEventListener('click', () => {
+                        if (value !== checkbox.checked) {
+                            checkbox.checked = !checkbox.checked;
+                            checkbox.dispatchEvent(new Event('change'));
+                        }
+                        radioBtns.forEach(btn => btn.classList.remove('clicked'));
+                        btn.classList.add('clicked');
+                    });
+
+
+                    if (checkbox.checked === value) btn.classList.add('clicked');
+                });
+                checkbox.addEventListener("change", function() {
+                    if (checkbox.checked) applyCoupons();
+                    else if (activeCoupons.length) removeCoupons(true);
+                });
             });
-            checkbox.addEventListener("change", function () {
-                if (checkbox.checked) applyCoupons();
-                else if (activeCoupons.length) removeCoupons(true);
-            });
-        });
         </script>
     <? endif;
 

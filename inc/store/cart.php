@@ -1,5 +1,24 @@
 <?php
 
+/* Change woocommerce product literals for Activitat*/
+
+add_filter('gettext', 'change_some_woocommerce_strings', 10, 3);
+add_filter('ngettext', 'change_some_woocommerce_strings', 10, 3);
+function change_some_woocommerce_strings($translate_text, $original_text, $domain)
+{
+	if ($domain != "woocommerce") {
+		return $translate_text;
+	} else if (stripos($original_text, 'Product') !== false || stripos($original_text, 'Categories') !== false) {
+		$translate_text = str_ireplace(
+			array('Product categories', 'Products', 'Product'),
+			array('Activitats', 'Activitats', 'Activitat'),
+			$original_text
+		);
+	}
+
+	return $translate_text;
+}
+
 /* EXCLUDE PRODUCTS FROM COUPON DISCOUNT*/
 add_filter('woocommerce_coupon_is_valid_for_product', 'elmercatcultural_exclude_product_coupons', 9999, 4);
 function elmercatcultural_exclude_product_coupons($valid, $product, $coupon, $values)
@@ -73,6 +92,18 @@ function elmercatcultural_hide_coupon_messages($msg, $msg_code)
 	} else {
 		return $msg;
 	}
+}
+
+//CHANGE PROCEED TO CHECKOUT BUTTON TEXT
+
+add_action('woocommerce_proceed_to_checkout', 'woocommerce_button_proceed_to_checkout', 20);
+
+function woocommerce_button_proceed_to_checkout()
+{
+
+?>
+	<a href="/finalitza-la-compra" class="checkout-button button alt wc-forward"> Finalitza la inscripció </a>
+<?php
 }
 
 // REMOVE CART MESSAGE WHEN PRODUCT REMOVED

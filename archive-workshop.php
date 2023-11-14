@@ -20,6 +20,9 @@ get_header();
         <a data-term="comunitari" class="small underline workshop-archive__filter archive__filter async-filter">Comunitari</a>
         <a data-term="cultura" class="small underline workshop-archive__filter archive__filter async-filter">Cultura</a>
         <a data-term="ecosocial" class="small underline workshop-archive__filter archive__filter async-filter">Ecosocial</a>
+        <div class="historic-container">
+            <a data-term="historic" class="small underline workshop-archive__filter archive__filter async-filter">Activitats passades</a>
+        </div>
     </nav>
     <div class="workshop-archive__grid async-grid">
     </div>

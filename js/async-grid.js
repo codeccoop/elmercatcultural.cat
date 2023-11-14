@@ -9,12 +9,18 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	} );
 	const page = new State( 1, () => onFilter( 'page' ) );
 
-	const filters = Array.apply( null, siteMain.getElementsByClassName( 'async-filter' ) );
+	const filters = Array.apply(
+		null,
+		siteMain.getElementsByClassName( 'async-filter' )
+	);
 	filters.forEach( function( btn ) {
 		btn.addEventListener( 'click', onClickTerm );
 	} );
 
-	const pager = Array.apply( null, siteMain.getElementsByClassName( 'async-pager' ) )[ 0 ];
+	const pager = Array.apply(
+		null,
+		siteMain.getElementsByClassName( 'async-pager' )
+	)[ 0 ];
 	onFilter();
 
 	function onClickTerm( ev ) {
@@ -66,10 +72,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		return new Promise( function( res, rej ) {
 			try {
 				data = JSON.parse( data );
-				const posts = ( data.posts || [] ).map( ( e ) => {
-					e.date = new Date( e.date );
-					return e;
-				} );
+				const posts = data.posts;
 				const pages = data.pages || 0;
 				if ( posts.length === 0 ) {
 					rej( new Error( 'Empty response' ) );
@@ -88,6 +91,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	function renderEvent( datum ) {
+		//console.log( datum );
 		const el = document.createElement( 'figure' );
 		el.classList.add( 'grid-item' );
 		const anchor = document.createElement( 'a' );
@@ -98,14 +102,27 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		const caption = document.createElement( 'figcaption' );
 		caption.classList.add( 'small' );
 		caption.innerHTML =
-      '<b class="title is.3">' +
-      datum.title +
-      '</b>' +
-      ( datum.date ? '<br/>Data: ' + datum.date.toLocaleDateString() : '' ) +
-      ( datum.hour ? '<br/>Horari: ' + datum.hour : '' );
+			'<b class="title is.3">' +
+			datum.title +
+			'</b>' +
+			( datum.date && datum.date_initial
+				? '<br/>Dates: ' + datum.date_initial + ' - ' + datum.date
+				: '<br/>Data: ' + datum.date ) +
+			( datum.hour ? '<br/>Horari: ' + datum.hour : '' );
+
+		if ( datum.available_stock === 0 ) {
+			const outOfStockBanner = document.createElement( 'div' );
+			outOfStockBanner.classList.add( 'stock__banner' );
+			anchor.appendChild( outOfStockBanner );
+		} else if ( ! datum.isopen ) {
+			const outOfDateBanner = document.createElement( 'div' );
+			outOfDateBanner.classList.add( 'date__banner' );
+			anchor.appendChild( outOfDateBanner );
+		}
 
 		anchor.appendChild( caption );
 		el.appendChild( anchor );
+
 		return el;
 	}
 
@@ -146,11 +163,15 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		let html = '';
 		if ( page.value > 2 ) {
 			html += `<li class="async-nav-btn first" data-page="1"><i></i></li>
-        <li class="async-nav-btn previous" data-page="${ page.value - 1 }"><i></i></li>`;
+        <li class="async-nav-btn previous" data-page="${
+	page.value - 1
+}"><i></i></li>`;
 		}
 
 		if ( page.value <= pages - 2 ) {
-			html += `<li class="async-nav-btn next" data-page="${ page.value + 1 }"><i></i></li>
+			html += `<li class="async-nav-btn next" data-page="${
+				page.value + 1
+			}"><i></i></li>
         <li class="async-nav-btn last" data-page="${ pages }"><i></i></li>`;
 		}
 
@@ -185,7 +206,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	function encodePayload( data ) {
 		return Object.keys( data )
 			.reduce( function( acum, k ) {
-				return acum.concat( encodeURIComponent( k ) + '=' + encodeURIComponent( data[ k ] ) );
+				return acum.concat(
+					encodeURIComponent( k ) + '=' + encodeURIComponent( data[ k ] )
+				);
 			}, [] )
 			.join( '&' );
 	}

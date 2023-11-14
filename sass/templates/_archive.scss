@@ -16,7 +16,8 @@
   }
 
   > span,
-  > a {
+  > a,
+    .historic-container a {
     display: block;
     width: fit-content;
     text-align: center;
@@ -43,6 +44,25 @@
       margin: 0px 1em;
     }
   }
+    .historic-container a{
+      font-family: $font__secondary;
+      margin: 0px 0px 1em;
+  
+      @include m-media(md) {
+        display: inline;
+        margin: 0px;
+    }
+  }
+  @include m-media(md){
+    .historic-container{
+      padding-right: 0;
+      padding-left: 2rem;
+      margin-left: 1rem;
+      border-left: solid 2px white;
+     
+    }
+  }
+  
 }
 
 .archive__filter {
@@ -54,11 +74,7 @@
   &:first-child {
     margin-left: 0.5rem;
   }
-
-  &:last-child {
-    padding-right: 0;
-  }
-
+  
   &:hover,
   &.active {
     color: $white;

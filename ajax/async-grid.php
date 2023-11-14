@@ -9,6 +9,7 @@ if (!function_exists('emc_get_grid_items')) {
         $term = $_POST['term'];
         $page = $_POST['page'];
         $type = $_POST['type'];
+        $time_dir = $term === 'historic' ? '<=' : '>=';
 
         $args = array(
             'post_type' => $type,
@@ -17,33 +18,18 @@ if (!function_exists('emc_get_grid_items')) {
             'offset' => ($page - 1) * 9,
             'meta_key' => 'date',
             'orderby' => 'meta_value',
-            'order' => 'DESC',
+            'order' => 'ASC',
             'meta_query' => [
-                'relation' => 'AND',
-                [
-                    'key' => 'date_sale_from',
-                    'compare' => '<=',
+                'relation' => 'OR', [
+                    'key' => 'date',
+                    'compare' => $time_dir,
                     'value' => date('Y-m-d'),
                     'type' => 'DATE',
-                ], [
-                    'key' => 'date_sale_to',
-                    'compare' => '>=',
-                    'value' => date('Y-m-d'),
-                    'type' => 'DATE',
-                ],
-
-
-
-            ],
-            'meta_query' => ['relation' => 'OR', [
-                'key' => 'date',
-                'compare' => '>=',
-                'value' => date('Y-m-d'),
-                'type' => 'DATE',
-            ]]
+                ]
+            ]
         );
 
-        if ($term != 'all') {
+        if ($term != 'all' && $term != 'historic') {
             $args['category_name'] = $term;
         }
 
@@ -57,17 +43,31 @@ if (!function_exists('emc_get_grid_items')) {
             $query->the_post();
             $ID = get_the_ID();
             $thumbnail = get_the_post_thumbnail_url($ID, 'medium');
-            try {
-                $date = DateTime::createFromFormat('d/m/Y', get_field('date', $ID));
-                $date = $date->getTimestamp();
-            } catch (Exception $e) {
-                $date = null;
+            // try {
+            $date = get_field('date', $ID);
+            $final_date_for_comparison = DateTime::createFromFormat('d/m/Y', get_field('date', $ID));
+            $date_sale_from = DateTime::createFromFormat('d/m/Y', get_field('date_sale_from', $ID));
+            $date_sale_to = DateTime::createFromFormat('d/m/Y', get_field('date_sale_to', $ID));
+            $today = time();
+            $checkbox = get_field('checkbox', $ID);
+            $isopen = true;
+            if ($date_sale_from && $date_sale_to) {
+                $isopen = ($date_sale_from->getTimestamp() < $today && $date_sale_to->getTimestamp() > $today) && $final_date_for_comparison->getTimestamp() > $today;
+            } else if (!$checkbox) {
+                $isopen = $final_date_for_comparison->getTimestamp() > $today;
             }
-            $hour = get_field('hour', $ID);
 
+            echo DateTime::createFromFormat('d/m/Y', date());
+            $date_initial = get_field('date_initial', $ID);
+            // } catch (Exception $e) {
+            //     $date = null;
+            // }
+
+            $hour = get_field('hour', $ID);
             if (!$thumbnail) {
                 $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
             }
+            $stock = get_field('available_stock', $ID);
 
             array_push($data['posts'], array(
                 'id' => $ID,
@@ -76,23 +76,17 @@ if (!function_exists('emc_get_grid_items')) {
                 'excerpt' => get_the_excerpt($ID),
                 'url' => get_post_permalink($ID),
                 'thumbnail' => $thumbnail,
-                'date' => gmdate('r', $date),
-                'hour' => $hour
+                'date' => $date,
+                'date_initial' => $date_initial,
+                'hour' => $hour,
+                'available_stock' => $stock,
+                'isopen' => $isopen,
+                'checkbox' => $checkbox,
+                'comparison_date' => $final_date_for_comparison
             ));
         }
 
-        if ($term != 'all') {
-            $cat = get_term_by('slug', $term, 'category');
-            $count = $cat->count;
-        } else {
-            $count = wp_count_posts($type);
-            if ($count) {
-                $count = $count->publish;
-            } else {
-                $count = 0;
-            }
-        }
-
+        $count = $query->found_posts;
         $pages = ceil($count / 9);
         $data['pages'] = $pages;
 

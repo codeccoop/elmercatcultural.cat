@@ -15,15 +15,19 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		jQuery( '.slides-numbers' ).addClass( 'show' );
 	}
 
-	jQuery( '.carroussel-content' ).on( 'afterChange', function( event, slick, currentSlide ) {
-		jQuery( '.carroussel-container' )
-			.find( '.slides-numbers .active' )
-			.html( currentSlide + 1 );
-	} );
+	jQuery( '.carroussel-content' ).on(
+		'afterChange',
+		function( event, slick, currentSlide ) {
+			jQuery( '.carroussel-container' )
+				.find( '.slides-numbers .active' )
+				.html( currentSlide + 1 );
+		}
+	);
 
 	const sliderItemsNum = jQuery( '.carroussel-content' )
 		.find( '.slick-slide' )
 		.not( '.slick-cloned' ).length;
-	jQuery( '.carroussel-container' ).find( '.slides-numbers .total' ).html( sliderItemsNum );
+	jQuery( '.carroussel-container' )
+		.find( '.slides-numbers .total' )
+		.html( sliderItemsNum );
 } );
-

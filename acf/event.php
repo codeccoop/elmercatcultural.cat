@@ -8,11 +8,30 @@ if (function_exists('acf_add_local_field_group')) :
         'fields' => array(
             array(
                 'key' => 'field_6329c591f50b7',
-                'label' => 'Data de l\'esdeveniment',
+                'label' => "Data de realització de l'esdeveniment o sessió final d'un taller",
                 'name' => 'date',
                 'type' => 'date_picker',
-                'instructions' => 'Seleccioneu la data de l\'esdeveniment',
+                'instructions' => "Seleccioneu la data de l'esdeveniment puntual o la data de 
+                l'última sessió, en cas de ser un taller recurrent amb vàries sessions",
                 'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '50',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'display_format' => 'd/m/Y',
+                'return_format' => 'd/m/Y',
+                'first_day' => 1,
+            ),
+            array(
+                'key' => 'field_6329c591f50p8',
+                'label' => 'Data inicial del taller',
+                'name' => 'date_initial',
+                'type' => 'date_picker',
+                'instructions' => "En cas que aquest esdeveniment duri més d'una sessió, 
+                seleccioneu la data corresponent a la primera sessió de les múltiples que tindrà.",
+                'required' => 0,
                 'conditional_logic' => 0,
                 'wrapper' => array(
                     'width' => '50',
