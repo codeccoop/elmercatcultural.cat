@@ -21,7 +21,7 @@ $page_ID = get_option('page_on_front');
             'post_status' => 'publish',
             'posts_per_page' => 4,
             'orderby' => 'date',
-            'order' => 'DESC'
+            'order' => 'ASC'
         );
         $loop = new WP_Query($args);
         ?>
