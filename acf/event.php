@@ -278,7 +278,7 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                 'key' => 'field_63ac235bd76ee',
                 'label' => 'Data d\'inici d\'inscripcions',
                 'name' => 'date_sale_from',
-                'type' => 'date_picker',
+                'type' => 'date_time_picker',
                 'instructions' => '',
                 'required' => 0,
                 'conditional_logic' => array(
@@ -295,15 +295,15 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                     'class' => '',
                     'id' => '',
                 ),
-                'display_format' => 'd/m/Y',
-                'return_format' => 'd/m/Y',
+                'display_format' => 'd/m/Y g:i a',
+                'return_format' => 'd/m/Y g:i a',
                 'first_day' => 1,
             ),
             array(
                 'key' => 'field_63ac238ad76ef',
                 'label' => 'Data de tancament d\'inscripcions',
                 'name' => 'date_sale_to',
-                'type' => 'date_picker',
+                'type' => 'date_time_picker',
                 'instructions' => '',
                 'required' => 0,
                 'conditional_logic' => array(
@@ -320,8 +320,8 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                     'class' => '',
                     'id' => '',
                 ),
-                'display_format' => 'd/m/Y',
-                'return_format' => 'd/m/Y',
+                'display_format' => 'd/m/Y g:i a',
+                'return_format' => 'd/m/Y g:i a',
                 'first_day' => 1,
             ),
             array(

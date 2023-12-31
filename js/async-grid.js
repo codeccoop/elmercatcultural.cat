@@ -9,18 +9,12 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	} );
 	const page = new State( 1, () => onFilter( 'page' ) );
 
-	const filters = Array.apply(
-		null,
-		siteMain.getElementsByClassName( 'async-filter' )
-	);
+	const filters = Array.apply( null, siteMain.getElementsByClassName( 'async-filter' ) );
 	filters.forEach( function( btn ) {
 		btn.addEventListener( 'click', onClickTerm );
 	} );
 
-	const pager = Array.apply(
-		null,
-		siteMain.getElementsByClassName( 'async-pager' )
-	)[ 0 ];
+	const pager = Array.apply( null, siteMain.getElementsByClassName( 'async-pager' ) )[ 0 ];
 	onFilter();
 
 	function onClickTerm( ev ) {
@@ -102,13 +96,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		const caption = document.createElement( 'figcaption' );
 		caption.classList.add( 'small' );
 		caption.innerHTML =
-			'<b class="title is.3">' +
-			datum.title +
-			'</b>' +
-			( datum.date && datum.date_initial
-				? '<br/>Dates: ' + datum.date_initial + ' - ' + datum.date
-				: '<br/>Data: ' + datum.date ) +
-			( datum.hour ? '<br/>Horari: ' + datum.hour : '' );
+      '<b class="title is.3">' + datum.title + '</b>' + renderDate( datum );
 
 		if ( datum.available_stock === 0 ) {
 			const outOfStockBanner = document.createElement( 'div' );
@@ -124,6 +112,21 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		el.appendChild( anchor );
 
 		return el;
+	}
+
+	function renderDate( { date, date_initial, hour } ) {
+		let html = '<br/>Dates: ';
+		if ( date && date_initial ) {
+			html += `${ date_initial } - ${ date }`;
+		} else {
+			html += date;
+		}
+
+		if ( hour ) {
+			html += `<br/>Horari: ${ hour }`;
+		}
+
+		return html;
 	}
 
 	function renderPages( pages ) {
@@ -163,15 +166,11 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		let html = '';
 		if ( page.value > 2 ) {
 			html += `<li class="async-nav-btn first" data-page="1"><i></i></li>
-        <li class="async-nav-btn previous" data-page="${
-	page.value - 1
-}"><i></i></li>`;
+        <li class="async-nav-btn previous" data-page="${ page.value - 1 }"><i></i></li>`;
 		}
 
 		if ( page.value <= pages - 2 ) {
-			html += `<li class="async-nav-btn next" data-page="${
-				page.value + 1
-			}"><i></i></li>
+			html += `<li class="async-nav-btn next" data-page="${ page.value + 1 }"><i></i></li>
         <li class="async-nav-btn last" data-page="${ pages }"><i></i></li>`;
 		}
 
@@ -206,9 +205,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	function encodePayload( data ) {
 		return Object.keys( data )
 			.reduce( function( acum, k ) {
-				return acum.concat(
-					encodeURIComponent( k ) + '=' + encodeURIComponent( data[ k ] )
-				);
+				return acum.concat( encodeURIComponent( k ) + '=' + encodeURIComponent( data[ k ] ) );
 			}, [] )
 			.join( '&' );
 	}
