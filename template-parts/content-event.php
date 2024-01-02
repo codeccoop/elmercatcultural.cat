@@ -56,7 +56,7 @@ defined('ABSPATH') || exit;
             <?php
             if ($has_inscription) {
                 if ($stock && $end_date >= $now && $start_date <= $now) { ?>
-                    <form class="cart" action="https://elmercatcultural.cat/cistella" method="post" enctype="multipart/form-data">
+                    <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
                         <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
                     </form>
                 <?php } else { ?>
