@@ -102,7 +102,7 @@ function woocommerce_button_proceed_to_checkout()
 {
 
 ?>
-	<a href="/finalitza-la-compra" class="checkout-button button alt wc-forward"> Finalitza la inscripció </a>
+	<a href="/finalitza-la-inscripcio" class="checkout-button button alt wc-forward"> Finalitza la inscripció </a>
 <?php
 }
 

@@ -9,6 +9,7 @@ if (!function_exists('emc_get_grid_items')) {
         $term = $_POST['term'];
         $page = $_POST['page'];
         $type = $_POST['type'];
+        $order = $term === 'historic' ? 'DESC' : 'ASC';
         $time_dir = $term === 'historic' ? '<=' : '>=';
 
         $args = array(
@@ -18,7 +19,7 @@ if (!function_exists('emc_get_grid_items')) {
             'offset' => ($page - 1) * 9,
             'meta_key' => 'date',
             'orderby' => 'meta_value',
-            'order' => 'ASC',
+            'order' => $order,
             'meta_query' => [
                 'relation' => 'OR', [
                     'key' => 'date',
