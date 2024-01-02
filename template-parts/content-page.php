@@ -17,7 +17,7 @@
             <?php if (sizeof($tags) > 0) : ?>
                 <p class="page-breadcrumb small"><?= $tags[0]->name; ?></p>
             <?php else : ?>
-                <p class="page-breadcrumb small">EL MERCAT</p>
+                <p class="page-breadcrumb small">elMercat</p>
             <?php endif; ?>
             <?php if (is_cart() || is_checkout() && empty(is_wc_endpoint_url('order-received'))) : ?>
                 <?php
