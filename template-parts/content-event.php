@@ -30,7 +30,8 @@ defined('ABSPATH') || exit;
     </header><!-- .entry-header -->
 
     <div class="post-content">
-        <?php $post_id = get_the_ID();
+        <?php
+        $post_id = get_the_ID();
         global $post;
         $product = emc_get_bound_product($post_id);
         $has_inscription = false;
@@ -38,25 +39,23 @@ defined('ABSPATH') || exit;
         if ($product) {
             $has_inscription = get_field('checkbox', $post_id);
 
-            $current_date = strtotime(date("c"));
+            $now = current_time('U', false);
             $end_date = strtotime($product->get_date_on_sale_to());
             if (!$end_date) {
-                $end_date = get_field('date', $post_id);
-                $end_date = strtotime(str_replace('/', '-', $end_date));
+                $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
             }
+
             $start_date = strtotime($product->get_date_on_sale_from());
-            if (!$start_date) {
-                $start_date = $current_date;
-            }
+            if (!$start_date) $start_date = $now;
+
             $stock = $product->get_stock_quantity();
             $external_inscription = get_field('external_inscription', $post_id);
         }
-
         ?>
         <div class="post-content__inscription">
             <?php
             if ($has_inscription) {
-                if ($stock && $end_date >= $current_date && $start_date <= $current_date) { ?>
+                if ($stock && $end_date >= $now && $start_date <= $now) { ?>
                     <form class="cart" action="https://elmercatcultural.cat/event/<?= $product->get_slug(); ?>" method="post" enctype="multipart/form-data">
                         <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
                     </form>

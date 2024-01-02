@@ -46,16 +46,21 @@ if (!function_exists('emc_get_grid_items')) {
             $thumbnail = get_the_post_thumbnail_url($ID, 'medium');
             if (!$thumbnail) $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
 
-            $event_date = DateTime::createFromFormat('d/m/Y', get_field('date', $ID));
-            $date_sale_from = DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_from', $ID));
-            $date_sale_to = DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_to', $ID));
-            $today = time();
+            $event_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $ID)))->getTimestamp();
+            $has_inscription = get_field('checkbox', $ID);
+            $date_sale_from = $has_inscription
+                ? (DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_from', $ID)))->getTimestamp()
+                : null;
+            $date_sale_to = $has_inscription
+                ? (DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_to', $ID)))->getTimestamp()
+                : null;
+            $now = current_time('U', false);
 
             $isopen = true;
             if ($date_sale_from && $date_sale_to) {
-                $isopen = ($date_sale_from->getTimestamp() < $today && $date_sale_to->getTimestamp() > $today) && $event_date->getTimestamp() > $today;
+                $isopen = $date_sale_from < $now && $date_sale_to > $now && $event_date > $now;
             } else if (!get_field('checkbox', $ID)) {
-                $isopen = $event_date->getTimestamp() > $today;
+                $isopen = $event_date > $now;
             }
 
             $data['posts'][] = [
