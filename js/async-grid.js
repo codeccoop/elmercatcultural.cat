@@ -98,15 +98,14 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		caption.innerHTML =
       '<b class="title is.3">' + datum.title + '</b>' + renderDate( datum );
 
-		if ( datum.available_stock === 0 ) {
-			const outOfStockBanner = document.createElement( 'div' );
-			outOfStockBanner.classList.add( 'stock__banner' );
-			anchor.appendChild( outOfStockBanner );
-		} else if ( ! datum.isopen ) {
+		if ( ! datum.isopen ) {
 			const outOfDateBanner = document.createElement( 'div' );
 			outOfDateBanner.classList.add( 'date__banner' );
 			anchor.appendChild( outOfDateBanner );
-		}
+		} else if ( datum.available_stock === 0 ) {
+			const outOfStockBanner = document.createElement( 'div' );
+			outOfStockBanner.classList.add( 'stock__banner' );
+			anchor.appendChild( outOfStockBanner );
 
 		anchor.appendChild( caption );
 		el.appendChild( anchor );
