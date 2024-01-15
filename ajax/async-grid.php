@@ -47,7 +47,7 @@ if (!function_exists('emc_get_grid_items')) {
             $thumbnail = get_the_post_thumbnail_url($ID, 'medium');
             if (!$thumbnail) $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
 
-            $event_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $ID)))->getTimestamp();
+            $event_date = (DateTime::createFromFormat('d/m/Y g:i a', get_field('date', $ID)))->getTimestamp();
             $has_inscription = get_field('checkbox', $ID);
             $date_sale_from = $has_inscription
                 ? (DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_from', $ID)))->getTimestamp()
