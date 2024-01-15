@@ -106,6 +106,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 			const outOfStockBanner = document.createElement( 'div' );
 			outOfStockBanner.classList.add( 'stock__banner' );
 			anchor.appendChild( outOfStockBanner );
+		}
 
 		anchor.appendChild( caption );
 		el.appendChild( anchor );
