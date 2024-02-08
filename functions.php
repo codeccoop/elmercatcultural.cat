@@ -310,16 +310,16 @@ function emc_ga_analytics()
 {
 ?>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id-G-XXXXXXXXXX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HSNR4W1VZ8"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
             dataLayer.push(arguments);
         }
-        gtag("js", new Date());
-        gtag("config", "G-XXXXXXXXXX");
+        gtag('js', new Date());
+
+        gtag('config', 'G-HSNR4W1VZ8');
     </script>
-    <!-- End of Google tag -->
 <?php
 }
