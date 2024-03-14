@@ -228,6 +228,7 @@
 
   img {
     object-fit: cover;
+    object-position: center;
     height: columns_width(10, "side");
     @include m-columns_width(14);
 

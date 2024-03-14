@@ -44,7 +44,7 @@ if (!function_exists('emc_get_grid_items')) {
         while ($query->have_posts()) {
             $query->the_post();
             $ID = get_the_ID();
-            $thumbnail = get_the_post_thumbnail_url($ID, 'medium');
+            $thumbnail = get_the_post_thumbnail_url($ID, 'full');
             if (!$thumbnail) $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
 
             $event_date = (DateTime::createFromFormat('d/m/Y g:i a', get_field('date', $ID)))->getTimestamp();
