@@ -174,7 +174,7 @@
                 <img src="<?= get_bloginfo('template_url') . '/assets/images/bcn-banner.png'; ?>" />
             </div> -->
             <div class="footer__row">
-                <p class="footer__text small">El mercat forma part de:</p>
+                <p class="footer__text small">elMercat forma part de:</p>
                 <img src="<?= get_bloginfo('template_url') . '/assets/images/xec.png'; ?>" />
             </div>
         </div>
@@ -184,7 +184,7 @@
             <p class="footer__text small">
                 <span><a href="/avis-legal"><u>Avís legal</u></a></span>
                 <span><a href="/politica-de-privacitat"><u>Política de privacitat</u></a></span>
-                <span>© El Mercat Cultural</span>
+                <span>© elMercat</span>
             </p>
         </div>
         <p class="small">
