@@ -8,3 +8,4 @@ woocommerce.css
 woocommerce.css.map
 .DS_Store
 .nvimrc
+.php-cs-fixer.cache

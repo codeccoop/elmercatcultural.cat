@@ -33,11 +33,9 @@ function cod_order_payment_processing_order_status($order_id)
 {
 	if (!$order_id) return;
 
-	// Get an instance of the WC_Order object
-	//throw new Exception(print_r($order_id));
 	$order = new WC_Order($order_id);
 
-	if ($order->get_payment_method() == 'cod') {
+	if ($order->get_payment_method() == 'cod' || empty($order->get_payment_method()) && $order->get_total() === '0.00') {
 		$order->update_status('completed');
 	}
 }
