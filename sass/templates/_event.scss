@@ -121,6 +121,7 @@
           margin: 2rem auto 0;
           object-fit: cover;
           max-height: 30vh;
+          width: 100%;
 
           @include m-media(md) {
             max-height: 40vh;
@@ -147,6 +148,10 @@
   }
 
   .carroussel-content {
+    &.slick-slider {
+      background-color: unset;
+    }
+
     button {
       display: none;
       visibility: none;

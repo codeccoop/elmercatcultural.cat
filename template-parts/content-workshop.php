@@ -56,27 +56,32 @@ if ($product) {
         <div class="post-content__inscription">
             <?php
     if ($has_inscription) {
-        if ($stock && $end_date >= $now && $start_date <= $now) { ?>
-                    <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
-                        <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
-                    </form>
-                <?php } else { ?>
+        if ($end_date >= $now && $start_date <= $now) {
+            if ($stock) { ?>
+                <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
+                    <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
+                </form>
+            <?php } else { ?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small">Places esgotades, apuntat a <a href="#" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <?php }
+            } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
                     <p class="small">Inscripció tancada</p>
                 <?php }
-                } elseif ($external_inscription) { ?>
+            } elseif ($external_inscription) { ?>
                 <div class="cart">
                     <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
                 </div>
             <?php } ?>
             <p class="event-bold event-title">DATES</p>
             <?php
-                $date = get_field('date', $post_id);
-                $initial = get_field('date_initial', $post_id);
-                if ($initial) {
-                    $date = $initial . ' - ' . $date;
-                }
-            ?>
+            $date = get_field('date', $post_id);
+$initial = get_field('date_initial', $post_id);
+if ($initial) {
+    $date = $initial . ' - ' . $date;
+}
+?>
             <p class="small"><?= $date ?></p>
             <p class="event-bold event-title">HORARI</p>
             <?php if (get_field('hour', $post_id)) { ?>
