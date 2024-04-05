@@ -250,6 +250,7 @@ function wip_redirection()
  * Load shortcodes
  */
 require get_template_directory() . '/shortcodes/embedded-map.php';
+require get_template_directory() . '/shortcodes/feed.php';
 
 /* Custom Post Types */
 require get_template_directory() . '/post_types/destacat.php';

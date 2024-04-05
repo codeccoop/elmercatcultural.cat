@@ -21,10 +21,10 @@ $page_ID = get_option('page_on_front');
             'post_status' => 'publish',
             'posts_per_page' => 4,
             'orderby' => 'date',
-            'order' => 'ASC'
+            'order' => 'DESC'
         );
-        $loop = new WP_Query($args);
-        ?>
+$loop = new WP_Query($args);
+?>
         <div class="front-page__jumbotron <?= $loop->post_count == 0 ? 'static' : 'slider'; ?>">
             <?php if ($loop->post_count == 0) : ?>
                 <figure class="front-page__jumbotron-item">
@@ -33,47 +33,38 @@ $page_ID = get_option('page_on_front');
                 </figure>
                 <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
                     <?php
-                    $ID = get_the_ID();
+            $ID = get_the_ID();
                     $imageURL = get_the_post_thumbnail_url(get_the_ID());
                     $text = get_field('text', $ID);
                     $URL = get_field('url', $ID);
                     ?>
                     <figure class="front-page__jumbotron-item">
-                        <? if ($URL) : ?>
+                        <?php if ($URL) : ?>
                             <a href="<?= $URL; ?>">
                                 <img src="<?= $imageURL; ?>" />
-                                <figcaption class="title is-3"><?= $text; ?></figcaption>
                             </a>
-                        <? else : ?>
+                        <?php else : ?>
                             <img src="<?= $imageURL; ?>" /></a>
-                            <figcaption class="title is-3"><?= $text; ?></figcaption>
-                        <? endif; ?>
+                        <?php endif; ?>
                     </figure>
             <?php endwhile;
-            endif; ?>
+                endif; ?>
+        </div>
+    </section>
+    <section id="feed" class="front-page__section">
+        <div class="front-page__section-content">
+            <div class="front-page__feed">
+                <?= do_shortcode('[emc_feed post_type="event"]') ?>
+                <p><a class="underline small" href="/programacio">Programació cultural</a></p>
+            </div> 
+            <hr> 
+            <div class="front-page__feed">
+                <?= do_shortcode('[emc_feed post_type="workshop"]') ?>
+                <p><a class="underline small" href="/tallers">Tallers i bocins</a></p>
+            </div>
         </div>
     </section>
     <section id="barris" class="front-page__section">
-        <div class="front-page__highlight-links">
-            <?php
-            $links = get_field('links', $page_ID);
-            ?>
-            <div class="front-page__highlight-link">
-                <a href="<?= $links['link-1']['url']; ?>">
-                    <span class="underline"><?= $links['link-1']['text']; ?></span>
-                </a>
-            </div>
-            <div class="front-page__highlight-link">
-                <a href="<?= $links['link-2']['url']; ?>">
-                    <span class="underline"><?= $links['link-2']['text']; ?></span>
-                </a>
-            </div>
-            <div class="front-page__highlight-link">
-                <a href="<?= $links['link-3']['url']; ?>">
-                    <span class="underline"><?= $links['link-3']['text']; ?></span>
-                </a>
-            </div>
-        </div>
         <div class="front-page__section-content">
             <?php $section = get_field('section-1', $page_ID); ?>
             <h2><?= $section['title']; ?></h2>

@@ -12,20 +12,26 @@
     height: calc(#{vh(100)} - #{$size__site-header});
 
     @include m-media(zr, md, portrait) {
-      height: calc(#{vh(55)} - #{$size__site-header});
+      height: calc(#{vh(35)} - #{$size__site-header});
     }
 
     .admin-bar & {
       height: calc(
-        calc(#{vh(100)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+        calc(#{vh(100)} - #{$size__site-header}) -
+          var(--wp-admin--admin-bar--height)
       );
 
       @include m-media(zr, md, portrait) {
         height: calc(
-          calc(#{vh(55)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+          calc(#{vh(35)} - #{$size__site-header}) -
+            var(--wp-admin--admin-bar--height)
         );
       }
     }
+  }
+
+  &#feed {
+    background-color: #e3d0b9;
   }
 
   &#barris {
@@ -38,10 +44,11 @@
 }
 
 .front-page__section-content {
-  text-align: center;
-  @include m-columns_width(12);
+  text-align: left;
+  width: 100%;
 
   @include m-media(md) {
+    text-align: center;
     @include m-columns_width(10);
   }
 
@@ -73,6 +80,10 @@
   overflow: hidden;
   height: 100%;
 
+  &.slick-slider {
+    background-color: unset;
+  }
+
   .front-page__jumbotron-item {
     margin: 0;
     position: relative;
@@ -88,7 +99,8 @@
 
     .admin-bar & {
       padding-top: calc(
-        calc(#{vh(100)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+        calc(#{vh(100)} - #{$size__site-header}) -
+          var(--wp-admin--admin-bar--height)
       );
     }
 
@@ -103,17 +115,19 @@
 
       @include m-media(zr, md, portrait) {
         height: vh(55) - $size__site-header;
-        height: calc(#{vh(55)} - #{$size__site-header});
+        height: calc(#{vh(35)} - #{$size__site-header});
       }
 
       .admin-bar & {
         height: calc(
-          calc(#{vh(100)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+          calc(#{vh(100)} - #{$size__site-header}) -
+            var(--wp-admin--admin-bar--height)
         );
 
         @include m-media(zr, md, portrait) {
           height: calc(
-            calc(#{vh(55)} - #{$size__site-header}) - var(--wp-admin--admin-bar--height)
+            calc(#{vh(35)} - #{$size__site-header}) -
+              var(--wp-admin--admin-bar--height)
           );
         }
       }
@@ -227,6 +241,77 @@
 
       &:hover {
         color: $white;
+      }
+    }
+  }
+}
+
+#feed {
+  .front-page__section-content {
+    > h3 {
+      text-align: left;
+    }
+
+    hr {
+      margin-bottom: 3rem;
+    }
+
+    .front-page__feed > p {
+      padding-top: 2rem;
+    } 
+  }
+
+  .emc-feed {
+    display: flex;
+    flex-direction: column;
+
+    @include m-media(md) {
+      flex-direction: row;
+    }
+
+    .emc-feed-entry {
+      flex: 1;
+
+      @include m-media(md) {
+        padding: 0 2rem;
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+
+      a::after {
+        display: none;
+      }
+
+      .emc-feed-thumbnail {
+        display: flex;
+        flex-direction: column;
+
+        picture {
+          padding-top: 80%;
+          position: relative;
+          margin-bottom: 1rem;
+        }
+
+        img {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        figcaption {
+          font-size: 15px;
+          text-transform: unset;
+        }
       }
     }
   }

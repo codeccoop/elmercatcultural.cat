@@ -7,25 +7,6 @@ if (function_exists('acf_add_local_field_group')) :
         'title' => 'Destacats',
         'fields' => array(
             array(
-                'key' => 'field_6357cfeae2e9a',
-                'label' => 'Text',
-                'name' => 'text',
-                'type' => 'text',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'maxlength' => '',
-            ),
-            array(
                 'key' => 'field_6357d011e2e9b',
                 'label' => 'URL',
                 'name' => 'url',
