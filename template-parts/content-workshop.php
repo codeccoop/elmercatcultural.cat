@@ -59,7 +59,7 @@ if ($product) {
         if ($end_date >= $now && $start_date <= $now) {
             if ($stock) { ?>
                 <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
-                    <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-te</button>
+                    <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
                 </form>
             <?php } else { ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>

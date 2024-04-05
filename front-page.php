@@ -56,10 +56,7 @@ $page_ID = get_option('page_on_front');
     <section id="barris" class="front-page__section">
         <div class="front-page__highlight-links">
             <?php
-            //$programacio = get_page_by_title('programacio');
-            //$tallers = get_page_by_title('tallers');
             $links = get_field('links', $page_ID);
-
             ?>
             <div class="front-page__highlight-link">
                 <a href="<?= $links['link-1']['url']; ?>">
