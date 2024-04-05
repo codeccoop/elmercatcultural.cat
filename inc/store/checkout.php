@@ -288,8 +288,8 @@ function elmercatcultural_checkout_field_process()
 		$isvalid = false;
 		wc_add_notice(__('És obligatori introduir la DATA DE NAIXEMENT'), 'error');
 	} else {
-		$dateFormat = '/^\d{2}\/[0-1]{1}[1-9]{1}\/\d{4}$/';
-		if (!preg_match($dateFormat, $_POST['billing_birthday'])) {
+        $date = DateTimeImmutable::createFromFormat("d/m/Y", $_POST['billing_birthday']);
+		if (!$date) {
 			$isvalid = false;
 			wc_add_notice(__('El valor del camp DATA DE NAIXEMENT és invàlid'), 'error');
 		}
