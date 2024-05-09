@@ -63,7 +63,7 @@ if ($product) {
                 </form>
             <?php } else { ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apuntat a <a href="https://barri.elmercatcultural.cat/nextcloud/apps/forms/s/XQFrpnr7QjDdpLeLBiM3dzpn" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <p class="small">Places esgotades, apunta't a <a href="https://barri.elmercatcultural.cat/nextcloud/apps/forms/s/XQFrpnr7QjDdpLeLBiM3dzpn" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
                 <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>

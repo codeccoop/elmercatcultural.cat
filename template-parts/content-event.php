@@ -65,7 +65,7 @@ if ($product) {
             <?php } else {
                 $inscriptions = get_option('emc-inscriptions', []); ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apuntat a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
                 <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
@@ -94,7 +94,7 @@ if ($initial) {
             <?php if (get_field('price', $post_id)) : ?>
                 <p class="small"><?php the_field('price', $post_id); ?></p>
             <?php else : ?>
-                <p class="small">Gratuïta</p>
+                <p class="small">Gratuït</p>
             <?php endif; ?>
             <p class="event-bold event-title">CATEGORIA</p>
             <?php $categories = get_the_category($post_id);
