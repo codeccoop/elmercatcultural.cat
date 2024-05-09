@@ -62,10 +62,11 @@ if ($product) {
                     <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
                         <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
                     </form>
-            <?php } else { ?>
+            <?php } else {
+                $inscriptions = get_option('emc-inscriptions', []); ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apuntat a <a href="#" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
-            <?php }
+                <p class="small">Places esgotades, apuntat a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
                     <p class="small">Inscripció tancada</p>
@@ -90,9 +91,11 @@ if ($initial) {
                 <p class="small"><?php the_field('hour', $post_id); ?></p>
             <?php } ?>
             <p class="event-bold event-title">PREU</p>
-            <?php if (get_field('price', $post_id)) { ?>
+            <?php if (get_field('price', $post_id)) : ?>
                 <p class="small"><?php the_field('price', $post_id); ?></p>
-            <?php } ?>
+            <?php else : ?>
+                <p class="small">Gratuïta</p>
+            <?php endif; ?>
             <p class="event-bold event-title">CATEGORIA</p>
             <?php $categories = get_the_category($post_id);
 foreach ($categories as $category) { ?>

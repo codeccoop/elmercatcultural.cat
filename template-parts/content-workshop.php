@@ -63,7 +63,7 @@ if ($product) {
                 </form>
             <?php } else { ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apuntat a <a href="#" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <p class="small">Places esgotades, apuntat a <a href="https://barri.elmercatcultural.cat/nextcloud/apps/forms/s/XQFrpnr7QjDdpLeLBiM3dzpn" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
                 <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
@@ -88,9 +88,11 @@ if ($initial) {
                 <p class="small"><?php the_field('hour', $post_id); ?></p>
             <?php } ?>
             <p class="event-bold event-title">PREU</p>
-            <?php if (get_field('price', $post_id)) { ?>
+            <?php if (get_field('price', $post_id)) : ?>
                 <p class="small"><?php the_field('price', $post_id); ?></p>
-            <?php } ?>
+            <?php else : ?>
+                <p class="small">Gratuït</p>
+            <?php endif; ?>
             <p class="event-bold event-title">CATEGORIA</p>
             <?php $categories = get_the_category($post_id);
 foreach ($categories as $category) { ?>

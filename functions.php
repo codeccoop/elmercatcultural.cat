@@ -24,29 +24,29 @@ add_action('after_setup_theme', 'setup');
 function setup()
 {
     /*
-		* Make theme available for translation.
-		* Translations can be filed in the /languages/ directory.
-		* If you're building a theme based on elmercatcultural.cat, use a find and replace
-		* to change 'elmercatcultural.cat' to the name of your theme in all the template files.
-		*/
+        * Make theme available for translation.
+        * Translations can be filed in the /languages/ directory.
+        * If you're building a theme based on elmercatcultural.cat, use a find and replace
+        * to change 'elmercatcultural.cat' to the name of your theme in all the template files.
+        */
     load_theme_textdomain('elmercatcultural.cat', get_template_directory() . '/languages');
 
     // Add default posts and comments RSS feed links to head.
     add_theme_support('automatic-feed-links');
 
     /*
-		* Let WordPress manage the document title.
-		* By adding theme support, we declare that this theme does not use a
-		* hard-coded <title> tag in the document head, and expect WordPress to
-		* provide it for us.
-		*/
+        * Let WordPress manage the document title.
+        * By adding theme support, we declare that this theme does not use a
+        * hard-coded <title> tag in the document head, and expect WordPress to
+        * provide it for us.
+        */
     add_theme_support('title-tag');
 
     /*
-		* Enable support for Post Thumbnails on posts and pages.
-		*
-		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		*/
+        * Enable support for Post Thumbnails on posts and pages.
+        *
+        * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+        */
     add_theme_support('post-thumbnails');
 
     // This theme uses wp_nav_menu() in one location.
@@ -57,9 +57,9 @@ function setup()
     );
 
     /*
-		* Switch default core markup for search form, comment form, and comments
-		* to output valid HTML5.
-		*/
+        * Switch default core markup for search form, comment form, and comments
+        * to output valid HTML5.
+        */
     add_theme_support(
         'html5',
         array(
@@ -122,7 +122,9 @@ function emc_admin_init()
 add_action('pre_get_posts', 'emc_tags_support_query');
 function emc_tags_support_query($wp_query)
 {
-    if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
+    if ($wp_query->get('tag')) {
+        $wp_query->set('post_type', 'any');
+    }
 }
 
 /**
@@ -169,7 +171,9 @@ function scripts()
     wp_register_style('mapbox-gl-css', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css', false);
     wp_register_script('mapbox-gl-js', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js', false);
 
-    if (is_admin()) return;
+    if (is_admin()) {
+        return;
+    }
 
     wp_enqueue_style('elmercatcultural-style', get_stylesheet_uri(), array(), ELMERCATCULTURAL_VERSION);
     wp_style_add_data('elmercatcultural-style', 'rtl', 'replace');
@@ -187,7 +191,7 @@ function scripts()
         wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true);
         wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), ELMERCATCULTURAL_VERSION, true);
         wp_enqueue_script('front-page', get_template_directory_uri() . '/js/front-page.js', array('jquery', 'slick-js'), ELMERCATCULTURAL_VERSION, true);
-    } else if (is_page(array('programacio', 'tallers'))) {
+    } elseif (is_page(array('programacio', 'tallers'))) {
         wp_enqueue_script('async-grid', get_template_directory_uri() . '/js/async-grid.js', array(), ELMERCATCULTURAL_VERSION, true);
         wp_localize_script(
             'async-grid',
@@ -309,7 +313,7 @@ function emc_submit_email_to_newsletter()
 add_action('wp_head', 'emc_ga_analytics');
 function emc_ga_analytics()
 {
-?>
+    ?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HSNR4W1VZ8"></script>
     <script>
@@ -324,3 +328,63 @@ function emc_ga_analytics()
     </script>
 <?php
 }
+
+add_action('admin_menu', function () {
+    add_options_page(
+        'elMercat',
+        'elMercat',
+        'manage_options',
+        'emc',
+        'emc_menu_render'
+    );
+});
+
+function emc_menu_render()
+{
+    ?>
+    <div class="wrap">
+        <h1>elMercat</h1>
+        <form action="options.php" method="post">
+        <?php
+        settings_fields('emc');
+        do_settings_sections('emc');
+        submit_button();
+        ?>
+        </form>
+    </div>
+    <?php
+}
+
+add_action('admin_init', function () {
+    register_setting(
+        'emc',
+        'emc-inscriptions',
+        [
+            'type' => 'string',
+            'show_in_rest' => false,
+            'defaults' => [
+                'waiting-list' => '#'
+            ]
+        ],
+    );
+
+    add_settings_section(
+        'emc-inscriptions-section',
+        __('Inscripcions', 'emc'),
+        function () {
+            echo '<p>Configuració general de les inscripcions</p>';
+        },
+        'emc',
+    );
+
+    add_settings_field(
+        'waiting-list',
+        __('Llista d\'espera', 'emc'),
+        function () {
+            $inscriptions = get_option('emc-inscriptions', []);
+            echo "<input type='text' name='emc-inscriptions[waiting-list]' value='{$inscriptions['waiting-list']}' />";
+        },
+        'emc',
+        'emc-inscriptions-section'
+    );
+});
