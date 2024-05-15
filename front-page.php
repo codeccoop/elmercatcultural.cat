@@ -34,7 +34,7 @@ $loop = new WP_Query($args);
                 </figure>
                 <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
                     <?php
-    $ID = get_the_ID();
+                    $ID = get_the_ID();
                     $imageURL = get_the_post_thumbnail_url(get_the_ID());
                     $text = get_field('text', $ID);
                     $URL = get_field('url', $ID);

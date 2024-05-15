@@ -9,7 +9,25 @@ function emc_feed($atts)
     $query = new WP_Query([
         'post_type' => $post_type,
         'posts_per_page' => $posts,
+        'meta_query' => [
+            [
+                'key' => 'date',
+                'type' => 'DATE',
+                'value' => date('Y-m-d H:m:s'),
+                'compare' => '>='
+            ]
+        ],
+        'orderby' => 'meta_value',
+        'order' => 'ASC',
     ]);
+
+    if ($query->found_posts < 3) {
+        if ($post_type === 'event') {
+            return '<h2>No et perdis cap esdeveniment</h2>';
+        } else {
+            return '<h2>Descobreix tot el que fem a elMercat</h2>';
+        }
+    }
 
     ob_start(); ?>
     <div class="emc-feed">

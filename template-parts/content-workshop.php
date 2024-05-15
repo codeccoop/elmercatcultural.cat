@@ -61,9 +61,10 @@ if ($product) {
                 <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
                     <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
                 </form>
-            <?php } else { ?>
+            <?php } else {
+                $inscriptions = get_option('emc-inscriptions', []); ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apunta't a <a href="https://barri.elmercatcultural.cat/nextcloud/apps/forms/s/XQFrpnr7QjDdpLeLBiM3dzpn" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p>
                 <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
@@ -74,16 +75,7 @@ if ($product) {
                     <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
                 </div>
             <?php } ?>
-            <p class="event-bold event-title">DATES</p>
-            <?php
-            $date = get_field('date', $post_id);
-$initial = get_field('date_initial', $post_id);
-if ($initial) {
-    $date = $initial . ' - ' . $date;
-}
-?>
-            <p class="small"><?= $date ?></p>
-            <p class="event-bold event-title">HORARI</p>
+            <p class="event-bold event-title">DATA I HORARI</p>
             <?php if (get_field('hour', $post_id)) { ?>
                 <p class="small"><?php the_field('hour', $post_id); ?></p>
             <?php } ?>

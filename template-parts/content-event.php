@@ -65,7 +65,7 @@ if ($product) {
             <?php } else {
                 $inscriptions = get_option('emc-inscriptions', []); ?>
                 <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration: underline; color: blue;">la llista d'espera</a></p>
+                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p>
                 <?php }
             } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
@@ -77,16 +77,7 @@ if ($product) {
                 </div>
             <?php } ?>
 
-            <p class="event-bold event-title">DATA</p>
-            <?php
-            $date = get_field('date', $post_id);
-$initial = get_field('date_initial', $post_id);
-if ($initial) {
-    $date = $initial . ' - ' . $date;
-}
-?>
-            <p class="small"><?= $date ?></p>
-            <p class="event-bold event-title">HORA</p>
+            <p class="event-bold event-title">DATA I HORARI</p>
             <?php if (get_field('hour', $post_id)) { ?>
                 <p class="small"><?php the_field('hour', $post_id); ?></p>
             <?php } ?>

@@ -44,10 +44,10 @@ if (function_exists('acf_add_local_field_group')) :
             ),
             array(
                 'key' => 'field_6346d023a6704',
-                'label' => 'Hora de l\'esdeveniment',
+                'label' => 'Data i hora de l\'esdeveniment',
                 'name' => 'hour',
                 'type' => 'text',
-                'instructions' => 'Escriviu l\'hora de l\'esdeveniment (21:00 h) o del taller (de 18.00 a 20.00 h)',
+                'instructions' => 'Escriviu la data i l\'hora de l\'esdeveniment per mostrar-ho a la fitxa pública',
                 'required' => 0,
                 'conditional_logic' => 0,
                 'wrapper' => array(
