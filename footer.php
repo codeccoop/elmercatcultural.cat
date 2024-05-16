@@ -176,6 +176,8 @@
             <div class="footer__row">
                 <p class="footer__text small">elMercat forma part de:</p>
                 <img src="<?= get_bloginfo('template_url') . '/assets/images/xec.png'; ?>" />
+                <p class="footer__text small">Amb el suport de:</p>
+                <img src="<?= get_bloginfo('template_url') . '/assets/images/logo-ajuntament.png'; ?>" />
             </div>
         </div>
     </div>
