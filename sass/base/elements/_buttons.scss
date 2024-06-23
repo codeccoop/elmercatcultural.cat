@@ -31,6 +31,11 @@ input[type="submit"] {
     color: $color__font-primary;
   }
 }
+.wc-proceed-to-checkout a.checkout-button.button {
+  display: block;
+  width: 100%;
+  height: fit-content;
+}
 a.checkout-button.button,
 #place_order {
   color: $color__font-primary;
