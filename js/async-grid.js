@@ -114,16 +114,10 @@ document.addEventListener( 'DOMContentLoaded', function() {
 		return el;
 	}
 
-	function renderDate( { date, date_initial, hour } ) {
-		let html = '<br/>Dates: ';
-		if ( date && date_initial ) {
-			html += `${ date_initial } - ${ date }`;
-		} else {
-			html += date;
-		}
-
+	function renderDate( { hour } ) {
+    let html = '';
 		if ( hour ) {
-			html += `<br/>Horari: ${ hour }`;
+			html += `<br/>${ hour }`;
 		}
 
 		return html;

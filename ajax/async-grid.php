@@ -71,8 +71,6 @@ if (!function_exists('emc_get_grid_items')) {
                 'excerpt' => get_the_excerpt($ID),
                 'url' => get_post_permalink($ID),
                 'thumbnail' => $thumbnail,
-                'date' => get_field('date', $ID),
-                'date_initial' => get_field('date_initial', $ID),
                 'hour' => get_field('hour', $ID),
                 'available_stock' => get_field('available_stock', $ID),
                 'isopen' => $isopen,
