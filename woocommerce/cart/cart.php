@@ -151,9 +151,6 @@ do_action('woocommerce_before_cart'); ?>
                             <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" />
                             <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
                             <?php do_action('woocommerce_cart_coupon'); ?>
-                            <script>
-                                console.log("Hello darknes my old friend");
-                            </script>
                         </div>
                     <?php } ?>
 
@@ -175,13 +172,16 @@ do_action('woocommerce_before_cart'); ?>
 
 <div class="cart-collaterals">
     <?php
-    if (wc_coupons_enabled()) : ?>
+    if (wc_coupons_enabled() && emc_cart_has_available_coupons()) : ?>
         <div class="coupon">
             <h3 class="sans-serif">Descomptes</h3>
             <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
-            <p class="small">ETS MENOR DE 35 ANYS, JUBILAT O ESTÂS A L'ATUR?</p>
+            <ul class="emc-cart-discount-concepts">
+            <?= do_action('emc_list_cart_coupons', emc_cart_available_coupons()) ?>
+            </ul>
+            <p>Pots beneficiar-te d'algun dels descomptes disponibles?</p>
             <div class="checkbox-input-wrapper">
-                <input <?= $has_coupons ? 'checked="true"' : '' ?> type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
+                <input type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
                 <div class="checkbox-input__labels">
                     <label class="checkbox-input__label-btn small" data-value="true">Sí</label>
                     <label class="checkbox-input__label-btn small" data-value="false">No</label>
@@ -199,9 +199,9 @@ do_action('woocommerce_before_cart'); ?>
                 }
 
                 function removeCoupons(reload) {
-                    fetch('https://elmercatcultural.cat/cistella?remove_coupon=master-coupon')
+                    fetch('/cistella?remove_coupon=master-coupon')
                         .then(_ => {
-                            window.location.reload();
+                            window.location = window.location;
                         });
                 }
                 jQuery(document.body).on("wc_cart_emptied", removeCoupons);
@@ -234,9 +234,6 @@ do_action('woocommerce_before_cart'); ?>
                         radioBtns.forEach(btn => btn.classList.remove('clicked'));
                         btn.classList.add('clicked');
                     });
-
-
-                    if (checkbox.checked === value) btn.classList.add('clicked');
                 });
                 checkbox.addEventListener("change", function() {
                     if (checkbox.checked) applyCoupons();

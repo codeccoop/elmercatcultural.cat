@@ -8,10 +8,6 @@
   }
 
   .woocommerce-cart-form {
-   
-    .table.shop_table_responsive tr td::before {
-      display: none;
-    }
 
     .cart_item {
       position: relative;
@@ -184,6 +180,15 @@
     @include m-media(md) {
       padding-top: 2.5rem;
       flex-direction: row;
+    }
+
+    table.shop_table_responsive tr td::before {
+      text-align: left;
+    }
+
+    .emc-cart-discount-concepts {
+      margin-left: 0; 
+      padding-left: 0;
     }
 
     h3 {
