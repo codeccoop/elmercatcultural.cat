@@ -226,6 +226,14 @@ function elmercatcultural_add_checkout_checkbox()
 		'required'      => false, // Mandatory or Optional
 		'label'         => "Vull rebre els correus de elMercat i subscriure'm a la newsletter", // Label and Link
 	));
+    woocommerce_form_field('policy_checkbox', array(
+        'type'          => 'checkbox',
+		'class'         => array('emc_policy_checkbox'), // CSS Class
+		'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox checkbox'),
+		'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox input-checkbox'),
+		'required'      => !$is_admin, // Mandatory or Optional
+		'label'         => "Accepto la <a href='/politica-dinscripcions-i-cancelacio' target='_blank' rel='noopener'>Política d'Inscripcions i Cancelacions</a>.", // Label and Link
+    ));
 }
 
 /* DISPLAY CUSTOM MESSAGES WHEN FIELDS ARE EMPTY */
