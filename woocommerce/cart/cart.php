@@ -175,11 +175,11 @@ do_action('woocommerce_before_cart'); ?>
     if (wc_coupons_enabled() && emc_cart_has_available_coupons()) : ?>
         <div class="coupon">
             <h3 class="sans-serif">Descomptes</h3>
+            <p>Pots beneficiar-te d'algun dels descomptes disponibles?</p>
             <?php $has_coupons = sizeof(WC()->cart->get_coupons()) > 0; ?>
             <ul class="emc-cart-discount-concepts">
             <?= do_action('emc_list_cart_coupons', emc_cart_available_coupons()) ?>
             </ul>
-            <p>Pots beneficiar-te d'algun dels descomptes disponibles?</p>
             <div class="checkbox-input-wrapper">
                 <input type="checkbox" name="coupon_checkbox" class="input-checkbox bool-selector" id="coupon_checkbox" />
                 <div class="checkbox-input__labels">

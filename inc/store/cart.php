@@ -55,9 +55,11 @@ function emc_cart_has_available_coupons()
 function emc_cart_available_coupons()
 {
     $coupon_codes = available_coupon_codes();
-    return array_map(function ($code) {
+    return array_filter(array_map(function ($code) {
         return get_page_by_title($code, OBJECT, 'shop_coupon');
-    }, $coupon_codes);
+    }, $coupon_codes), function ($coupon) {
+        return emc_cart_can_use_coupon($coupon->ID);
+    });
 }
 
 function emc_cart_can_use_coupon($coupon_id)

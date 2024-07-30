@@ -187,13 +187,20 @@
     }
 
     .emc-cart-discount-concepts {
-      margin-left: 0; 
+      margin-left: 1.5em; 
       padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include m-media(md) {
+        display: block;
+      }
     }
 
     h3 {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: .5rem;
       text-transform: uppercase;
 
       @include m-media(md) {
@@ -212,7 +219,6 @@
       padding-bottom: 4rem;
       display: flex;
       flex-direction: column;
-      align-items: center;
 
       @include m-media(md) {
         border-bottom: none;
