@@ -56,22 +56,18 @@ if ($product) {
 ?>
         <div class="post-content__inscription">
             <?php
-    if ($has_inscription) {
-        if ($end_date >= $now && $start_date <= $now) {
-            if ($stock) { ?>
+            if ($has_inscription) {
+                if ($end_date >= $now && $start_date <= $now) {
+                    if ($stock) { ?>
                     <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
                         <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
                     </form>
-            <?php } else {
-                $inscriptions = get_option('emc-inscriptions', []); ?>
-                <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions['waiting-list'] ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p>
-                <?php }
-            } else { ?>
+                    <?php }
+                    } else { ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
                     <p class="small">Inscripció tancada</p>
                 <?php }
-            } elseif ($external_inscription) { ?>
+                    } elseif ($external_inscription) { ?>
                 <div class="cart">
                     <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
                 </div>
