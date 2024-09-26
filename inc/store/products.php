@@ -14,7 +14,8 @@ $EVENT_FIELDS_KEYMAP = [
     'date_sale_from' => 10,
     'date_sale_to' => 11,
     // 'external_inscription' => 11,
-    'genere' => 12
+    'genere' => 12,
+    'menu' => 13,
 ];
 
 function emc_get_bound_product($post_id)
@@ -80,6 +81,9 @@ function emc_sync_bound_product($product, $postarr)
 
     $product_gender = $postarr['acf'][$acf_keys[$EVENT_FIELDS_KEYMAP['genere']]];
     $product->update_meta_data('genere', $product_gender);
+
+    $product_menu = $postarr['acf'][$acf_keys[$EVENT_FIELDS_KEYMAP['menu']]];
+    $product->update_meta_data('menu', $product_menu);
 
     $product->save();
 }

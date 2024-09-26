@@ -377,6 +377,26 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                 'ajax' => 0,
                 'placeholder' => '',
             ),
+            array(
+                'key' => 'field_66f541323c56b',
+                'label' => 'Menú',
+                'name' => 'menu',
+                'aria-label' => '',
+                'type' => 'true_false',
+                'instructions' => 'Per a esdeveniments gastronòmics es possible habilitar la opció de seleccionar un menú vegetarià',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'message' => 'Habilita la opció vegetariana',
+                'default_value' => 0,
+                'ui' => 0,
+                'ui_on_text' => '',
+                'ui_off_text' => '',
+            ),
         ),
         'location' => array(
             array(
