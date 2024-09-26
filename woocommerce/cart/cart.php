@@ -254,3 +254,4 @@ do_action('woocommerce_before_cart'); ?>
 </div>
 
 <?php do_action('woocommerce_after_cart'); ?>
+<?php do_action('emc_cart_script'); ?>

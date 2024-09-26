@@ -165,3 +165,37 @@ function filter_woocommerce_available_payment_gateways($available_gateways)
 
     return $available_gateways;
 };
+
+add_action('emc_cart_script', function () {
+    ?>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function debounce(fn, ms) {
+                let timeout;
+                return function (...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(fn.apply(this, args), ms);
+                }
+            }
+
+            function listenInputs() {
+                const form = document.querySelector(".woocommerce-cart-form");
+                if (!form) return;
+
+                for (let input of form.querySelectorAll("input[type=number]")) {
+                    input.addEventListener("input", debounce(function (e) {
+                        if (!e.target.value) return;
+                        const ev = jQuery.Event("keypress");
+                        ev.keyCode = 13;
+                        ev.key = "Enter";
+                        jQuery(input).trigger(ev);
+                    }, 300));
+                }
+            }
+
+            jQuery(document.body).on("updated_wc_div", listenInputs);
+            listenInputs();
+        });
+        </script>
+    <?php
+});
