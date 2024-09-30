@@ -135,7 +135,7 @@ function elmercatcultural_filter_checkout_fields($fields)
             'type' => 'select',
             'class' => array('form-row-wide'),
             'label' => __('MENú'),
-            'options' => array('generic' => 'Menú genèric', 'vegan' => 'Opció vegana'),
+            'options' => array('animal' => 'Opció amb procedència d\'animal', 'vegan' => 'Opció vegana'),
             'required' => !$is_admin,
         ),
     );
@@ -193,7 +193,7 @@ function elmercatcultural_extra_checkout_fields()
                 <?php woocommerce_form_field('billing_menu', [
                     'type' => 'select',
                     'class' => ['form-row-wide'],
-                    'options' => ['generic' => 'Opció genèrica', 'vegan' => 'Opció vegana'],
+                    'options' => ['animal' => 'Opció amb procedència d\'animal', 'vegan' => 'Opció vegana'],
                     'label' => __('MENÚ'),
                     'required' => !$is_admin,
                 ]); ?>
@@ -231,7 +231,7 @@ function elmercatcultural_save_extra_checkout_fields($order, $data)
         if ((int) $data['billing_menu'] === 'vegan') {
             $note = sanitize_text_field('Vegà');
         } else {
-            $note = sanitize_text_field('Genèric');
+            $note = sanitize_text_field('Amb procedència d\'animal');
         }
         $order->update_meta_data('billing_menu', $note);
     }
