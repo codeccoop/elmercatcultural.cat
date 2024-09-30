@@ -132,10 +132,11 @@ function elmercatcultural_filter_checkout_fields($fields)
             'required' => !$is_admin,
         ),
         'billing_menu' => array(
-            'type' => 'checkbox',
+            'type' => 'select',
             'class' => array('form-row-wide'),
-            'label' => __('MENÚ VEGÀ'),
-            'required' => false,
+            'label' => __('MENú'),
+            'options' => array('generic' => 'Menú genèric', 'vegan' => 'Opció vegana'),
+            'required' => !$is_admin,
         ),
     );
 
@@ -159,6 +160,7 @@ function elmercatcultural_extra_checkout_fields()
         }
     }
 
+    ob_start();
     // because of this foreach, everything added to the array in the previous function will display automagically
     if (sizeof($gender_meta) > 0) {
         $is_admin = emc_is_admin();
@@ -189,14 +191,23 @@ function elmercatcultural_extra_checkout_fields()
         if (in_array('1', $menu_meta)) : ?>
             <div class="extra-fields">
                 <?php woocommerce_form_field('billing_menu', [
-                    'type' => 'checkbox',
+                    'type' => 'select',
                     'class' => ['form-row-wide'],
-                    'label' => __('MENÚ VEGÀ'),
-                    'required' => false,
+                    'options' => ['generic' => 'Opció genèrica', 'vegan' => 'Opció vegana'],
+                    'label' => __('MENÚ'),
+                    'required' => !$is_admin,
                 ]); ?>
             </div>
         <?php endif;
     }
+
+    $extra_fields = ob_get_clean();
+    if (strlen($extra_fields) > 0) : ?>
+        <div class="extra-fields">
+            <h4 style="border-bottom:2px solid #e3d0b9;text-transform:uppercase;padding-bottom:1rem">Camps adicionals</h4>
+            <?= $extra_fields ?>
+        </div>
+    <?php endif;
 }
 
 /* Save the extra data */
@@ -217,7 +228,7 @@ function elmercatcultural_save_extra_checkout_fields($order, $data)
         // $order->save();
     }
     if (isset($data['billing_menu'])) {
-        if ((int) $data['billing_menu'] === 1) {
+        if ((int) $data['billing_menu'] === 'vegan') {
             $note = sanitize_text_field('Vegà');
         } else {
             $note = sanitize_text_field('Genèric');

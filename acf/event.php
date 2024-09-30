@@ -383,7 +383,7 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                 'name' => 'menu',
                 'aria-label' => '',
                 'type' => 'true_false',
-                'instructions' => 'Per a esdeveniments gastronòmics es possible habilitar la opció de seleccionar un menú vegetarià',
+                'instructions' => 'Per a esdeveniments gastronòmics es possible habilitar la opció de seleccionar un menú vegà',
                 'required' => 0,
                 'conditional_logic' => 0,
                 'wrapper' => array(
@@ -391,7 +391,7 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                     'class' => '',
                     'id' => '',
                 ),
-                'message' => 'Habilita la opció vegetariana',
+                'message' => 'Habilita el selector d\'opcions veganes per al menú',
                 'default_value' => 0,
                 'ui' => 0,
                 'ui_on_text' => '',
