@@ -40,14 +40,20 @@ if ($product) {
     $has_inscription = get_field('checkbox', $post_id);
 
     $now = current_time('U', false);
-    $end_date = strtotime($product->get_date_on_sale_to());
-    if (!$end_date) {
-        $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
-    }
 
-    $start_date = strtotime($product->get_date_on_sale_from());
-    if (!$start_date) {
-        $start_date = $now;
+    try {
+        $end_date = strtotime($product->get_date_on_sale_to());
+        if (!$end_date) {
+            $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
+        }
+
+        $start_date = strtotime($product->get_date_on_sale_from());
+        if (!$start_date) {
+            $start_date = $now;
+        }
+    } catch (Error $e) {
+        $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
+        $start_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
     }
 
     $stock = $product->get_stock_quantity();

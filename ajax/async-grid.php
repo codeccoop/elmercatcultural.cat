@@ -50,6 +50,7 @@ if (!function_exists('emc_get_grid_items')) {
                 $thumbnail = get_template_directory_uri() . '/assets/images/event--default.png';
             }
 
+            $now = current_time('U', false);
             try {
                 $event_date = (DateTime::createFromFormat('d/m/Y g:i a', get_field('date', $ID)))->getTimestamp();
                 $has_inscription = get_field('checkbox', $ID);
@@ -59,8 +60,7 @@ if (!function_exists('emc_get_grid_items')) {
                 $date_sale_to = $has_inscription
                     ? (DateTime::createFromFormat('d/m/Y g:i a', get_field('date_sale_to', $ID)))->getTimestamp()
                     : null;
-                $now = current_time('U', false);
-            } catch (Error ) {
+            } catch (Error $e) {
                 $date_sale_from = (DateTime::createFromFormat('d/m/Y g:i a', get_field('date', $ID)))->getTimestamp();
                 $date_sale_to = (DateTime::createFromFormat('d/m/Y g:i a', get_field('date', $ID)))->getTimestamp();
             }
