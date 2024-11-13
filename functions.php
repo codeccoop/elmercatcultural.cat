@@ -168,8 +168,8 @@ add_action('wp_enqueue_scripts', 'scripts');
 add_action('admin_enqueue_scripts', 'scripts');
 function scripts()
 {
-    wp_register_style('mapbox-gl-css', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css', false);
-    wp_register_script('mapbox-gl-js', 'https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js', false);
+    wp_register_script('leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['jquery'], '1.9.4');
+    wp_register_style('leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', [], '1.9.4');
 
     if (is_admin()) {
         return;
@@ -347,9 +347,9 @@ function emc_menu_render()
         <form action="options.php" method="post">
         <?php
         settings_fields('emc');
-        do_settings_sections('emc');
-        submit_button();
-        ?>
+    do_settings_sections('emc');
+    submit_button();
+    ?>
         </form>
     </div>
     <?php

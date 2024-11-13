@@ -51,6 +51,9 @@ if ($product) {
         if (!$start_date) {
             $start_date = $now;
         }
+    } catch (Exception $e) {
+        $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
+        $start_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
     } catch (Error $e) {
         $end_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();
         $start_date = (DateTime::createFromFormat('d/m/Y', get_field('date', $post_id)))->getTimestamp();

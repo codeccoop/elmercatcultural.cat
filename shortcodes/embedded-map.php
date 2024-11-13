@@ -1,4 +1,5 @@
 <?php
+
 function emc_sc_embedded_map($atts = [], $content = null, $tag = '')
 {
     $atts = array_change_key_case((array) $atts, CASE_LOWER);
@@ -34,28 +35,24 @@ function emc_sc_embedded_map($atts = [], $content = null, $tag = '')
 
     $content = '<div id="' . $id . '" class="' . $classes . '" style="' . $style . '"></div>';
 
-    if (!wp_script_is('mapbox-gl-js')) {
-        wp_enqueue_script('mapbox-gl-js');
+    if (!wp_script_is('leaflet-js')) {
+        wp_enqueue_script('leaflet-js');
     }
 
-    if (!wp_script_is('mapbox-gl-css')) {
-        wp_enqueue_style('mapbox-gl-css');
+    if (!wp_script_is('leaflet-css')) {
+        wp_enqueue_style('leaflet-css');
     }
 
     $script = '<script>
     document.addEventListener("DOMContentLoaded", function () {
-        mapboxgl.accessToken = "pk.eyJ1Ijoib3J6b2MiLCJhIjoiY2lzZGEzNXhmMDAwdjJvcGZ4NXU2bzU0NCJ9.RzrN_JISe561WfI1SjWCvw";
-        const map = new mapboxgl.Map({
-         container: "' . $id . '", // container ID
-         style: "mapbox://styles/mapbox/streets-v11", // style URL
-         center: [' . $lng . ', ' . $lat . '], // starting position [lng, lat]
-         zoom: ' . $zoom . ', // starting zoom
-        });
-        // map.addControl(new mapboxgl.NavigationControl());
-        new mapboxgl.Marker({
-            color: \'#e74c3c\',
-            scale: 0.5
-        }).setLngLat([' . $lng . ', ' . $lat . ']).addTo(map);
+        const map = new L.map("' . $id . '")
+            .setView([' . $lat . ', ' . $lng . '], ' . $zoom . ');
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
+        }).addTo(map);
+
+        L.marker([' . $lat . ', ' . $lng . ']).addTo(map);
     });
     </script>';
 
