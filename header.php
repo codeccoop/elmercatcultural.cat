@@ -49,7 +49,7 @@
                                 <a href="<?= wc_get_cart_url(); ?>"></a>
                             </div>
                         </div>
-                    <? endif; ?>
+                    <?php endif; ?>
                     <?php
                     wp_nav_menu(
                         array(
