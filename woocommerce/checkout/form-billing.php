@@ -24,12 +24,11 @@ defined('ABSPATH') || exit;
     <?php do_action('woocommerce_before_checkout_billing_form', $checkout); ?>
 
     <div class="woocommerce-billing-fields__field-wrapper">
-        <?php
-        $fields = $checkout->get_checkout_fields('billing');
-        ?>
+        <?php $fields = $checkout->get_checkout_fields('billing'); ?>
         <div class="required-fields__message">
-            <p> Els camps marcats amb un <span class="required-simbol">*</span> són obligatoris </p>
+            <p> <?= __('Els camps marcats amb un <span class="required-simbol">*</span> són obligatoris', 'elmercatcultural.cat') ?></p>
         </div>
+        
         <div class="elmercat-form-field-customer-details">
             <?php woocommerce_form_field('billing_first_name', $fields['billing_first_name'], $checkout->get_value('billing_first_name')); ?>
             <?php woocommerce_form_field('billing_last_name', $fields['billing_last_name'], $checkout->get_value('billing_last_name')); ?>
@@ -48,8 +47,10 @@ defined('ABSPATH') || exit;
             <?php woocommerce_form_field('billing_birthday', $fields['billing_birthday'], $checkout->get_value('billing_company')); ?>
         </div>
         <div class="elmercat-form-field-adress-details">
-            <?php woocommerce_form_field('billing_postcode', $fields['billing_postcode'], $checkout->get_value('billing_postcode'));
-            do_action("radio_input_veina", $checkout); ?>
+            <?php woocommerce_form_field('billing_postcode', $fields['billing_postcode'], $checkout->get_value('billing_postcode')); ?>
+        </div>
+        <div class="elmercat-form-field-is-neighbour">
+            <?php do_action("radio_input_veina", $checkout); ?>
             <p class="form-row-placeholder" aria-hidden="true" style="visibility: hidden;"></p>
             <script>
                 const buttonSi = document.getElementById('billing_neighbour_1');
@@ -65,14 +66,19 @@ defined('ABSPATH') || exit;
                 });
             </script>
         </div>
+        <div class="elmercat-form-field-newsletter-opt-in">
+            <?php if (isset($fields['ws_opt_in'])) {
+                $fields['ws_opt_in']['label'] = __('Vols subscriure\'t al nostre butlletí?', 'elmercatcultural.cat');
+                woocommerce_form_field('ws_opt_in', $fields['ws_opt_in'], $checkout->get_value('ws_opt_in'));
+            } ?>
+        </div>
         <div class="elmercat-form-field-adress-details">
             <?php woocommerce_form_field('billing_address_1', $fields['billing_address_1'], $checkout->get_value('billing_address_1'));
-            woocommerce_form_field('billing_address_2', $fields['billing_address_2'], $checkout->get_value('billing_address_2'));
-            woocommerce_form_field('billing_city', $fields['billing_city'], $checkout->get_value('billing_city'));
-            woocommerce_form_field('billing_state', $fields['billing_state'], $checkout->get_value('billing_state'));
-            woocommerce_form_field('billing_country', $fields['billing_country'], $checkout->get_value('billing_country'));
-            ?>
-        </div>
+woocommerce_form_field('billing_address_2', $fields['billing_address_2'], $checkout->get_value('billing_address_2'));
+woocommerce_form_field('billing_city', $fields['billing_city'], $checkout->get_value('billing_city'));
+woocommerce_form_field('billing_state', $fields['billing_state'], $checkout->get_value('billing_state'));
+woocommerce_form_field('billing_country', $fields['billing_country'], $checkout->get_value('billing_country'));
+?></div>
 
         <!-- <form id="mcSubscriptionForm" action="https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&id=77f622e665&f_id=002990e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate> -->
         <!-- <div class="footer__subscription-field">

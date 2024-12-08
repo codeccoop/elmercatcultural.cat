@@ -3,11 +3,13 @@
     .required-fields__message {
       p {
         font-style: italic;
+
         .required-simbol {
           color: red;
         }
       }
     }
+
     .elmercat-form-field-contact-details,
     .elmercat-form-field-customer-details,
     .elmercat-form-field-adress-details {
@@ -123,34 +125,44 @@
       }
     }
 
-    .elmercat-form-field-adress-details {
-      #billing_neighbour_field {
-        margin-left: 0;
-        margin-bottom: 1rem;
-        width: 100%;
+    #billing_neighbour_field {
+      margin-left: 0;
+      margin-bottom: 1rem;
+      width: 100%;
 
-        @include m-media(md) {
-          @include m-columns-width(4);
-          margin-bottom: 3rem;
+      @include m-media(md) {
+        @include m-columns-width(4);
+        margin-bottom: 3rem;
+      }
+
+      .woocommerce-input-wrapper {
+        margin-top: 0.5em;
+        display: block;
+
+        input {
+          visibility: hidden;
+          width: 0px !important;
         }
 
-        .woocommerce-input-wrapper {
-          input {
-            visibility: hidden;
+        label {
+          text-transform: uppercase;
+          font-weight: 600;
+          font-family: $font__secondary;
+
+          &:last-child {
+            margin-left: 1rem;
           }
 
-          label {
-            text-transform: uppercase;
-            font-weight: 600;
-            font-family: $font__secondary;
-
-            &.clicked {
-              color: $color__theme-primary;
-              text-decoration: underline 3px;
-            }
+          &.clicked {
+            color: $color__theme-primary;
+            text-decoration: underline 3px;
           }
         }
       }
+    }
+
+    #ws_opt_in_field input {
+      width: fit-content;
     }
 
     .field-remove {
@@ -167,6 +179,7 @@
         border-radius: 0;
         border-bottom: 2px solid $color__theme-primary;
         outline: none;
+
         @include m-media(md) {
           @include m-columns-width(4.2);
         }
@@ -198,6 +211,7 @@
     p {
       margin-top: 0;
       margin-bottom: 4rem;
+
       select {
         width: 40%;
         margin-left: 2rem;
@@ -211,6 +225,7 @@
     }
   }
 }
+
 #order_review_heading {
   text-transform: uppercase;
   border-bottom: 2px solid $color__theme-primary;
@@ -228,9 +243,11 @@
     }
 
     tr {
+
       th,
       td {
         text-align: left;
+
         &:not(:last-child) {
           @include m-media(md) {
             border-right: 2px solid $color__theme-primary;
@@ -310,20 +327,25 @@
     ul.wc_payment_methods.not-admin {
       display: none;
     }
+
     .place-order {
       text-align: center;
+
       #privacy_checkbox_field,
       #policy_checkbox_field {
         .woocommerce-input-wrapper label {
           font-weight: 600;
+
           a {
             text-decoration: underline;
           }
         }
       }
+
       #newsletter_checkbox_field {
         font-weight: 600;
       }
+
       .wp-element-button {
         margin-top: 4rem;
       }

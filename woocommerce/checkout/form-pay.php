@@ -13,7 +13,7 @@
  *
  * @see https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 7.0.1
+ * @version 8.2.1
  */
 
 defined('ABSPATH') || exit;
@@ -50,10 +50,8 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 							do_action('woocommerce_order_item_meta_end', $item_id, $item, $order, false);
 							?>
 						</td>
-						<td class="product-quantity"><?php echo apply_filters('woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf('&times;&nbsp;%s', esc_html($item->get_quantity())) . '</strong>', $item); ?></td><?php // @codingStandardsIgnoreLine 
-																																																														?>
-						<td class="product-subtotal"><?php echo $order->get_formatted_line_subtotal($item); ?></td><?php // @codingStandardsIgnoreLine 
-																													?>
+                        <td class="product-quantity"><?php echo apply_filters('woocommerce_order_item_quantity_html', ' <strong class="product-quantity">' . sprintf('&times;&nbsp;%s', esc_html($item->get_quantity())) . '</strong>', $item); ?></td><?php // @codingStandardsIgnoreLine  ?>
+						<td class="product-subtotal"><?php echo $order->get_formatted_line_subtotal($item); ?></td><?php // @codingStandardsIgnoreLine ?>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
@@ -62,15 +60,22 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 			<?php if ($totals) : ?>
 				<?php foreach ($totals as $total) : ?>
 					<tr>
-						<th scope="row" colspan="2"><?php echo $total['label']; ?></th><?php // @codingStandardsIgnoreLine 
-																						?>
-						<td class="product-total"><?php echo $total['value']; ?></td><?php // @codingStandardsIgnoreLine 
-																						?>
+                        <th scope="row" colspan="2"><?php echo $total['label']; ?></th><?php // @codingStandardsIgnoreLine ?>
+                        <td class="product-total"><?php echo $total['value']; ?></td><?php // @codingStandardsIgnoreLine ?>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</tfoot>
 	</table>
+
+    <?php
+	/**
+	 * Triggered from within the checkout/form-pay.php template, immediately before the payment section.
+	 *
+	 * @since 8.2.0
+	 */
+	do_action( 'woocommerce_pay_order_before_payment' ); 
+	?>
 
 	<div id="payment">
 		<?php if ($order->needs_payment()) : ?>
@@ -81,7 +86,9 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 						wc_get_template('checkout/payment-method.php', array('gateway' => $gateway));
 					}
 				} else {
-					echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters('woocommerce_no_available_payment_methods_message', esc_html__('Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce')) . '</li>'; // @codingStandardsIgnoreLine
+                    echo '<li>';
+					wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', esc_html__( 'Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) ), 'notice' ); // phpcs:ignore WooCommerce.Commenting.CommentHooks.MissingHookComment
+                    echo '</li>';
 				}
 				?>
 			</ul>
