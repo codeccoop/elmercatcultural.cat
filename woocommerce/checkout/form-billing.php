@@ -68,7 +68,7 @@ defined('ABSPATH') || exit;
         </div>
         <div class="elmercat-form-field-newsletter-opt-in">
             <?php if (isset($fields['ws_opt_in'])) {
-                $fields['ws_opt_in']['label'] = __('Vols subscriure\'t al nostre butlletí?', 'elmercatcultural.cat');
+                $fields['ws_opt_in']['label'] = __('Vull rebre els correus de elMercat i subscriure\'m a la newsletter', 'elmercatcultural.cat');
                 woocommerce_form_field('ws_opt_in', $fields['ws_opt_in'], $checkout->get_value('ws_opt_in'));
             } ?>
         </div>

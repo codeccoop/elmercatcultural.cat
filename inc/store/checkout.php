@@ -274,14 +274,6 @@ function elmercatcultural_add_checkout_checkbox()
         'required'      => !$is_admin, // Mandatory or Optional
         'label'         => "Accepto la <a href='/politica-de-privacitat' target='_blank' rel='noopener'>Política de Privacitat</a>. Les dades personals s'utilitzaran per processar la comanda, millorar l'experiència d'usuari en aquest lloc web.", // Label and Link
     ));
-    woocommerce_form_field('newsletter_checkbox', array( // CSS ID
-        'type'          => 'checkbox',
-        'class'         => array('emc_newsletter_checkbox'), // CSS Class
-        'label_class'   => array('woocommerce-form__label woocommerce-form__label-for-checkbox newsletter'),
-        'input_class'   => array('woocommerce-form__input woocommerce-form__input-checkbox newsletter-checkbox'),
-        'required'      => false, // Mandatory or Optional
-        'label'         => "Vull rebre els correus de elMercat i subscriure'm a la newsletter", // Label and Link
-    ));
     woocommerce_form_field('policy_checkbox', array(
         'type'          => 'checkbox',
         'class'         => array('emc_policy_checkbox'), // CSS Class
@@ -364,14 +356,6 @@ function elmercatcultural_checkout_field_process()
     if (!isset($_POST['privacy_checkbox'])) {
         $isvalid = false;
         wc_add_notice(__("Heu d'acceptar la política de privadesa"), 'error');
-    }
-
-    if ($isvalid && isset($_POST['newsletter_checkbox'])) {
-        try {
-            emc_submit_email_to_newsletter();
-        } catch (Exception $e) {
-            wc_add_notice(__("No us heu pogut subscriure a la Newsletter: " . $e->getMessage()), 'error');
-        }
     }
 }
 
