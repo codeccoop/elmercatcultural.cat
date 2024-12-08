@@ -31,11 +31,11 @@ defined('ABSPATH') || exit;
             <th><?php esc_html_e('Subtotal', 'woocommerce'); ?></th>
             <td data-title="<?php esc_attr_e('Subtotal', 'woocommerce'); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
         </tr>
+
         <?php foreach (WC()->cart->get_coupons() as $code => $coupon) :
             if ($code === 'master-coupon') {
                 continue;
-            }
-            ?>
+            } ?>
             <tr class="cart-discount coupon-<?= esc_attr(sanitize_title($code)); ?>">
                 <th><?= $coupon->get_description() ?></th>
                 <td data-title="<?= esc_attr($coupon->get_description()); ?>"><?php wc_cart_totals_coupon_html($coupon); ?></td>

@@ -1,4 +1,5 @@
 <?php
+
 //adding our own portfolio item
 function emc_post_type_event()
 {
@@ -21,3 +22,8 @@ function emc_post_type_event()
 }
 
 add_action('init', 'emc_post_type_event');
+
+function emc_get_event_by_name($name)
+{
+    return emc_get_post_by_name($name, 'event');
+}

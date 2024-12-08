@@ -27,7 +27,7 @@ function emc_exclude_product_coupons($valid, $product, $coupon, $values)
 }
 
 /* FORCE TO APPLY ALL COUPONS*/
-function available_coupon_codes()
+function emc_available_coupon_codes()
 {
     global $wpdb;
 
@@ -39,11 +39,23 @@ function available_coupon_codes()
 }
 
 /** COUPONS LOGIC */
+function emc_get_coupon_by_title($title)
+{
+    $coupons = get_posts([
+        'post_type' => 'shop_coupon',
+        'title' => $title,
+    ]);
+
+    if (count($coupons)) {
+        return $coupons[0];
+    }
+}
+
 function emc_cart_has_available_coupons()
 {
-    $coupon_codes = available_coupon_codes();
+    $coupon_codes = emc_available_coupon_codes();
     foreach ($coupon_codes as $code) {
-        $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
+        $coupon = emc_get_coupon_by_title($code);
         if (emc_cart_can_use_coupon($coupon->ID)) {
             return true;
         }
@@ -54,10 +66,12 @@ function emc_cart_has_available_coupons()
 
 function emc_cart_available_coupons()
 {
-    $coupon_codes = available_coupon_codes();
-    return array_filter(array_map(function ($code) {
-        return get_page_by_title($code, OBJECT, 'shop_coupon');
-    }, $coupon_codes), function ($coupon) {
+    $coupon_codes = emc_available_coupon_codes();
+    $coupons = array_map(function ($code) {
+        return emc_get_coupon_by_title($code);
+    }, $coupon_codes);
+
+    return (array) array_filter($coupons, function ($coupon) {
         return emc_cart_can_use_coupon($coupon->ID);
     });
 }
@@ -86,9 +100,9 @@ function auto_apply_coupon_for_regular_customers($coupon_code)
     if ($coupon_code != 'master-coupon') {
         return;
     }
-    $coupon_codes = available_coupon_codes();
+    $coupon_codes = emc_available_coupon_codes();
     foreach ($coupon_codes as $code) {
-        $coupon = get_page_by_title($code, OBJECT, 'shop_coupon');
+        $coupon = emc_get_coupon_by_title($code);
 
         if (!WC()->cart->has_discount($code) && emc_cart_can_use_coupon($coupon->ID)) {
             WC()->cart->apply_coupon($code);
@@ -103,6 +117,9 @@ function emc_auto_remove_coupon_for_regular_customers($coupon_code)
 }
 
 add_action('emc_list_cart_coupons', function ($coupons) {
+    if ($coupons instanceof WP_Post) {
+        $coupons = [$coupons];
+    }
     $concepts = array_filter(array_unique(array_map(function ($coupon) {
         return esc_html($coupon->post_excerpt);
     }, $coupons)));

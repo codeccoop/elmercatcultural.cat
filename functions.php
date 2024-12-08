@@ -113,7 +113,7 @@ function emc_initialize_theme()
     register_taxonomy_for_object_type('post_tag', 'page');
 }
 
-add_action('admin_init', 'emc_admin_init');
+add_action('admin_menu', 'emc_admin_init');
 function emc_admin_init()
 {
     remove_menu_page('edit.php?post_type=product');
@@ -388,3 +388,11 @@ add_action('admin_init', function () {
         'emc-inscriptions-section'
     );
 });
+
+function emc_get_post_by_name($name, $post_type = 'post')
+{
+    $posts = get_posts(['post_type' => $post_type, 'name' => $name]);
+    if (count($posts)) {
+        return $posts[0];
+    }
+}

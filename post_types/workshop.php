@@ -1,4 +1,5 @@
 <?php
+
 //adding our own portfolio item
 function emc_post_type_workshop()
 {
@@ -21,3 +22,8 @@ function emc_post_type_workshop()
 }
 
 add_action('init', 'emc_post_type_workshop');
+
+function emc_get_workshop_by_name($name)
+{
+    return emc_get_post_by_name($name, 'workshop');
+}

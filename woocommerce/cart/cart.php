@@ -13,7 +13,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 7.0.1
+ * @version 7.9.0
  */
 
 defined('ABSPATH') || exit;
@@ -42,12 +42,17 @@ do_action('woocommerce_before_cart'); ?>
                 $_product   = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
                 $product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
                 $slug = preg_replace('/-product$/', '', $cart_item['data']->get_slug());
-                $post_type = 'event';
-                $post = get_page_by_path($slug, OBJECT, $post_type);
-                if (!$post) {
-                    $post_type = 'workshop';
-                    $post = get_page_by_path($slug, OBJECT, $post_type);
-                }
+                $post = emc_get_event_by_name($slug) ?? emc_get_workshop_by_name($slug);
+
+                /**
+				 * Filter the product name.
+				 *
+				 * @since 2.1.0
+				 * @param string $product_name Name of the product in the cart.
+				 * @param array $cart_item The product in the cart.
+				 * @param string $cart_item_key Key for the product in the cart.
+				 */
+				$product_name = apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key );
 
                 if ($_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters('woocommerce_cart_item_visible', true, $cart_item, $cart_item_key)) {
                     $product_permalink = get_post_permalink($post);
@@ -73,8 +78,13 @@ do_action('woocommerce_before_cart'); ?>
                             <div class="product-name title is-3">
                                 <?php
                                 if (!$product_permalink) {
-                                    echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;');
+							        echo wp_kses_post( $product_name . '&nbsp;' );
                                 } else {
+                                    /**
+                                     * This filter is documented above.
+                                     *
+                                     * @since 2.1.0
+                                     */
                                     echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
                                 }
 
@@ -100,20 +110,25 @@ do_action('woocommerce_before_cart'); ?>
                         <td class="product-quantity" data-title="<?php esc_attr_e('Quantity', 'woocommerce'); ?>">
                             <?php
                             if ($_product->is_sold_individually()) {
-                                $product_quantity = sprintf('1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key);
+                                // $product_quantity = sprintf('1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key);
+                                $min_quantity = 1;
+                                $max_quantity = 1;
                             } else {
-                                $product_quantity = woocommerce_quantity_input(
-                                    array(
-                                        'input_name'   => "cart[{$cart_item_key}][qty]",
-                                        'input_value'  => $cart_item['quantity'],
-                                        'max_value'    => $_product->get_max_purchase_quantity(),
-                                        'min_value'    => '0',
-                                        'product_name' => $_product->get_name(),
-                                    ),
-                                    $_product,
-                                    false
-                                );
+                                $min_quantity = 0;
+                                $max_quantity = $_product->get_max_purchase_quantity();
                             }
+
+                            $product_quantity = woocommerce_quantity_input(
+                                array(
+                                    'input_name'   => "cart[{$cart_item_key}][qty]",
+                                    'input_value'  => $cart_item['quantity'],
+                                    'max_value'    => $_product->get_max_purchase_quantity(),
+                                    'min_value'    => '0',
+                                    'product_name' => $_product->get_name(),
+                                ),
+                                $_product,
+                                false
+                            );
 
                             echo apply_filters('woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item); // PHPCS: XSS ok.
                             ?>
@@ -133,9 +148,7 @@ do_action('woocommerce_before_cart'); ?>
                             );
                             ?>
                         </td>
-
-                    </tr>
-            <?php
+                    </tr><?php
                 }
             }
             ?>
@@ -147,7 +160,7 @@ do_action('woocommerce_before_cart'); ?>
 
                     <?php if (wc_coupons_enabled()) { ?>
                         <div class="coupon">
-                            <label for="coupon_code"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
+                            <label for="coupon_code" class="screen-reader-text"><?php esc_html_e('Coupon:', 'woocommerce'); ?></label>
                             <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e('Coupon code', 'woocommerce'); ?>" />
                             <button type="submit" class="button<?php echo esc_attr(wc_wp_theme_get_element_class_name('button') ? ' ' . wc_wp_theme_get_element_class_name('button') : ''); ?>" name="apply_coupon" value="<?php esc_attr_e('Apply coupon', 'woocommerce'); ?>"><?php esc_attr_e('Apply coupon', 'woocommerce'); ?></button>
                             <?php do_action('woocommerce_cart_coupon'); ?>
