@@ -15,52 +15,11 @@
 <section id="newsletter" class="newsletter__section">
     <div class="newsletter__section-border">
         <div class="newsletter__section-content">
-            <h2>Dona't d'alta al nostre butlletí:</h2>
+			            <h2>Dona't d'alta al nostre butlletí:</h2>
             <div class="footer__subscription">
-                <form id="mcSubscriptionForm" action=https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
-                    <div class="footer__subscription-field">
-                        <input placeholder="elteucorreu@correu.cat" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
-                        <i tabindex="0" role="button"></i>
-                    </div>
-                </form>
-            </div>
-            <script type='text/javascript'>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const form = document.getElementById('mcSubscriptionForm');
-                    const submitBtn = form.querySelector('i');
-                    const emailInput = form.querySelector('input');
-
-                    function validateEmail(email) {
-                        return email.match(
-                            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-                    }
-
-                    emailInput.addEventListener('keydown', (ev) => {
-                        if (ev.keyCode !== 13) {
-                            emailInput.classList.remove('invalid');
-                            return;
-                        }
-                        ev.preventDefault();
-                        ev.stopPropagation()
-                        if (validateEmail(emailInput.value)) {
-                            form.submit();
-                        } else {
-                            emailInput.classList.add('invalid');
-                        }
-                    });
-
-                    submitBtn.addEventListener('click', (ev) => {
-                        if (validateEmail(emailInput.value)) {
-                            form.submit();
-                        } else {
-                            emailInput.classList.add('invalid');
-                        }
-                    });
-                });
-            </script>
+                <?php echo do_shortcode("[sibwp_form id=2]"); ?>
         </div>
     </div>
-
     </div>
 </section>
 <hr>
