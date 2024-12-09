@@ -1,0 +1,49 @@
+.wp-block-organic-profile-block .organic-profile-image {
+  display: flex;
+  align-items: center;
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  overflow: hidden !important;
+  background-repeat: no-repeat !important;
+  justify-content: space-around !important;
+  max-width: 200px;
+}
+
+.organic-profile-content {
+  text-align: left !important;
+}
+
+.fa-linkedin:before {
+  content: "\f0ac" !important;
+}
+
+.wp-block-organic-profile-block .organic-profile-content h5 {
+  text-transform: none;
+
+}
+
+.wp-block-organic-profile-block .organic-profile-image figure {
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .wp-block-organic-profile-block .organic-profile-image {
+    max-width: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wp-block-organic-profile-block .organic-profile-image img {
+    padding: 0 10%;
+  }
+}
+
+.wp-block-organic-profile-block {
+  display: flex;
+  align-items: stretch;
+  background-color: #ffffff;
+  margin: 32px 0px;
+  box-shadow: none !important;
+  border: 0px 1px 1px 0px solid #ccc;
+}

@@ -1,3 +1,9 @@
+@media only screen and (max-width: 812px) {
+  .page-id-403 .site-main.page .type-wc-cart .cart-collaterals>div {
+    padding: 0 0rem;
+  }
+}
+
 .site-main.page .type-wc-cart {
   .page-header {
     border-bottom: 2px solid $color__theme-primary;
@@ -187,7 +193,7 @@
     }
 
     .emc-cart-discount-concepts {
-      margin-left: 1.5em; 
+      margin-left: 1.5em;
       padding-left: 0;
       display: flex;
       flex-direction: column;
@@ -209,7 +215,7 @@
       }
     }
 
-    > div {
+    >div {
       padding: 0 2rem;
     }
 
@@ -228,7 +234,7 @@
         @include m-columns-width(3.5);
       }
 
-      > p,
+      >p,
       .checkbox-input-wrapper {
         width: 100%;
         text-align: center;
@@ -283,6 +289,7 @@
 
       table {
         tr {
+
           th,
           td {
             padding: 1rem 0;

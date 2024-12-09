@@ -46,6 +46,7 @@ h2,
 }
 
 .is-mobile {
+
   h2,
   .title.is-2 {
     font-size: $font__size-title-2-mobile;
@@ -67,15 +68,26 @@ h6,
   }
 }
 
-h1 + .subtitle,
-h2 + .subtitle,
-h3 + .subtitle,
-h4 + .subtitle,
-h5 + .subtitle,
-h6 + .subtitle,
-.title + .subtitle {
+h1+.subtitle,
+h2+.subtitle,
+h3+.subtitle,
+h4+.subtitle,
+h5+.subtitle,
+h6+.subtitle,
+.title+.subtitle {
   font-size: $font__size-subtitle;
   line-height: $font__line-height-subtitle;
   margin-top: -1em;
   letter-spacing: 0;
+}
+
+/* Responsive headings */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 35px;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
 }

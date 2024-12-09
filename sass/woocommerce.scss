@@ -56,3 +56,8 @@ $woocommerce__color-info: #3d9cd2;
  * WooCommerce order review
  */
 @import "plugins/woocommerce/order";
+
+/**
+ * WooCommerce customer login
+ */
+@import "plugins/woocommerce/login";

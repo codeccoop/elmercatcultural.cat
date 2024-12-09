@@ -1,0 +1,109 @@
+.woocommerce-form-login-toggle .woocommerce-info {
+  color: #000;
+}
+
+.woocommerce-form-login-toggle .woocommerce-info {
+  border: none !important;
+  color: #000 !important;
+}
+
+button.woocommerce-button.button.woocommerce-form-login__submit {
+  display: block;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 980px) {
+  .woocommerce-form-login-toggle .woocommerce-info a {
+    float: none;
+    margin-top: 20px;
+  }
+}
+
+.woocommerce-form-login-toggle .woocommerce-info {
+  padding: 0px;
+}
+
+input#password,
+input#username,
+input#reg_email {
+  margin: 10px 0;
+  display: block;
+  width: 300px;
+}
+
+@media screen and (min-width: 980px) {
+
+  .page-id-405 .site-main .page-header,
+  .site-main .post-header {
+    padding-top: 3rem;
+  }
+}
+
+.page-id-405 .u-column2.col-2.woocommerce-Address {
+  display: none !important;
+}
+
+.page-id-405 li.woocommerce-MyAccount-navigation-link.woocommerce-MyAccount-navigation-link--downloads {
+  display: none !important;
+}
+
+.page-id-405 li.woocommerce-MyAccount-navigation-link.woocommerce-MyAccount-navigation-link--edit-address {
+  display: none;
+}
+
+.page-id-405 mark,
+ins {
+  background: none;
+  text-decoration: none;
+}
+
+.page-id-405 .woocommerce-column.woocommerce-column--1.woocommerce-column--billing-address.col-1 {
+  display: none;
+}
+
+.woocommerce-column.woocommerce-column--2.woocommerce-column--shipping-address.col-2 {
+  display: none;
+}
+
+button.woocommerce-button.button.woocommerce-form-login__submit,
+button.woocommerce-Button.woocommerce-button.button.woocommerce-form-register__submit {
+  color: #000000;
+  text-decoration: none !important;
+  border: 2px solid !important;
+  outline: none !important;
+  background-color: transparent !important;
+  font-family: "Krona One", sans-serif !important;
+  cursor: pointer;
+  padding: 0.8rem 1rem !important;
+  text-transform: uppercase !important;
+  height: 3rem !important;
+  width: fit-content !important;
+  border-radius: 5px !important;
+}
+
+.page-id-405 h2,
+.page-id-405 .title.is-2 {
+  clear: both;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.page-id-405 th {
+  text-align: left;
+}
+
+.page-id-405 th.woocommerce-table__product-table.product-total {
+  display: none;
+}
+
+input#createaccount {
+  transform: scale(2);
+  margin-right: 10px;
+}
+
+p.form-row.form-row-wide.create-account.woocommerce-validated {
+  font-weight: 600;
+  margin-bottom: 3em;
+}

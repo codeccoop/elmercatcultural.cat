@@ -15,5 +15,13 @@ textarea {
   }
 }
 
+.editor-styles-wrapper dfn,
+.editor-styles-wrapper cite,
+.editor-styles-wrapper em,
+.editor-styles-wrapper i {
+  font-style: normal !important;
+}
+
+
 @import 'headings';
 @import 'copy';
