@@ -254,7 +254,7 @@ do_action('woocommerce_before_cart'); ?>
                 });
             });
         </script>
-    <? endif;
+    <?php endif;
 
     /**
      * Cart collaterals hook.
