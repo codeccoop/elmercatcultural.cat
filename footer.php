@@ -15,11 +15,39 @@
 <section id="newsletter" class="newsletter__section">
     <div class="newsletter__section-border">
         <div class="newsletter__section-content">
-			            <h2>Dona't d'alta al nostre butlletí:</h2>
-            <div class="footer__subscription">
-                <?php echo do_shortcode("[sibwp_form id=2]"); ?>
-        </div>
-    </div>
+	    <h2>Dona't d'alta al nostre butlletí</h2>
+        <form id="newsletter-form" method="post" class="newsletter-form footer__subscription" action="<?= get_bloginfo('url') ?>?action=emc-newsletter-signup">
+            <p class="message success-message" style="display:none" arai-hidden="true"><?= __('Gràcies per subscriure\'t al buttletí. Per acabar de confirmar la teva alta, t\'hem enviat un correu de confirmació', 'elmercatcultural.cat') ?></p>
+            <p class="message error-message" style="display:none" aria-hidden="true"><?= __('Sembla que hi ha algun problema amb la teva subscripció. Revisa el formulari i torna a intentar-ho', 'elmercatcultural.cat') ?></p>
+            <p>Nom i cognoms<input type="text" name="contact_name" required="required"></p>
+            <p>Adreça de correu electrònic<input type="email" name="contact_email" required="required"></p>
+            <p><input type="submit" value="<?= __('Dona\'m d\'alta', 'elmercatcultural.cat') ?>"></p>
+        </form>
+        <script>
+        const form = document.getElementById("newsletter-form");
+        form.addEventListener("submit", (ev) => {
+            ev.preventDefault();
+            for (let message of form.querySelectorAll(".message")) {
+                message.style.display = "none";
+                message.setAttribute("aria-hidden", "true");
+            }
+            fetch(window.location.pathname.replace(/\/+$/, "") + '/?action=emc-newsletter-signup', {
+                method: "POST",
+                body: new FormData(form)
+            })
+                .then(res => res.json())
+                .then(({ success }) => {
+                    if (!success) throw new Error();
+                    return form.querySelector(".success-message");
+                }).catch((err) => {
+                    console.log(err);
+                    return form.querySelector(".error-message");
+                }).then((message) => {
+                    message.style.display = "block";
+                    message.removeAttribute("aria-hidden");
+                });
+        });
+        </script>
     </div>
 </section>
 <hr>
@@ -56,60 +84,12 @@
             <div class="footer__row">
                 <?php
                 $coordinates = array_map('trim', explode(' ', get_theme_mod('coordinates')));
-                # $coordinates = [41.5028, 1.81346];
-                $lat = $coordinates[0];
-                $lng = $coordinates[1];
-                echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
-                ?>
+$lat = $coordinates[0];
+$lng = $coordinates[1];
+echo do_shortcode('[embedded_map lng="' . $lng . '" lat="' . $lat . '" class="contact__map"]');
+?>
             </div>
         </div>
-        <!-- <div class="footer__column">
-            <div class="footer__row">
-                <p class="footer__title small">Dona't d'alta al nostre butlletí</p>
-                <div class="footer__subscription">
-                    <form id="mcSubscriptionForm" action=https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0 method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate>
-                        <div class="footer__subscription-field">
-                            <input placeholder="elteucorreu@correu.cat" type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" required>
-                            <i tabindex="0" role="button"></i>
-                        </div>
-                    </form>
-                </div>
-                <script type='text/javascript'>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const form = document.getElementById('mcSubscriptionForm');
-                        const submitBtn = form.querySelector('i');
-                        const emailInput = form.querySelector('input');
-
-                        function validateEmail(email) {
-                            return email.match(
-                                /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-                        }
-
-                        emailInput.addEventListener('keydown', (ev) => {
-                            if (ev.keyCode !== 13) {
-                                emailInput.classList.remove('invalid');
-                                return;
-                            }
-                            ev.preventDefault();
-                            ev.stopPropagation()
-                            if (validateEmail(emailInput.value)) {
-                                form.submit();
-                            } else {
-                                emailInput.classList.add('invalid');
-                            }
-                        });
-
-                        submitBtn.addEventListener('click', (ev) => {
-                            if (validateEmail(emailInput.value)) {
-                                form.submit();
-                            } else {
-                                emailInput.classList.add('invalid');
-                            }
-                        });
-                    });
-                </script>
-            </div>
-        </div> -->
         <div class="footer__column">
             <div class="footer__row">
                 <p class="footer__title small">Troba'ns a</p>
@@ -122,16 +102,6 @@
             </div>
         </div>
         <div class="footer__column">
-            <!-- <div class="footer__row">
-                <p class="footer__text small"><a href="/avis-legal">Avís legal</a></p>
-                <p class="footer__text small"><a href="/politica-de-privacitat">Política de privacitat</a></p>
-                <p class="footer__text small"><a href="/politica-de-cookies">Política de cookies</a></p>
-                <p class="footer__text small">© El Mercat Cultural</a></p>
-            </div>
-            <div class="footer__row">
-                <p class="footer__text small">Amb el suport de:</p>
-                <img src="<?= get_bloginfo('template_url') . '/assets/images/bcn-banner.png'; ?>" />
-            </div> -->
             <div class="footer__row">
                 <p class="footer__text small">elMercat forma part de:</p>
                 <img src="<?= get_bloginfo('template_url') . '/assets/images/xec.png'; ?>" />

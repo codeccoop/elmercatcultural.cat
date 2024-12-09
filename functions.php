@@ -365,3 +365,43 @@ function emc_get_post_by_name($name, $post_type = 'post')
         return $posts[0];
     }
 }
+
+add_action('init', function () {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_GET['action']) || !$_GET['action'] === 'emc-newsletter-signup') {
+        return;
+    }
+
+    if (!empty($_POST['contact_name'])) {
+        $contact_name = $_POST['contact_name'];
+        if ($contact_email = filter_var($_POST['contact_email'], FILTER_VALIDATE_EMAIL)) {
+            $contact_email = $_POST['contact_email'];
+            $lead = [
+                'email' => $contact_email,
+                'attributes' => ['NOMBRE' => $contact_name],
+                'includeListIds' => [2],
+                'redirectionUrl' => get_bloginfo('url') . '/gracies',
+                'templateId' => 5,
+            ];
+
+            $res = wp_remote_request('https://api.brevo.com/v3/contacts/doubleOptinConfirmation', [
+                'method' => 'POST',
+                'headers' => [
+                    'accept' => 'application/json',
+                    'content-type' => 'application/json',
+                    'api-key' => BREVO_API_KEY,
+                ],
+                'body' => json_encode($lead, JSON_UNESCAPED_UNICODE),
+            ]);
+
+            if (!is_wp_error($res) && $res['response']['code'] < 300) {
+                wp_send_json(['success' => true]);
+            }
+        }
+    }
+
+    wp_send_json(['success' => false]);
+});
+
+add_filter('query_vars', function ($vars) {
+    return array_merge($vars, ['newsletter-feedback']);
+});
