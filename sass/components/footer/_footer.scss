@@ -2,7 +2,8 @@
   margin: 0 2rem;
 
   .woocommerce-checkout &,
-  .woocommerce-cart & {
+  .woocommerce-cart &,
+  .woocommerce-account & {
     display: none;
   }
 
