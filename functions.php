@@ -401,7 +401,3 @@ add_action('init', function () {
 
     wp_send_json(['success' => false]);
 });
-
-add_filter('query_vars', function ($vars) {
-    return array_merge($vars, ['newsletter-feedback']);
-});
