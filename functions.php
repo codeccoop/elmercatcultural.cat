@@ -367,7 +367,7 @@ function emc_get_post_by_name($name, $post_type = 'post')
 }
 
 add_action('init', function () {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_GET['action']) || !$_GET['action'] === 'emc-newsletter-signup') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_GET['action']) || $_GET['action'] !== 'emc-newsletter-signup') {
         return;
     }
 
