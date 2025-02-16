@@ -16,38 +16,7 @@
     <div class="newsletter__section-border">
         <div class="newsletter__section-content">
 	    <h2>Dona't d'alta al nostre butlletí</h2>
-        <form id="newsletter-form" method="post" class="newsletter-form footer__subscription" action="<?= get_bloginfo('url') ?>?action=emc-newsletter-signup">
-            <p class="message success-message" style="display:none" arai-hidden="true"><?= __('Gràcies per subscriure\'t al buttletí. Per acabar de confirmar la teva alta, t\'hem enviat un correu de confirmació', 'elmercatcultural.cat') ?></p>
-            <p class="message error-message" style="display:none" aria-hidden="true"><?= __('Sembla que hi ha algun problema amb la teva subscripció. Revisa el formulari i torna a intentar-ho', 'elmercatcultural.cat') ?></p>
-            <p>Nom i cognoms<input type="text" name="contact_name" required="required"></p>
-            <p>Adreça de correu electrònic<input type="email" name="contact_email" required="required"></p>
-            <p><input type="submit" value="<?= __('Dona\'m d\'alta', 'elmercatcultural.cat') ?>"></p>
-        </form>
-        <script>
-        const form = document.getElementById("newsletter-form");
-        form.addEventListener("submit", (ev) => {
-            ev.preventDefault();
-            for (let message of form.querySelectorAll(".message")) {
-                message.style.display = "none";
-                message.setAttribute("aria-hidden", "true");
-            }
-            fetch(window.location.pathname.replace(/\/+$/, "") + '/?action=emc-newsletter-signup', {
-                method: "POST",
-                body: new FormData(form)
-            })
-                .then(res => res.json())
-                .then(({ success }) => {
-                    if (!success) throw new Error();
-                    return form.querySelector(".success-message");
-                }).catch((err) => {
-                    console.log(err);
-                    return form.querySelector(".error-message");
-                }).then((message) => {
-                    message.style.display = "block";
-                    message.removeAttribute("aria-hidden");
-                });
-        });
-        </script>
+        <?php echo do_shortcode('[contact-form-7 id="9f39a0e" title="Subscriu-te al butlletí"]'); ?>
     </div>
 </section>
 <hr>
