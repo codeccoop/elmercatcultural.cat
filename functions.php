@@ -365,23 +365,3 @@ function emc_get_post_by_name($name, $post_type = 'post')
         return $posts[0];
     }
 }
-
-add_filter('forms_bridge_payload', function ($payload, $bridge) {
-    if ($bridge->name === 'Butlletí') {
-        $payload['includeListIds'] = [$payload['includeListIds']];
-
-        if (isset($payload['attributes']['NOMBRE'])) {
-            [$firstname, $lastname] = explode(' ', $payload['attributes']['NOMBRE']);
-            if (!empty($lastname)) {
-                $payload['attributes']['NOMBRE'] = $firstname;
-                $payload['attributes']['APELLIDOS'] = $lastname;
-            } else {
-                $payload['attributes']['APELLIDOS'] = '';
-            }
-        }
-
-        $payload['redirectionUrl'] = get_option('siteurl') . '/gracies';
-    }
-
-    return $payload;
-}, 10, 2);
