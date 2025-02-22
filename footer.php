@@ -16,7 +16,7 @@
     <div class="newsletter__section-border">
         <div class="newsletter__section-content">
 	    <h2>Dona't d'alta al nostre butlletí</h2>
-        <?php echo do_shortcode('[contact-form-7 id="17ceea3" title="Subscriu-te al butlletí"]'); ?>
+        <?php echo do_shortcode('[contact-form-7 id="a26c384" title="Subscriu-te al butlletí"]'); ?>
     </div>
 </section>
 <hr>
