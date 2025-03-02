@@ -365,3 +365,37 @@ function emc_get_post_by_name($name, $post_type = 'post')
         return $posts[0];
     }
 }
+
+add_filter('woocloud_orders_headers', function ($headers) {
+    return [
+        'id',
+        'productes',
+        'data',
+        'estat',
+        'total',
+        'mètode de pagament',
+        'nom',
+        'cognoms',
+        'correu electrònic',
+        'telèfon',
+        'dni',
+        'any de naixement',
+    ];
+}, 10, 1);
+
+add_filter('woocloud_order_data', function ($data, $order) {
+    return [
+        'id' => $data['id'],
+        'productes' => $data['name'],
+        'data' => $data['date'],
+        'estat' => $data['status'],
+        'total' => $data['total'],
+        'mètode de pagament' => $data['payment_method'],
+        'nom' => $data['billing_first_name'],
+        'cognoms' => $data['billing_last_name'],
+        'correu electrònic' => $data['billing_email'],
+        'telèfon' => $data['billing_phone'],
+        'dni' => $order->get_meta('billing_DNI'),
+        'any de naixement' => $order->get_meta('billing_birthyear'),
+    ];
+}, 10, 2);

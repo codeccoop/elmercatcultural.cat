@@ -46,7 +46,7 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
 
 	<?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
 
-	<h3 id="order_review_heading"><?php esc_html_e('Your order', 'woocommerce'); ?></h3>
+	<h3 id="order_review_heading"><?php esc_html_e('La teva inscripció', 'woocommerce'); ?></h3>
 
 	<?php do_action('woocommerce_checkout_before_order_review'); ?>
 

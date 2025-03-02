@@ -44,27 +44,10 @@ defined('ABSPATH') || exit;
                     </div>
                 </div>
             </div>
-            <?php woocommerce_form_field('billing_birthday', $fields['billing_birthday'], $checkout->get_value('billing_company')); ?>
+            <?php woocommerce_form_field('billing_birthyear', $fields['billing_birthyear'], $checkout->get_value('billing_birthyear')); ?>
         </div>
         <div class="elmercat-form-field-adress-details">
             <?php woocommerce_form_field('billing_postcode', $fields['billing_postcode'], $checkout->get_value('billing_postcode')); ?>
-        </div>
-        <div class="elmercat-form-field-is-neighbour">
-            <?php do_action("radio_input_veina", $checkout); ?>
-            <p class="form-row-placeholder" aria-hidden="true" style="visibility: hidden;"></p>
-            <script>
-                const buttonSi = document.getElementById('billing_neighbour_1');
-                const buttonNo = document.getElementById('billing_neighbour_2');
-
-                buttonSi.addEventListener('click', function() {
-                    buttonSi.labels[1].classList.add('clicked');
-                    buttonNo.labels[0].classList.remove('clicked');
-                });
-                buttonNo.addEventListener('click', function() {
-                    buttonNo.labels[0].classList.add('clicked');
-                    buttonSi.labels[1].classList.remove('clicked');
-                });
-            </script>
         </div>
         <div class="elmercat-form-field-newsletter-opt-in">
             <?php if (isset($fields['ws_opt_in'])) {
@@ -72,81 +55,6 @@ defined('ABSPATH') || exit;
                 woocommerce_form_field('ws_opt_in', $fields['ws_opt_in'], $checkout->get_value('ws_opt_in'));
             } ?>
         </div>
-        <div class="elmercat-form-field-adress-details">
-            <?php woocommerce_form_field('billing_address_1', $fields['billing_address_1'], $checkout->get_value('billing_address_1'));
-woocommerce_form_field('billing_address_2', $fields['billing_address_2'], $checkout->get_value('billing_address_2'));
-woocommerce_form_field('billing_city', $fields['billing_city'], $checkout->get_value('billing_city'));
-woocommerce_form_field('billing_state', $fields['billing_state'], $checkout->get_value('billing_state'));
-woocommerce_form_field('billing_country', $fields['billing_country'], $checkout->get_value('billing_country'));
-?></div>
-
-        <!-- <form id="mcSubscriptionForm" action="https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&id=77f622e665&f_id=002990e0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate> -->
-        <!-- <div class="footer__subscription-field">
-            <input placeholder="elteucorreu@correu.cat" type="email" value="" name="EMAIL" class="email" id="mce-EMAIL">
-            <i tabindex="0" role="button"></i>
-        </div> -->
-        <!-- </form> -->
-
-        <script type='text/javascript'>
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     const emailInput = document.getElementById('mce-EMAIL');
-            //     const checkoutEmail = document.getElementById("billing_email");
-            //     const newsletterCheckbox = document.getElementById("newsletter_checkbox");
-            //     //const formCheckout = document.getElementsByName("checkout")[0];
-
-            //     function syncEmailValues() {
-            //         console.log("fired");
-            //         if (newsletterCheckbox.checked) {
-            //             emailInput.value = checkoutEmail.value;
-            //         } else {
-            //             emailInput.value = "";
-            //         }
-            //     }
-            //     syncEmailValues();
-            //     newsletterCheckbox.addEventListener("change", syncEmailValues);
-            //     checkoutEmail.addEventListener("input", syncEmailValues);
-
-
-            // formCheckout.addEventListener("submit", (ev) => {
-            //     ev.stopPropagation();
-            //     debugger;
-            //     const data = Array.from(formCheckout.querySelectorAll('input')).reduce((data, input) => {
-            //         return data + '&' + input.name + '=' + encodeURIComponent(input.value)
-            //     }, '').slice(1);
-            //     jQuery.ajax({
-            //         url: 'https://elmercatcultural.cat/?wc-ajax=checkout',
-            //         method: 'POST',
-            //         data: data,
-            //         success: function(response) {
-            //             debugger;
-            //             if (response.result === "success") {
-            //                 if (newsletterCheckbox.checked) {
-            //                     jQuery.ajax({
-            //                         url: 'https://elmercatcultural.us11.list-manage.com/subscribe/post?u=6cddc765d60db6bb166e55534&amp;id=77f622e665&amp;f_id=002990e0f0',
-            //                         method: 'POST',
-            //                         data: 'EMAIL=' + checkoutEmail.value,
-            //                         complete: function() {
-            //                             window.location = response.redirect;
-            //                         }
-            //                     });
-            //                 } else {
-            //                     window.location = response.redirect;
-            //                 }
-            //             } else {
-            //                 // gestio d'errors
-            //             }
-
-            //         },
-            //         error: function(jqXHR, textStatus, errorThrown) {
-            //             console.error(arguments);
-            //         }
-            //     })
-
-
-            // });
-            //});
-        </script>
-
     </div>
 
     <?php do_action('woocommerce_after_checkout_billing_form', $checkout); ?>
