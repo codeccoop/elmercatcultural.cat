@@ -1,16 +1,5 @@
 <?php
 
-add_filter('woocommerce_default_address_fields', function ($fields) {
-    unset($fields['address_1']);
-    unset($fields['address_2']);
-    unset($fields['city']);
-    unset($fields['state']);
-    unset($fields['country']);
-    unset($fields['company']);
-
-    return $fields;
-});
-
 add_filter('woocommerce_billing_fields', function ($fields) {
     unset($fields['billing_state']);
     unset($fields['billing_country']);
@@ -20,11 +9,11 @@ add_filter('woocommerce_billing_fields', function ($fields) {
     unset($fields['billing_company']);
 
     return $fields;
-});
+}, 10, 1);
 
-add_filter('woocommerce_shipping_fields', function ($fields) {
+add_filter('woocommerce_shipping_fields', function () {
     return [];
-});
+}, 10, 0);
 
 add_filter('woocommerce_checkout_fields', function ($fields) {
     $is_admin = emc_is_admin();
@@ -127,7 +116,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
     ];
 
     return $fields;
-});
+}, 10, 1);
 
 add_action('woocommerce_checkout_after_customer_details', function () {
     $gender_meta = [];
@@ -153,9 +142,16 @@ add_action('woocommerce_checkout_after_customer_details', function () {
             <div class="extra-fields">
                 <?php woocommerce_form_field('billing_gender_mixta', array(
                     'type' => 'select',
-                    'class' => array('form-row-wide'),
-                    'options' => array('Home Cis' => 'Home Cis', 'Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
-                    'label'  => __("GÈNERE"),
+                    'class' => ['form-row-wide'],
+                    'options' => [
+                        'Home Cis' => 'Home Cis',
+                        'Home Trans' => 'Home Trans',
+                        'Dona Cis' => 'Dona Cis',
+                        'Dona Trans' => 'Dona Trans',
+                        'Persona No Binaria' => 'Persona No Binaria',
+                        'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre',
+                    ],
+                    'label'  => __('GÈNERE', 'elmercat'),
                     'required' => !$is_admin,
                 )); ?>
             </div>
@@ -163,9 +159,15 @@ add_action('woocommerce_checkout_after_customer_details', function () {
             <div class="extra-fields">
                 <?php woocommerce_form_field('billing_gender_no_mixta', array(
                     'type' => 'select',
-                    'class' => array('form-row-wide'),
-                    'options' => array('Home Trans' => 'Home Trans', 'Dona Cis' => 'Dona Cis', 'Dona Trans' => 'Dona Trans', 'Persona No Binaria' => 'Persona No Binaria', 'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'),
-                    'label'  => __("GÈNERE"),
+                    'class' => ['form-row-wide'],
+                    'options' => [
+                        'Home Trans' => 'Home Trans',
+                        'Dona Cis' => 'Dona Cis',
+                        'Dona Trans' => 'Dona Trans',
+                        'Persona No Binaria' => 'Persona No Binaria',
+                        'Altres/Prefereixo no respondre' => 'Altres/Prefereixo no respondre'
+                    ],
+                    'label'  => __('GÈNERE', 'elmercat'),
                     'required' => !$is_admin,
                 )); ?>
             </div>
@@ -300,6 +302,10 @@ add_action('woocommerce_checkout_process', function () {
 
     if (!isset($_POST['privacy_checkbox'])) {
         wc_add_notice(__("Heu d'acceptar la política de privadesa"), 'error');
+    }
+
+    if (!isset($_POST['policy_checkbox'])) {
+        wc_add_notice(__("Heu d'acceptar la política d'inscripcions i cancelacions"), 'error');
     }
 });
 
