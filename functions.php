@@ -380,6 +380,7 @@ add_filter('woocloud_orders_headers', function ($headers) {
         'telèfon',
         'dni',
         'any de naixement',
+	'codi postal',
     ];
 }, 10, 1);
 
@@ -397,5 +398,6 @@ add_filter('woocloud_order_data', function ($data, $order) {
         'telèfon' => $data['billing_phone'],
         'dni' => $order->get_meta('billing_DNI'),
         'any de naixement' => $order->get_meta('billing_birthyear'),
+	'codi postal' => $data['billing_postcode'],
     ];
 }, 10, 2);
