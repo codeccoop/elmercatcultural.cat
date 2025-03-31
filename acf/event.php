@@ -325,6 +325,61 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
                 'first_day' => 1,
             ),
             array(
+                'key' => 'field_67ea8cccb0542',
+                'label' => 'Habilitar la llista d\'inscripcions',
+                'name' => 'has_waiting_list',
+                'aria-label' => '',
+                'type' => 'true_false',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_63ac23d589421',
+                            'operator' => '==',
+                            'value' => '1',
+                        ),
+                    ),
+                ),
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'message' => '',
+                'default_value' => 1,
+                'allow_in_bindings' => 0,
+                'ui' => 0,
+                'ui_on_text' => '',
+                'ui_off_text' => '',
+            ),
+            array(
+                'key' => 'field_67ea8d2ab0543',
+                'label' => 'Enllaç a la llista d\'inscripcions',
+                'name' => 'waiting_list_url',
+                'aria-label' => '',
+                'type' => 'url',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => array(
+                    array(
+                        array(
+                            'field' => 'field_67ea8cccb0542',
+                            'operator' => '==',
+                            'value' => '1',
+                        ),
+                    ),
+                ),
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => 'https://barri.elmercatcultural.cat/nextcloud/apps/forms/s/XQFrpnr7QjDdpLeLBiM3dzpn',
+                'allow_in_bindings' => 0,
+                'placeholder' => '',
+            ),
+            array(
                 'key' => 'field_63ac8baa110f5',
                 'label' => 'Enllaç a l\'inscripció',
                 'name' => 'external_inscription',
