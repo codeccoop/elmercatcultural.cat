@@ -57,48 +57,53 @@ if ($product) {
     }
 
     $stock = $product->get_stock_quantity();
+} else {
     $external_inscription = get_field('external_inscription', $post_id);
-} ?>
-        <div class="post-content__inscription">
-            <?php
-    if ($has_inscription) {
-        if ($end_date >= $now && $start_date <= $now) {
-            if ($stock > 0) { ?>
-                <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
-                    <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
-                </form>
-            <?php } else if (get_field('has_waiting_list', $post_id)) {
-                $inscriptions = get_field('waiting_list_url', $post_id); ?>
-                <p class="event-bold event-title">INSCRIPCIÓ</p>
-                <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions; ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p>
-                <?php }
-            } else { ?>
+}
+?>
+    <div class="post-content__inscription"><?php
+        if ($has_inscription) {
+            if ($end_date >= $now && $start_date <= $now) {
+                if ($stock > 0) { ?>
+                    <form class="cart" action="/cistella" method="post" enctype="multipart/form-data">
+                        <button type="submit" name="add-to-cart" value="<?= $product->get_id(); ?>" class="single_add_to_cart_button button alt wp-element-button inscription">Inscriu-t'hi</button>
+                    </form><?php
+                } else if (get_field('has_waiting_list', $post_id)) {
+                    $inscriptions = get_field('waiting_list_url', $post_id); ?>
                     <p class="event-bold event-title">INSCRIPCIÓ</p>
-                    <p class="small">Inscripció tancada</p>
-                <?php }
-            } elseif ($external_inscription) { ?>
-                <div class="cart">
-                    <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
-                </div>
-            <?php } ?>
-            <p class="event-bold event-title">DATA I HORARI</p>
-            <?php if (get_field('hour', $post_id)) { ?>
-                <p class="small"><?php the_field('hour', $post_id); ?></p>
-            <?php } ?>
-            <p class="event-bold event-title">PREU</p>
-            <?php if (get_field('price', $post_id)) : ?>
-                <p class="small"><?php the_field('price', $post_id); ?></p>
-            <?php else : ?>
-                <p class="small">Gratuït</p>
-            <?php endif; ?>
-            <p class="event-bold event-title">CATEGORIA</p>
-            <?php $categories = get_the_category($post_id);
-foreach ($categories as $category) { ?>
-                <p class="small"><?php echo $category->name; ?></p>
-            <?php } ?>
-            <p class="event-bold event-title">FITXA TÈCNICA</p>
-            <span class="artistic-description"><?php the_field('artists', $post_id); ?></p>
-        </div>
+                    <p class="small">Places esgotades, apunta't a <a href="<?= $inscriptions; ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p><?php
+                } else { ?>
+                    <p class="event-bold event-title">INSCRIPCIÓ</p>
+                    <p class="small">Inscripció tancada</p><?php
+                }
+            } else { ?>
+                <p class="event-bold event-title">INSCRIPCIÓ</p>
+                <p class="small">Inscripció tancada</p><?php
+            }
+        } elseif ($external_inscription) { ?>
+            <div class="cart">
+                <a class="button" target="_blank" href="<?= $external_inscription; ?>">Inscripció</a>
+            </div><?php
+        }
+            
+        ?><p class="event-bold event-title">DATA I HORARI</p>
+        <?php if (get_field('hour', $post_id)) { ?>
+            <p class="small"><?php the_field('hour', $post_id); ?></p>
+        <?php } ?>
+        <p class="event-bold event-title">PREU</p>
+        <?php if (get_field('price', $post_id)) : ?>
+            <p class="small"><?php the_field('price', $post_id); ?></p>
+        <?php else : ?>
+            <p class="small">Gratuït</p>
+        <?php endif; ?>
+        <p class="event-bold event-title">CATEGORIA</p>
+        <?php $categories = get_the_category($post_id);
+    foreach ($categories as $category) { ?>
+            <p class="small"><?php echo $category->name; ?></p>
+        <?php } ?>
+        <p class="event-bold event-title">FITXA TÈCNICA</p>
+        <span class="artistic-description"><?php the_field('artists', $post_id); ?></p>
+    </div>
         <div class="post-content__description">
             <div class="description-text">
                 <?php the_field('description_event', $post_id); ?>
