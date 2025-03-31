@@ -326,7 +326,7 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
             ),
             array(
                 'key' => 'field_67ea8cccb0542',
-                'label' => 'Habilitar la llista d\'inscripcions',
+                'label' => 'Habilitar la llista d\'espera',
                 'name' => 'has_waiting_list',
                 'aria-label' => '',
                 'type' => 'true_false',
@@ -355,7 +355,7 @@ Si no n\'afegiu cap, a la fitxa de l\'esdeveniment apareixerà la imatge destaca
             ),
             array(
                 'key' => 'field_67ea8d2ab0543',
-                'label' => 'Enllaç a la llista d\'inscripcions',
+                'label' => 'Enllaç a la llista d\'espera',
                 'name' => 'waiting_list_url',
                 'aria-label' => '',
                 'type' => 'url',
