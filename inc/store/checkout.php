@@ -31,6 +31,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
         'required'  => $is_admin,
         'class' => ['form-row-wide'],
         'maxlength' => 10,
+        'autocomplete' => 'bday',
     ];
 
     $fields['billing']['billing_first_name'] = array_merge(
@@ -74,7 +75,8 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
         [
             'label' => null,
             'placeholder'   => __('CODI POSTAL', 'elmercat'),
-            'required'  => false
+            'required'  => false,
+            'autocomplete' => 'postal-code',
         ]
     );
 
