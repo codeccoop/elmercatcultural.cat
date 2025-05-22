@@ -62,7 +62,7 @@ do_action('woocommerce_before_cart'); ?>
                         <td class="product-cover" data-title="<?php esc_attr_e('Product', 'woocommerce'); ?>">
                             <div class="product-thumbnail">
                                 <?php
-                                $thumbnail_url = get_the_post_thumbnail_url($post);
+                                $thumbnail_url = get_the_post_thumbnail_url($product_id);
                                 if (!$thumbnail_url) {
                                     $thumbnail_url = get_template_directory_uri() . '/assets/images/event--default.png';
                                 }
