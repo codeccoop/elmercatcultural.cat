@@ -32,17 +32,18 @@
     .newsletter__section-content {
       text-align: center;
 
-      .wpcf7-form {
+      .wpforms-form {
         max-width: 450px;
         margin: auto;
 
-        >p:not(.message) {
+        .wpforms-field {
           text-align: left;
         }
 
         input {
           display: block;
           width: 100%;
+          max-width: unset;
           border: 1px solid #000;
           border-radius: 6px;
           padding: 0 10px;
@@ -52,26 +53,15 @@
           white-space: nowrap;
           text-overflow: ellipsis;
 
-          &.invalid {
-            border-color: red;
+          &.wpfrms-error {
+            border-color: var(--wpforms-label-error-color);
           }
         }
 
-        .message {
+        .wpforms-confirmation-container-full {
+          background-color: #b5d6db;
+          border-color: #b5d6db;
           font-weight: bold;
-          display: none;
-
-          &:target {
-            display: block;
-          }
-
-          &.success-message {
-            color: var(--wp--preset--color--vivid-green-cyan);
-          }
-
-          &.error-message {
-            color: var(--wp--preset--color--vivid-red);
-          }
         }
       }
     }
