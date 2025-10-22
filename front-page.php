@@ -13,46 +13,8 @@
 get_header();
 $page_ID = get_option('page_on_front');
 ?>
-<main class="front-page">
-    <section id="highlights" class="front-page__section">
-        <?php
-        $args = array(
-            'post_type' => 'destacat',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'orderby' => 'date',
-            'order' => 'DESC'
-        );
-
-$loop = new WP_Query($args);
-?>
-        <div class="front-page__jumbotron <?= $loop->post_count == 0 ? 'static' : 'slider'; ?>">
-            <?php if ($loop->post_count == 0) : ?>
-                <figure class="front-page__jumbotron-item">
-                    <img src="<?= get_template_directory_uri() . '/assets/images/jumbotron--default.png'; ?>" />
-                    <figcaption class="title">El Mercat Cultural</figcaption>
-                </figure>
-                <?php else : while ($loop->have_posts()) : $loop->the_post(); ?>
-                    <?php
-                    $ID = get_the_ID();
-                    $imageURL = get_the_post_thumbnail_url(get_the_ID());
-                    $text = get_field('text', $ID);
-                    $URL = get_field('url', $ID);
-                    ?>
-                    <figure class="front-page__jumbotron-item">
-                        <?php if ($URL) : ?>
-                            <a href="<?= $URL; ?>">
-                                <img src="<?= $imageURL; ?>" />
-                            </a>
-                        <?php else : ?>
-                            <img src="<?= $imageURL; ?>" /></a>
-                        <?php endif; ?>
-                    </figure>
-            <?php endwhile;
-                endif; ?>
-        </div>
-    </section>
-    <section id="feed" class="front-page__section">
+<?php echo do_shortcode('[superblockslider id="6813"]'); ?>
+ <section id="feed" class="front-page__section">
         <div class="front-page__section-content">
             <div class="front-page__feed">
                 <?= do_shortcode('[emc_feed post_type="event"]') ?>
