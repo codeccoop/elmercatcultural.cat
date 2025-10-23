@@ -1,0 +1,11 @@
+node_modules
+package.json
+package-lock.json
+
+# config
+*.config.js
+.lintstagedrc.js
+
+# production
+theme.bundle.*
+editor-style.css
