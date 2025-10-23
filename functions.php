@@ -8,9 +8,9 @@
  * @package elmercatcultural.cat
  */
 
-if (!defined('ELMERCATCULTURAL_VERSION')) {
-    // Replace the version number of the theme on each release.
-    define('ELMERCATCULTURAL_VERSION', '2.6.0');
+if ( ! defined( 'ELMERCATCULTURAL_VERSION' ) ) {
+	// Replace the version number of the theme on each release.
+	define( 'ELMERCATCULTURAL_VERSION', '2.6.0' );
 }
 
 /**
@@ -20,111 +20,107 @@ if (!defined('ELMERCATCULTURAL_VERSION')) {
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-add_action('after_setup_theme', 'setup');
-function setup()
-{
-    /*
-        * Make theme available for translation.
-        * Translations can be filed in the /languages/ directory.
-        * If you're building a theme based on elmercatcultural.cat, use a find and replace
-        * to change 'elmercatcultural.cat' to the name of your theme in all the template files.
-        */
-    load_theme_textdomain('elmercatcultural.cat', get_template_directory() . '/languages');
+add_action( 'after_setup_theme', 'setup' );
+function setup() {
+	/*
+		* Make theme available for translation.
+		* Translations can be filed in the /languages/ directory.
+		* If you're building a theme based on elmercatcultural.cat, use a find and replace
+		* to change 'elmercatcultural.cat' to the name of your theme in all the template files.
+		*/
+	load_theme_textdomain( 'elmercatcultural.cat', get_template_directory() . '/languages' );
 
-    // Add default posts and comments RSS feed links to head.
-    add_theme_support('automatic-feed-links');
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
 
-    /*
-        * Let WordPress manage the document title.
-        * By adding theme support, we declare that this theme does not use a
-        * hard-coded <title> tag in the document head, and expect WordPress to
-        * provide it for us.
-        */
-    add_theme_support('title-tag');
+	/*
+		* Let WordPress manage the document title.
+		* By adding theme support, we declare that this theme does not use a
+		* hard-coded <title> tag in the document head, and expect WordPress to
+		* provide it for us.
+		*/
+	add_theme_support( 'title-tag' );
 
-    /*
-        * Enable support for Post Thumbnails on posts and pages.
-        *
-        * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-        */
-    add_theme_support('post-thumbnails');
+	/*
+		* Enable support for Post Thumbnails on posts and pages.
+		*
+		* @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		*/
+	add_theme_support( 'post-thumbnails' );
 
-    // This theme uses wp_nav_menu() in one location.
-    register_nav_menus(
-        array(
-            'menu-1' => esc_html__('Primary', 'elmercatcultural.cat'),
-        )
-    );
+	// This theme uses wp_nav_menu() in one location.
+	register_nav_menus(
+		array(
+			'menu-1' => esc_html__( 'Primary', 'elmercatcultural.cat' ),
+		)
+	);
 
-    /*
-        * Switch default core markup for search form, comment form, and comments
-        * to output valid HTML5.
-        */
-    add_theme_support(
-        'html5',
-        array(
-            'search-form',
-            'comment-form',
-            'comment-list',
-            'gallery',
-            'caption',
-            'style',
-            'script',
-        )
-    );
+	/*
+		* Switch default core markup for search form, comment form, and comments
+		* to output valid HTML5.
+		*/
+	add_theme_support(
+		'html5',
+		array(
+			'search-form',
+			'comment-form',
+			'comment-list',
+			'gallery',
+			'caption',
+			'style',
+			'script',
+		)
+	);
 
-    // Set up the WordPress core custom background feature.
-    add_theme_support(
-        'custom-background',
-        apply_filters(
-            'custom_background_args',
-            array(
-                'default-color' => 'ffffff',
-                'default-image' => '',
-            )
-        )
-    );
+	// Set up the WordPress core custom background feature.
+	add_theme_support(
+		'custom-background',
+		apply_filters(
+			'custom_background_args',
+			array(
+				'default-color' => 'ffffff',
+				'default-image' => '',
+			)
+		)
+	);
 
-    // Add theme support for selective refresh for widgets.
-    add_theme_support('customize-selective-refresh-widgets');
+	// Add theme support for selective refresh for widgets.
+	add_theme_support( 'customize-selective-refresh-widgets' );
 
-    /**
-     * Add support for core custom logo.
-     *
-     * @link https://codex.wordpress.org/Theme_Logo
-     */
-    add_theme_support(
-        'custom-logo',
-        array(
-            'height'      => 250,
-            'width'       => 250,
-            'flex-width'  => true,
-            'flex-height' => true,
-        )
-    );
+	/**
+	 * Add support for core custom logo.
+	 *
+	 * @link https://codex.wordpress.org/Theme_Logo
+	 */
+	add_theme_support(
+		'custom-logo',
+		array(
+			'height'      => 250,
+			'width'       => 250,
+			'flex-width'  => true,
+			'flex-height' => true,
+		)
+	);
 
-    add_theme_support('editor-styles');
-    add_editor_style('style.css');
+	add_theme_support( 'editor-styles' );
+	add_editor_style( 'style.css' );
 }
 
-add_action('init', 'emc_initialize_theme');
-function emc_initialize_theme()
-{
-    register_taxonomy_for_object_type('post_tag', 'page');
+add_action( 'init', 'emc_initialize_theme' );
+function emc_initialize_theme() {
+	register_taxonomy_for_object_type( 'post_tag', 'page' );
 }
 
-add_action('admin_menu', 'emc_admin_init');
-function emc_admin_init()
-{
-    remove_menu_page('edit.php?post_type=product');
+add_action( 'admin_menu', 'emc_admin_init' );
+function emc_admin_init() {
+	remove_menu_page( 'edit.php?post_type=product' );
 }
 
-add_action('pre_get_posts', 'emc_tags_support_query');
-function emc_tags_support_query($wp_query)
-{
-    if ($wp_query->get('tag')) {
-        $wp_query->set('post_type', 'any');
-    }
+add_action( 'pre_get_posts', 'emc_tags_support_query' );
+function emc_tags_support_query( $wp_query ) {
+	if ( $wp_query->get( 'tag' ) ) {
+		$wp_query->set( 'post_type', 'any' );
+	}
 }
 
 /**
@@ -134,10 +130,9 @@ function emc_tags_support_query($wp_query)
  *
  * @global int $content_width
  */
-add_action('after_setup_theme', 'content_width', 0);
-function content_width()
-{
-    $GLOBALS['content_width'] = apply_filters('content_width', 640);
+add_action( 'after_setup_theme', 'content_width', 0 );
+function content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'content_width', 640 );
 }
 
 /**
@@ -145,63 +140,61 @@ function content_width()
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-add_action('widgets_init', 'widgets_init');
-function widgets_init()
-{
-    register_sidebar(
-        array(
-            'name'          => esc_html__('Sidebar', 'elmercatcultural.cat'),
-            'id'            => 'sidebar-1',
-            'description'   => esc_html__('Add widgets here.', 'elmercatcultural.cat'),
-            'before_widget' => '<section id="%1$s" class="widget %2$s">',
-            'after_widget'  => '</section>',
-            'before_title'  => '<h2 class="widget-title">',
-            'after_title'   => '</h2>',
-        )
-    );
+add_action( 'widgets_init', 'widgets_init' );
+function widgets_init() {
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Sidebar', 'elmercatcultural.cat' ),
+			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'elmercatcultural.cat' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 
 /**
  * Enqueue scripts and styles.
  */
-add_action('wp_enqueue_scripts', 'scripts');
-add_action('admin_enqueue_scripts', 'scripts');
-function scripts()
-{
-    wp_register_script('leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', ['jquery'], '1.9.4');
-    wp_register_style('leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', [], '1.9.4');
+add_action( 'wp_enqueue_scripts', 'scripts' );
+add_action( 'admin_enqueue_scripts', 'scripts' );
+function scripts() {
+	wp_register_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array( 'jquery' ), '1.9.4' );
+	wp_register_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', array(), '1.9.4' );
 
-    if (is_admin()) {
-        return;
-    }
+	if ( is_admin() ) {
+		return;
+	}
 
-    wp_enqueue_style('elmercatcultural-style', get_stylesheet_uri(), array(), ELMERCATCULTURAL_VERSION);
-    wp_style_add_data('elmercatcultural-style', 'rtl', 'replace');
+	wp_enqueue_style( 'elmercatcultural-style', get_stylesheet_uri(), array(), ELMERCATCULTURAL_VERSION );
+	wp_style_add_data( 'elmercatcultural-style', 'rtl', 'replace' );
 
-    wp_enqueue_script('elmercatcultural-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ELMERCATCULTURAL_VERSION, true);
-    wp_enqueue_script('elmercatcultural-viewport', get_template_directory_uri() . '/js/viewport.js', array(), ELMERCATCULTURAL_VERSION, true);
-    wp_enqueue_script('elmercatcultural-device', get_template_directory_uri() . '/js/device-detect.js', array(), ELMERCATCULTURAL_VERSION, true);
+	wp_enqueue_script( 'elmercatcultural-navigation', get_template_directory_uri() . '/js/navigation.js', array(), ELMERCATCULTURAL_VERSION, true );
+	wp_enqueue_script( 'elmercatcultural-viewport', get_template_directory_uri() . '/js/viewport.js', array(), ELMERCATCULTURAL_VERSION, true );
+	wp_enqueue_script( 'elmercatcultural-device', get_template_directory_uri() . '/js/device-detect.js', array(), ELMERCATCULTURAL_VERSION, true );
 
-    if (is_single()) {
-        wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true);
-        wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), ELMERCATCULTURAL_VERSION, true);
-        wp_enqueue_script('front-page', get_template_directory_uri() . '/js/event.js', array('jquery', 'slick-js'), ELMERCATCULTURAL_VERSION, true);
-    }
-    if (is_front_page()) {
-        wp_enqueue_style('slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true);
-        wp_enqueue_script('slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array('jquery'), ELMERCATCULTURAL_VERSION, true);
-        wp_enqueue_script('front-page', get_template_directory_uri() . '/js/front-page.js', array('jquery', 'slick-js'), ELMERCATCULTURAL_VERSION, true);
-    } elseif (is_page(array('programacio', 'tallers'))) {
-        wp_enqueue_script('async-grid', get_template_directory_uri() . '/js/async-grid.js', array(), ELMERCATCULTURAL_VERSION, true);
-        wp_localize_script(
-            'async-grid',
-            'ajax_data',
-            array(
-                'nonce' => wp_create_nonce('async_grid'),
-                'ajax_url' => admin_url('admin-ajax.php'),
-            )
-        );
-    }
+	if ( is_single() ) {
+		wp_enqueue_style( 'slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true );
+		wp_enqueue_script( 'slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array( 'jquery' ), ELMERCATCULTURAL_VERSION, true );
+		wp_enqueue_script( 'front-page', get_template_directory_uri() . '/js/event.js', array( 'jquery', 'slick-js' ), ELMERCATCULTURAL_VERSION, true );
+	}
+	if ( is_front_page() ) {
+		wp_enqueue_style( 'slick-css', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css', array(), true );
+		wp_enqueue_script( 'slick-js', 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', array( 'jquery' ), ELMERCATCULTURAL_VERSION, true );
+		wp_enqueue_script( 'front-page', get_template_directory_uri() . '/js/front-page.js', array( 'jquery', 'slick-js' ), ELMERCATCULTURAL_VERSION, true );
+	} elseif ( is_page( array( 'programacio', 'tallers' ) ) ) {
+		wp_enqueue_script( 'async-grid', get_template_directory_uri() . '/js/async-grid.js', array(), ELMERCATCULTURAL_VERSION, true );
+		wp_localize_script(
+			'async-grid',
+			'ajax_data',
+			array(
+				'nonce'    => wp_create_nonce( 'async_grid' ),
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			)
+		);
+	}
 }
 
 /**
@@ -232,22 +225,21 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if (defined('JETPACK__VERSION')) {
-    require get_template_directory() . '/inc/jetpack.php';
+if ( defined( 'JETPACK__VERSION' ) ) {
+	require get_template_directory() . '/inc/jetpack.php';
 }
 
 /**
  * Load WooCommerce compatibility file.
  */
-if (class_exists('WooCommerce')) {
-    require get_template_directory() . '/inc/woocommerce.php';
+if ( class_exists( 'WooCommerce' ) ) {
+	require get_template_directory() . '/inc/woocommerce.php';
 }
 
-function wip_redirection()
-{
-    if (!is_user_logged_in()) {
-        wp_redirect('/wip.html');
-    }
+function wip_redirection() {
+	if ( ! is_user_logged_in() ) {
+		wp_redirect( '/wip.html' );
+	}
 }
 // add_action('template_redirect', 'wip_redirection');
 /**
@@ -272,190 +264,193 @@ require get_template_directory() . '/acf/event.php';
 require get_template_directory() . '/acf/destacats.php';
 require get_template_directory() . '/acf/portada.php';
 
-function emc_is_admin()
-{
-    $user = wp_get_current_user();
-    $roles = (array) $user->roles;
-    return in_array('administrator', $roles);
+function emc_is_admin() {
+	$user  = wp_get_current_user();
+	$roles = (array) $user->roles;
+	return in_array( 'administrator', $roles );
 }
 
-add_action('wp_head', 'emc_ga_analytics');
-function emc_ga_analytics()
-{
-    ?>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HSNR4W1VZ8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+add_action( 'wp_head', 'emc_ga_analytics' );
+function emc_ga_analytics() {
+	?>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-HSNR4W1VZ8"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
 
-        gtag('config', 'G-HSNR4W1VZ8');
-    </script>
-<?php
+		gtag('config', 'G-HSNR4W1VZ8');
+	</script>
+	<?php
 }
 
-add_action('admin_menu', function () {
-    add_options_page(
-        'elMercat',
-        'elMercat',
-        'manage_options',
-        'emc',
-        'emc_menu_render'
-    );
-});
+add_action(
+	'admin_menu',
+	function () {
+		add_options_page(
+			'elMercat',
+			'elMercat',
+			'manage_options',
+			'emc',
+			'emc_menu_render'
+		);
+	}
+);
 
-function emc_menu_render()
-{
-    ?>
-    <div class="wrap">
-        <h1>elMercat</h1>
-        <form action="options.php" method="post">
-        <?php
-        settings_fields('emc');
-    do_settings_sections('emc');
-    submit_button();
-    ?>
-        </form>
-    </div>
-    <?php
+function emc_menu_render() {
+	?>
+	<div class="wrap">
+		<h1>elMercat</h1>
+		<form action="options.php" method="post">
+		<?php
+		settings_fields( 'emc' );
+		do_settings_sections( 'emc' );
+		submit_button();
+		?>
+		</form>
+	</div>
+	<?php
 }
 
-add_action('admin_init', function () {
-    register_setting(
-        'emc',
-        'emc-inscriptions',
-        [
-            'type' => 'string',
-            'show_in_rest' => false,
-            'defaults' => [
-                'waiting-list' => '#'
-            ]
-        ],
-    );
+add_action(
+	'admin_init',
+	function () {
+		register_setting(
+			'emc',
+			'emc-inscriptions',
+			array(
+				'type'         => 'string',
+				'show_in_rest' => false,
+				'defaults'     => array(
+					'waiting-list' => '#',
+				),
+			),
+		);
 
-    add_settings_section(
-        'emc-inscriptions-section',
-        __('Inscripcions', 'emc'),
-        function () {
-            echo '<p>Configuració general de les inscripcions</p>';
-        },
-        'emc',
-    );
+		add_settings_section(
+			'emc-inscriptions-section',
+			__( 'Inscripcions', 'emc' ),
+			function () {
+				echo '<p>Configuració general de les inscripcions</p>';
+			},
+			'emc',
+		);
 
-    add_settings_field(
-        'waiting-list',
-        __('Llista d\'espera', 'emc'),
-        function () {
-            $inscriptions = get_option('emc-inscriptions', []);
-            echo "<input type='text' name='emc-inscriptions[waiting-list]' value='{$inscriptions['waiting-list']}' />";
-        },
-        'emc',
-        'emc-inscriptions-section'
-    );
-});
+		add_settings_field(
+			'waiting-list',
+			__( 'Llista d\'espera', 'emc' ),
+			function () {
+				$inscriptions = get_option( 'emc-inscriptions', array() );
+				echo "<input type='text' name='emc-inscriptions[waiting-list]' value='{$inscriptions['waiting-list']}' />";
+			},
+			'emc',
+			'emc-inscriptions-section'
+		);
+	}
+);
 
-function emc_get_post_by_name($name, $post_type = 'post')
-{
-    $posts = get_posts(['post_type' => $post_type, 'name' => $name]);
-    if (count($posts)) {
-        return $posts[0];
-    }
+function emc_get_post_by_name( $name, $post_type = 'post' ) {
+	$posts = get_posts(
+		array(
+			'post_type' => $post_type,
+			'name'      => $name,
+		)
+	);
+	if ( count( $posts ) ) {
+		return $posts[0];
+	}
 }
 
-add_filter('woocloud_orders_headers', function ($headers) {
-    return [
-        'id',
-        'productes',
-        'data',
-        'estat',
-        'total',
-        'mètode de pagament',
-        'nom',
-        'cognoms',
-        'correu electrònic',
-        'telèfon',
-        'dni',
-        'any de naixement',
-    'codi postal',
-    ];
-}, 10, 1);
-
-add_filter('woocloud_order_data', function ($data, $order) {
-    return [
-        'id' => $data['id'],
-        'productes' => $data['name'],
-        'data' => $data['date'],
-        'estat' => $data['status'],
-        'total' => $data['total'],
-        'mètode de pagament' => $data['payment_method'],
-        'nom' => $data['billing_first_name'],
-        'cognoms' => $data['billing_last_name'],
-        'correu electrònic' => $data['billing_email'],
-        'telèfon' => $data['billing_phone'],
-        'dni' => $order->get_meta('billing_DNI'),
-        'any de naixement' => $order->get_meta('billing_birthyear'),
-    'codi postal' => $data['billing_postcode'],
-    ];
-}, 10, 2);
-
-add_filter('mime_types', function ($mimes) {
-    $mimes['json'] = 'application/json';
-    return $mimes;
-}, 5, 1);
+add_filter(
+	'mime_types',
+	function ( $mimes ) {
+		$mimes['json'] = 'application/json';
+		return $mimes;
+	},
+	5,
+	1
+);
 
 /* Super Block Slider */
-add_filter('pre_render_block', function ($render, $parsed) {
-    if ($parsed['blockName'] === 'superblockslider/slide' && !empty($parsed['attrs']['hidden'])) {
-        return '';
-    }
-  
-    return $render;
-}, 90, 2);
+add_filter(
+	'pre_render_block',
+	function ( $render, $parsed ) {
+		if ( $parsed['blockName'] === 'superblockslider/slide' && ! empty( $parsed['attrs']['hidden'] ) ) {
+			return '';
+		}
 
-add_filter('render_block_data', function ($parsed) {
-    if ($parsed['blockName'] === 'superblockslider/slider') {
-        $index = 0;
+		return $render;
+	},
+	90,
+	2
+);
 
-        $from_count = count($parsed['innerBlocks']);
-        $from_width = $from_count * 100;
+add_filter(
+	'render_block_data',
+	function ( $parsed ) {
+		if ( $parsed['blockName'] === 'superblockslider/slider' ) {
+			$index = 0;
 
-        for ($i = 0; $i < $from_count; $i++) {
-            $slide = &$parsed['innerBlocks'][$i];
-            $className = $slide['attrs']['className'] ?? '';
+			$from_count = count( $parsed['innerBlocks'] );
+			$from_width = $from_count * 100;
 
-            if (preg_match('/hide([0-9]{6})/', (string) $className, $matches)) {
-                $d = date_parse_from_format('dmy', $matches[1]);
-                $timestamp = strtotime("{$d['year']}-{$d['month']}-{$d['day']}");
-                if ($timestamp < time()) {
-                    $slide['attrs']['hidden'] = true;
-                    continue;
-                }
-            }
+			for ( $i = 0; $i < count( $parsed['innerBlocks'] ); $i++ ) {
+				$slide     = &$parsed['innerBlocks'][ $i ];
+				$className = $slide['attrs']['className'] ?? '';
 
-            $slide['attrs']['slideIndex'] = $index;
-            $index++;
-        }
+				if ( preg_match( '/hide([0-9]{6})/', (string) $className, $matches ) ) {
+					$d         = date_parse_from_format( 'dmy', $matches[1] );
+					$timestamp = strtotime( "{$d['year']}-{$d['month']}-{$d['day']}" );
+					if ( $timestamp < time() ) {
+						$slide['attrs']['hidden'] = true;
+						continue;
+					}
+				}
 
-        $to_count = $index;
-        $to_width = $to_count * 100;
+				$slide['attrs']['slideIndex'] = $index;
+				$index++;
+			}
 
-        $parsed['innerHTML'] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerHTML']);
-        $parsed['innerContent'][0] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerContent'][0]);
-    }
+			$to_count = $index;
+			$to_width = $to_count * 100;
 
-    return $parsed;
-}, 20);
+			$parsed['innerHTML']       = str_replace( "width:{$from_width}%", "width:{$to_width}%", $parsed['innerHTML'] );
+			$parsed['innerContent'][0] = str_replace( "width:{$from_width}%", "width:{$to_width}%", $parsed['innerContent'][0] );
+		}
 
-add_action('init', function () {
-    wp_register_script(
-        'superblockslider',
-        get_stylesheet_directory_uri() . '/js/superblockslider.js',
-        [],
-        '1.0.0',
-        true,
-    );
-}, 0, 90);
+		return $parsed;
+	},
+	20
+);
+
+add_action(
+	'init',
+	function () {
+		wp_register_script(
+			'superblockslider',
+			get_stylesheet_directory_uri() . '/js/superblockslider.js',
+			array(),
+			'1.0.0',
+			true,
+		);
+	},
+	0,
+	90
+);
+
+function emc_get_date_field( $field, $post_id = null ) {
+	$datestr = get_field( $field, $post_id );
+	if ( ! $datestr ) {
+		return null;
+	}
+
+	if ( preg_match( '/(am|pm)$/', $datestr ) ) {
+		return DateTime::createFromFormat( 'd/m/Y g:i a', $datestr );
+	} else {
+		return DateTime::createFromFormat( 'Y-m-d H:i:s', $datestr );
+	}
+}
