@@ -42,7 +42,8 @@ do_action('woocommerce_before_cart'); ?>
                 $_product   = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
                 $product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
                 $slug = preg_replace('/-product$/', '', $cart_item['data']->get_slug());
-                $post = emc_get_event_by_name($slug) ?? emc_get_workshop_by_name($slug);
+                $post_id = get_post_meta($product_id, 'event_id', true);
+                $post = get_post($post_id) ?: emc_get_event_by_name($slug) ?? emc_get_workshop_by_name($slug);
 
                 /**
 				 * Filter the product name.
@@ -76,6 +77,10 @@ do_action('woocommerce_before_cart'); ?>
                           * @since 2.1.0
                           */
                           $thumbnail_url = get_the_post_thumbnail_url($product_id);
+                          if ( ! $thumbnail_url ) {
+                              $thumbnail_url = get_template_directory_uri() . '/assets/images/event--default.png';
+                          }
+
                           $thumbnail = '<img  height="250" width="250" src="' . $thumbnail_url . '">';
                           $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $thumbnail, $cart_item, $cart_item_key );
 
