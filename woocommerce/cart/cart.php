@@ -13,7 +13,7 @@
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 7.9.0
+ * @version 10.1.0
  */
 
 defined('ABSPATH') || exit;
@@ -59,96 +59,112 @@ do_action('woocommerce_before_cart'); ?>
             ?>
                     <tr class="woocommerce-cart-form__cart-item <?php echo esc_attr(apply_filters('woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key)); ?>">
 
-                        <td class="product-cover" data-title="<?php esc_attr_e('Product', 'woocommerce'); ?>">
-                            <div class="product-thumbnail">
-                                <?php
-                                $thumbnail_url = get_the_post_thumbnail_url($product_id);
-                                if (!$thumbnail_url) {
-                                    $thumbnail_url = get_template_directory_uri() . '/assets/images/event--default.png';
-                                }
-
-                                $thumbnail = '<img  height="250" width="250" src="' . $thumbnail_url . '">';
-                                if (!$product_permalink) {
-                                    echo $thumbnail; // PHPCS: XSS ok.
-                                } else {
-                                    printf('<a href="%s">%s</a>', esc_url($product_permalink), $thumbnail); // PHPCS: XSS ok.
-                                }
-                                ?>
-                            </div>
-                            <div class="product-name title is-3">
-                                <?php
-                                if (!$product_permalink) {
-							        echo wp_kses_post( $product_name . '&nbsp;' );
-                                } else {
-                                    /**
-                                     * This filter is documented above.
-                                     *
-                                     * @since 2.1.0
-                                     */
-                                    echo wp_kses_post(apply_filters('woocommerce_cart_item_name', sprintf('<a href="%s">%s</a>', esc_url($product_permalink), $_product->get_name()), $cart_item, $cart_item_key));
-                                }
-
-                                do_action('woocommerce_after_cart_item_name', $cart_item, $cart_item_key);
-
-                                // Meta data.
-                                echo wc_get_formatted_cart_item_data($cart_item); // PHPCS: XSS ok.
-
-                                // Backorder notification.
-                                if ($_product->backorders_require_notification() && $_product->is_on_backorder($cart_item['quantity'])) {
-                                    echo wp_kses_post(apply_filters('woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__('Available on backorder', 'woocommerce') . '</p>', $product_id));
-                                }
-                                ?>
-                            </div>
-                        </td>
-
-                        <td class="product-price" data-title="<?php esc_attr_e('Price', 'woocommerce'); ?>">
-                            <?php
-                            echo apply_filters('woocommerce_cart_item_price', WC()->cart->get_product_price($_product), $cart_item, $cart_item_key); // PHPCS: XSS ok.
-                            ?>
-                        </td>
-
-                        <td class="product-quantity" data-title="<?php esc_attr_e('Quantity', 'woocommerce'); ?>">
-                            <?php
-                            if ($_product->is_sold_individually()) {
-                                // $product_quantity = sprintf('1 <input type="hidden" name="cart[%s][qty]" value="1" />', $cart_item_key);
-                                $min_quantity = 1;
-                                $max_quantity = 1;
-                            } else {
-                                $min_quantity = 0;
-                                $max_quantity = $_product->get_max_purchase_quantity();
-                            }
-
-                            $product_quantity = woocommerce_quantity_input(
-                                array(
-                                    'input_name'   => "cart[{$cart_item_key}][qty]",
-                                    'input_value'  => $cart_item['quantity'],
-                                    'max_value'    => $_product->get_max_purchase_quantity(),
-                                    'min_value'    => '0',
-                                    'product_name' => $_product->get_name(),
-                                ),
-                                $_product,
-                                false
-                            );
-
-                            echo apply_filters('woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item); // PHPCS: XSS ok.
-                            ?>
-                        </td>
                         <td class="product-remove">
-                            <?php
+                          <?php
                             echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                                'woocommerce_cart_item_remove_link',
-                                sprintf(
-                                    '<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
-                                    esc_url(wc_get_cart_remove_url($cart_item_key)),
-                                    esc_html__('Remove this item', 'woocommerce'),
-                                    esc_attr($product_id),
-                                    esc_attr($_product->get_sku())
-                                ),
-                                $cart_item_key
+                              'woocommerce_cart_item_remove_link',
+                              sprintf(
+                                '<a role="button" href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+                                esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+                                /* translators: %s is the product name */
+                                esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
+                                esc_attr( $product_id ),
+                                esc_attr( $_product->get_sku() )
+                              ),
+                              $cart_item_key
                             );
-                            ?>
+                          ?>
                         </td>
-                    </tr><?php
+
+                        <td class="product-thumbnail">
+                        <?php
+                        /**
+                        * Filter the product thumbnail displayed in the WooCommerce cart.
+                        *
+                        * This filter allows developers to customize the HTML output of the product
+                        * thumbnail. It passes the product image along with cart item data
+                        * for potential modifications before being displayed in the cart.
+                        *
+                        * @param string $thumbnail     The HTML for the product image.
+                        * @param array  $cart_item     The cart item data.
+                        * @param string $cart_item_key Unique key for the cart item.
+                        *
+                        * @since 2.1.0
+                        */
+                        $thumbnail_url = get_the_post_thumbnail_url($post);
+                        $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $thumbnail_url, $cart_item, $cart_item_key );
+
+                        if ( ! $product_permalink ) {
+                          echo $thumbnail; // PHPCS: XSS ok.
+                        } else {
+                          printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
+                        }
+                        ?>
+                        </td>
+
+                        <td scope="row" role="rowheader" class="product-name" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
+                        <?php
+                        if ( ! $product_permalink ) {
+                          echo wp_kses_post( $product_name . '&nbsp;' );
+                        } else {
+                          /**
+                          * This filter is documented above.
+                          *
+                          * @since 2.1.0
+                          */
+                          echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() ), $cart_item, $cart_item_key ) );
+                        }
+
+                        do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
+
+                        // Meta data.
+                        echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
+
+                        // Backorder notification.
+                        if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
+                          echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
+                        }
+                        ?>
+                        </td>
+
+                        <td class="product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
+                          <?php
+                            echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+                          ?>
+                        </td>
+
+                        <td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
+                        <?php
+                        if ( $_product->is_sold_individually() ) {
+                          $min_quantity = 1;
+                          $max_quantity = 1;
+                        } else {
+                          $min_quantity = 0;
+                          $max_quantity = $_product->get_max_purchase_quantity();
+                        }
+
+                        $product_quantity = woocommerce_quantity_input(
+                          array(
+                            'input_name'   => "cart[{$cart_item_key}][qty]",
+                            'input_value'  => $cart_item['quantity'],
+                            'max_value'    => $max_quantity,
+                            'min_value'    => $min_quantity,
+                            'product_name' => $product_name,
+                          ),
+                          $_product,
+                          false
+                        );
+
+                        echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
+                        ?>
+                        </td>
+
+                        <td class="product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
+                          <?php
+                            echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+                          ?>
+                        </td> 
+                      </tr><?php
                 }
             }
             ?>
