@@ -420,7 +420,10 @@ add_filter('render_block_data', function ($parsed) {
     if ($parsed['blockName'] === 'superblockslider/slider') {
         $index = 0;
 
-        for ($i = 0; $i < count($parsed['innerBlocks']); $i++) {
+        $from_count = count($parsed['innerBlocks']);
+        $from_width = $from_count * 100;
+
+        for ($i = 0; $i < $from_count; $i++) {
             $slide = &$parsed['innerBlocks'][$i];
             $className = $slide['attrs']['className'] ?? '';
 
@@ -436,6 +439,12 @@ add_filter('render_block_data', function ($parsed) {
             $slide['attrs']['slideIndex'] = $index;
             $index++;
         }
+
+        $to_count = $index;
+        $to_width = $to_count * 100;
+
+        $parsed['innerHTML'] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerHTML']);
+        $parsed['innerContent'][0] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerContent'][0]);
     }
 
     return $parsed;
