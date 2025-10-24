@@ -126,7 +126,7 @@ do_action('woocommerce_before_cart'); ?>
 
                         <td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
                         <?php
-                        $min_quantity = 0;
+                        $min_quantity = 1;
                         $max_quantity = $_product->get_max_purchase_quantity();
 
                         $product_quantity = woocommerce_quantity_input(
