@@ -380,7 +380,7 @@ add_filter('woocloud_orders_headers', function ($headers) {
         'telèfon',
         'dni',
         'any de naixement',
-	'codi postal',
+    'codi postal',
     ];
 }, 10, 1);
 
@@ -398,6 +398,64 @@ add_filter('woocloud_order_data', function ($data, $order) {
         'telèfon' => $data['billing_phone'],
         'dni' => $order->get_meta('billing_DNI'),
         'any de naixement' => $order->get_meta('billing_birthyear'),
-	'codi postal' => $data['billing_postcode'],
+    'codi postal' => $data['billing_postcode'],
     ];
 }, 10, 2);
+
+add_filter('mime_types', function ($mimes) {
+    $mimes['json'] = 'application/json';
+    return $mimes;
+}, 5, 1);
+
+/* Super Block Slider */
+add_filter('pre_render_block', function ($render, $parsed) {
+    if ($parsed['blockName'] === 'superblockslider/slide' && !empty($parsed['attrs']['hidden'])) {
+        return '';
+    }
+  
+    return $render;
+}, 90, 2);
+
+add_filter('render_block_data', function ($parsed) {
+    if ($parsed['blockName'] === 'superblockslider/slider') {
+        $index = 0;
+
+        $from_count = count($parsed['innerBlocks']);
+        $from_width = $from_count * 100;
+
+        for ($i = 0; $i < $from_count; $i++) {
+            $slide = &$parsed['innerBlocks'][$i];
+            $className = $slide['attrs']['className'] ?? '';
+
+            if (preg_match('/hide([0-9]{6})/', (string) $className, $matches)) {
+                $d = date_parse_from_format('dmy', $matches[1]);
+                $timestamp = strtotime("{$d['year']}-{$d['month']}-{$d['day']}");
+                if ($timestamp < time()) {
+                    $slide['attrs']['hidden'] = true;
+                    continue;
+                }
+            }
+
+            $slide['attrs']['slideIndex'] = $index;
+            $index++;
+        }
+
+        $to_count = $index;
+        $to_width = $to_count * 100;
+
+        $parsed['innerHTML'] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerHTML']);
+        $parsed['innerContent'][0] = str_replace("width:{$from_width}%", "width:{$to_width}%", $parsed['innerContent'][0]);
+    }
+
+    return $parsed;
+}, 20);
+
+add_action('init', function () {
+    wp_register_script(
+        'superblockslider',
+        get_stylesheet_directory_uri() . '/js/superblockslider.js',
+        [],
+        '1.0.0',
+        true,
+    );
+}, 0, 90);

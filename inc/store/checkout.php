@@ -31,7 +31,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
         'required'  => $is_admin,
         'class' => ['form-row-wide'],
         'maxlength' => 10,
-        'autocomplete' => 'bday-year',
+        'autocomplete' => 'bday',
     ];
 
     $fields['billing']['billing_first_name'] = array_merge(
