@@ -54,6 +54,10 @@
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          
+          &[type="submit"]:focus {
+            color: #666;
+          }
         }
         
         .wpcf7-spinner {
@@ -66,6 +70,16 @@
           font-weight: bold;
           box-shadow: 5px 5px 0px #e3d0b9;
           transform: translateX(3px);
+          border-radius: 6px;
+          margin: 2em 0;
+        }
+        
+        &.invalid .wpcf7-response-output {
+	      border-color: #dc3232;
+          font-weight: bold;
+          padding: 0.5em 1em;
+          border-radius: 6px;
+          margin: 2em 0;
         }
       }
     }
