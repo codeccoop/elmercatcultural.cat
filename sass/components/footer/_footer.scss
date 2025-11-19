@@ -32,12 +32,13 @@
     .newsletter__section-content {
       text-align: center;
 
-      .wpforms-form {
+      .wpcf7-form {
         max-width: 450px;
         margin: auto;
 
-        .wpforms-field {
+        > p {
           text-align: left;
+          font-weight: bold;
         }
 
         input {
@@ -47,21 +48,24 @@
           border: 1px solid #000;
           border-radius: 6px;
           padding: 0 10px;
+          margin-top: 0.5em;
           height: 3rem;
           font-size: $font__size-small;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-
-          &.wpfrms-error {
-            border-color: var(--wpforms-label-error-color);
-          }
+        }
+        
+        .wpcf7-spinner {
+            display: none;
         }
 
-        .wpforms-confirmation-container-full {
+        .wpcf7-response-output {
           background-color: #b5d6db;
           border-color: #b5d6db;
           font-weight: bold;
+          box-shadow: 5px 5px 0px #e3d0b9;
+          transform: translateX(3px);
         }
       }
     }
