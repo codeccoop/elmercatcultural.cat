@@ -21,7 +21,8 @@ input[type="submit"] {
 
   &:focus,
   &.focus {
-    color: $white;
+    /* color: $white; */
+    color: $dove_gray;
   }
 
   &[disabled] {
@@ -51,15 +52,15 @@ a.checkout-button.button,
   width: fit-content;
   border-radius: 5px;
 
-  &:hover,
-  &:focus {
+  &:hover {
     box-shadow: 2px 2px 2px $color__theme-primary ;
     transform: translateY(-2px);
   }
 
   &:focus,
   &.focus {
-    color: $white;
+    // box-shadow: 2px 2px 2px $color__theme-primary ;
+    // color: $white;
   }
 
   &[disabled] {
@@ -91,10 +92,10 @@ button.inscription{
     transform: translateY(-2px);
   }
 
-  &:focus,
-  &.focus {
-    color: $white;
-  }
+  // &:focus,
+  // &.focus {
+  //   color: $white;
+  // }
 
   &[disabled] {
     cursor: default;

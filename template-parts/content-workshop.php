@@ -77,6 +77,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
 					<p class="event-bold event-title">INSCRIPCIÓ</p>
 					<p class="small">Places esgotades, apunta't a <a href="<?php echo $inscriptions; ?>" target="_blank" style="text-decoration:underline;">la llista d'espera</a></p>
+					<p class="small">* En cas de produir-se alguna baixa en al taller es contactarà amb les persones apuntades a la llista d’espera. <strong>Per tal de donar prioritat a la llista d’espera, no es permet fer intercanvi d’inscripcions entre persones.</strong></p>
 					<?php
 			} else {
 				?>
