@@ -188,7 +188,6 @@ function filter_woocommerce_available_payment_gateways( $available_gateways ) {
 		$is_offline = in_array( $gateway->title, array( 'Pagament en efectiu i presencial', 'Pagament amb targeta i presencial' ), true );
 		if ( $is_offline && ! current_user_can( 'manage_options' ) ) {
 			unset( $available_gateways[ $key ] );
-			break;
 		}
 	}
 
