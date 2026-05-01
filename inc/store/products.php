@@ -1,5 +1,80 @@
 <?php
 
+add_action(
+	'init',
+	function () {
+		register_post_meta(
+			'product',
+			'event_id',
+			array(
+				'type'              => 'integer',
+				'label'             => 'Event ID',
+				'description'       => 'Relació amb l\'esdeveniment (Programació o Taller)',
+				'single'            => true,
+				'sanitize_callback' => 'absint',
+				'show_in_rest'      => true,
+			),
+		);
+	},
+);
+
+add_filter(
+	'posts_bridge_remote_data',
+	function ( $data, $rcpt ) {
+		if ( 'product' !== $rcpt->post_type ) {
+			return $data;
+		}
+
+		$response = $rcpt->bridge
+			->backend
+			->get( '/wp-json/wc/v3/products/' . $rcpt->foreign_id );
+
+		if ( is_wp_error( $response ) ) {
+			return $data;
+		}
+
+		// $data['meta_input']['type']                  = $response['data']['type'];
+		// $data['meta_input']['featured']              = $response['data']['featured'];
+		// $data['meta_input']['catalog_visibility']    = $response['data']['catalog_visibility'];
+		// $data['meta_input']['description']           = $response['data']['description'];
+		// $data['meta_input']['short_description']     = $response['data']['short_description'];
+		// $data['meta_input']['sku']                   = $response['data']['sku'];
+		$data['meta_input']['_price']                 = $response['data']['price'] ?? '';
+		$data['meta_input']['_regular_price']         = $response['data']['regular_price'] ?? '';
+		$data['meta_input']['_sale_price_dates_from'] = $response['data']['date_on_sale_from'] ?? '';
+		$data['meta_input']['_sale_price_dates_to']   = $response['data']['date_on_sale_to'] ?? '';
+		$data['meta_input']['total_sales']            = $response['data']['total_sales'] ?? '';
+		$data['meta_input']['_virtual']               = $response['data']['virtual'] ?? '';
+		$data['meta_input']['_downloadable']          = $response['data']['downloadable'] ?? '';
+		$data['meta_input']['_download_limit']        = $response['data']['download_limit'] ?? '';
+		$data['meta_input']['_download_expiry']       = $response['data']['download_expiry'] ?? '';
+		$data['meta_input']['_tax_status']            = $response['data']['tax_status'] ?? '';
+		$data['meta_input']['_tax_class']             = $response['data']['tax_class'] ?? '';
+		$data['meta_input']['_manage_stock']          = $response['data']['manage_stock'] ?? '';
+		$data['meta_input']['_stock']                 = $response['data']['stock_quantity'] ?? '';
+		$data['meta_input']['_stock_status']          = $response['data']['stock_status'] ?? '';
+		$data['meta_input']['_backorders']            = $response['data']['backorders'] ?? '';
+		$data['meta_input']['_sold_individually']     = $response['data']['sold_individually'] ?? '';
+		// $data['meta_input']['sale_price']            = $response['data']['sale_price'];
+		// $data['meta_input']['date_on_sale_from_gmt'] = $response['data']['date_on_sale_from_gmt'];
+		// $data['meta_input']['date_on_sale_to_gmt']   = $response['data']['date_on_sale_to_gmt'];
+		// $data['meta_input']['on_sale']               = $response['data']['on_sale'];
+		// $data['meta_input']['purchasable']           = $response['data']['purchasable'];
+		// $data['meta_input']['downloads']             = $response['data']['downloads'];
+		// $data['meta_input']['external_url']          = $response['data']['external_url'];
+		// $data['meta_input']['button_text']           = $response['data']['button_text'];
+		// $data['meta_input']['low_stock_amount']      = $response['data']['low_stock_amount'];
+		// $data['meta_input']['shipping_required']     = $response['data']['shipping_required'];
+		// $data['meta_input']['shipping_taxable']      = $response['data']['shipping_taxable'];
+		// $data['meta_input']['shipping_class']        = $response['data']['shipping_class'];
+		// $data['meta_input']['shipping_class_id']     = $response['data']['shipping_class_id'];
+
+		return $data;
+	},
+	10,
+	2
+);
+
 $EVENT_FIELDS_KEYMAP = array(
 	'date'              => 0,
 	'date_initial'      => 1,

@@ -28,7 +28,7 @@ add_filter('woocommerce_checkout_fields', function ($fields) {
     $fields['billing']['billing_birthyear'] = [
         'type' => 'number',
         'placeholder' => __('Any de naixement', 'elmercat'),
-        'required'  => $is_admin,
+        'required'  => !$is_admin,
         'class' => ['form-row-wide'],
         'maxlength' => 10,
         'autocomplete' => 'bday',
@@ -224,8 +224,8 @@ add_action('woocommerce_checkout_create_order', function ($order, $data) {
 
 add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
     ?>
-        <p><b>DNI:</b><?php echo $order->get_meta('billing_DNI'); ?></p> 
-        <p><b>Any de naixement:</b><?php echo $order->get_meta('billing_birthyear'); ?></p> 
+        <p><b>DNI:</b><?php echo $order->get_meta('billing_DNI'); ?></p>
+        <p><b>Any de naixement:</b><?php echo $order->get_meta('billing_birthyear'); ?></p>
     <?php
 
     if ($order->get_meta('billing_gender_mixta')) : ?>
