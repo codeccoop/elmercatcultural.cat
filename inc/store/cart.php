@@ -185,8 +185,13 @@ function emc_cart_content_summary() {
 add_filter( 'woocommerce_available_payment_gateways', 'filter_woocommerce_available_payment_gateways', 10, 1 );
 function filter_woocommerce_available_payment_gateways( $available_gateways ) {
 	foreach ( $available_gateways as $key => $gateway ) {
+		$is_admin   = current_user_can( 'manage_options' );
 		$is_offline = in_array( $gateway->title, array( 'Pagament en efectiu i presencial', 'Pagament amb targeta i presencial' ), true );
-		if ( $is_offline && ! current_user_can( 'manage_options' ) ) {
+		if ( $is_offline ) {
+			if ( ! $is_admin ) {
+				unset( $available_gateways[ $key ] );
+			}
+		} elseif ( $is_admin ) {
 			unset( $available_gateways[ $key ] );
 		}
 	}
